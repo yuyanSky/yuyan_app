@@ -61,7 +61,8 @@ class NotificationService extends GetxService {
 
     debugPrint('start: notification service');
     timer = Timer.periodic(
-      10.seconds,
+      // 这里的时间长一点
+      20.seconds,
       (timer) {
         fetch();
       },

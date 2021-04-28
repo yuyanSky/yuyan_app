@@ -271,19 +271,19 @@ class UserAvatarWidget extends StatelessWidget {
   final String avatar;
   final double height;
 
-  const UserAvatarWidget({
+  UserAvatarWidget({
     Key key,
-    this.avatar =
-        "https://cdn.nlark.com/yuque/0/2019/png/84147/1547032500238-d93512f4-db23-442f-b4d8-1d46304f9673.png",
+    this.avatar,
     this.height = 34,
   }) : super(key: key);
 
+  String get avatarUrl =>
+      avatar ??
+      "https://cdn.nlark.com/yuque/0/2019/png/84147/1547032500238-d93512f4-db23-442f-b4d8-1d46304f9673.png";
+
   @override
   Widget build(BuildContext context) {
-    if (avatar == null) {
-      return SizedBox.shrink();
-    }
-    var imgUrl = Util.ossImg(avatar);
+    var imgUrl = Util.ossImg(avatarUrl);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(height / 2 + 3),

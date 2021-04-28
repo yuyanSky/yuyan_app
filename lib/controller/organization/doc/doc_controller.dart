@@ -3,6 +3,7 @@ import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/model/document/commen/comment_detail.dart';
 import 'package:yuyan_app/model/document/doc_detail/doc_detail.dart';
+import 'package:yuyan_app/model/document/tag_seri.dart';
 import 'package:yuyan_app/model/user/user.dart';
 
 class DocDetailController extends FetchValueController<DocDetailSeri> {
@@ -45,5 +46,16 @@ class DocCommentsController extends FetchValueController<ApiResponse> {
     var data = (res.data as List);
     comments = data.map((e) => CommentDetailSeri.fromJson(e)).toList();
     return res;
+  }
+}
+
+class DocTagController extends FetchListValueController<TagSeri> {
+  final int docId;
+
+  DocTagController(this.docId);
+
+  @override
+  Future<List<TagSeri>> fetch() {
+    return ApiRepository.getDocTags(docId: docId);
   }
 }

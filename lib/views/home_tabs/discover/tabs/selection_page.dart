@@ -77,7 +77,7 @@ class _RecommendItemWidget extends StatelessWidget {
   }
 
   buildDoc(DocSeri data) {
-    bool hasCover = data.cover != null;
+    bool hasCover = !GetUtils.isNullOrBlank(data.cover);
     Widget coverWidget;
     Widget descWidget;
     if (hasCover) {

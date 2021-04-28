@@ -73,8 +73,6 @@ class _HomeState extends State<Home> {
   _buildBottomNav(BottomNavigatorController controller) {
     var currIndex = tabIndex.value;
 
-    debugPrint('_buildbottomNav');
-
     final items = [
       Icon(
         Icons.insert_emoticon,
@@ -134,8 +132,8 @@ class _HomeState extends State<Home> {
             height: controller.height,
             items: items,
             onTap: (index) {
-              tabIndex.value = index;
               debugPrint('tabIndex: $index');
+              tabIndex.value = index;
             },
           ),
         );

@@ -13,6 +13,7 @@ import 'package:yuyan_app/model/document/commen/comment_detail.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/doc_detail/artboard_seri.dart';
 import 'package:yuyan_app/model/document/doc_detail/doc_detail.dart';
+import 'package:yuyan_app/model/document/tag_seri.dart';
 import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
 import 'package:yuyan_app/model/document/group_home/group_home_seri.dart';
@@ -819,6 +820,17 @@ class ApiRepository {
   }
 
   ///文档
+  static Future<List<TagSeri>> getDocTags({int docId}) async {
+    var res = await api.get(
+      '/tags',
+      queryParameters: {
+        'docId': docId,
+      },
+    );
+    var data = (res.data as ApiResponse).data as List;
+    return data.map((e) => TagSeri.fromJson(e)).toList();
+  }
+
   static Future<List<TocSeri>> getBookTocList({int bookId}) async {
     var res = await api.get(
       '/catalog_nodes',

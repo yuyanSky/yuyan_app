@@ -87,6 +87,7 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
 
   Widget _buildMoreAction() {
     return PopupMenuButton(
+      icon: Icon(Icons.more_vert),
       itemBuilder: (_) => [
         PopupMenuItem(
           value: () {
@@ -164,12 +165,14 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    int _y = 0;
     final docBody = InAppWebView(
       initialUrl: embedUrl,
       initialOptions: InAppWebViewGroupOptions(
         crossPlatform: InAppWebViewOptions(
-          useShouldOverrideUrlLoading: true,
-        ),
+            // useShouldOverrideUrlLoading: true,
+
+            ),
       ),
       onWebViewCreated: (c) {
         _webViewController = c;
@@ -179,23 +182,32 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
         debugPrint('title => $title');
       },
       onScrollChanged: (_, x, y) {
-        if (y > 300) {
-          showUser.value = false;
-        } else {
-          showUser.value = true;
+        var delta = y - _y;
+        if (y > 100) {
+          if (delta > 3) {
+            showUser.value = false;
+          } else if (delta < -3) {
+            showUser.value = true;
+          }
         }
+        _y = y;
       },
       onProgressChanged: (_, progress) {},
       shouldOverrideUrlLoading: (_, req) async {
         debugPrint('override request => $req');
-        if (req.url.endsWith(_param)) {
-          return ShouldOverrideUrlLoadingAction.ALLOW;
-        }
-        if (req.url.startsWith('https://tracert.alipay.com/')) {
-          return ShouldOverrideUrlLoadingAction.CANCEL;
-        }
-        MyRoute.webview(req.url);
-        return ShouldOverrideUrlLoadingAction.CANCEL;
+        // if (req.url.endsWith(_param)) {
+        // return ShouldOverrideUrlLoadingAction.ALLOW;
+        // }
+        // if (req.url.startsWith('https://tracert.alipay.com/')) {
+        // return ShouldOverrideUrlLoadingAction.CANCEL;
+        // }
+        // MyRoute.webview(req.url);
+        // return ShouldOverrideUrlLoadingAction.CANCEL;
+        return ShouldOverrideUrlLoadingAction.ALLOW;
+      },
+      onCreateWindow: (_, req) async {
+        debugPrint('create window: $req');
+        return false;
       },
       onLoadStart: (_, url) {
         visible.value = false;
@@ -211,49 +223,103 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
       },
     );
 
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        // backgroundColor: AppColors.background,
-        title: GetBuilder<DocDetailController>(
-          tag: tag,
-          builder: (c) => c.stateBuilder(
-            onError: (err) => Text('${err.title}'),
-            onLoading: Text('${title.value}'),
-            onIdle: () {
-              title.value = c.value.title;
-              final elseif = Align(
-                child: Text('${title.value}'),
-                alignment: Alignment.centerLeft,
-              );
-              return Obx(
-                () => _buildUserBar(c.value.user).onlyIf(
-                  showUser.value,
-                  elseif: () => elseif,
-                ),
-              );
-            },
-          ),
-        ),
-        actions: [
-          _buildMoreAction(),
-        ],
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Obx(
-              () => IndexedStack(
-                index: visible.value ? 1 : 0,
-                children: [
-                  ViewLoadingWidget(),
-                  docBody,
-                ],
-              ),
+    return Theme(
+      data: ThemeData(primaryColor: Colors.white),
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          backgroundColor: AppColors.background,
+          title: GetBuilder<DocDetailController>(
+            tag: tag,
+            builder: (c) => c.stateBuilder(
+              onError: (err) => Text('${err.title}'),
+              onLoading: Text('${title.value}'),
+              onIdle: () {
+                title.value = c.value.title;
+                final elseif = Align(
+                  child: Text('${title.value}'),
+                  alignment: Alignment.centerLeft,
+                );
+                return Obx(
+                  () => _buildUserBar(c.value.user).onlyIf(
+                    showUser.value,
+                    elseif: () => elseif,
+                  ),
+                );
+              },
             ),
           ),
-          _buildBottomBar(),
-        ],
+          actions: [
+            // GestureDetector(
+            //   onTap: () {
+            //     showMaterialModalBottomSheet(
+            //       context: context,
+            //       builder: (_) {
+            //         return Container(
+            //           margin: const EdgeInsets.all(8),
+            //           padding: const EdgeInsets.all(8),
+            //           child: GetBuilder<DocDetailController>(
+            //             tag: tag,
+            //             builder: (c) => c.stateBuilder(
+            //               onIdle: () => Column(
+            //                 mainAxisSize: MainAxisSize.min,
+            //                 children: [
+            //                   Text('标签'),
+            //                   GetBuilder<DocTagController>(
+            //                     init: DocTagController(c.value.id),
+            //                     tag: tag,
+            //                     builder: (c) => c.stateBuilder(
+            //                       onError: (err) => SizedBox.shrink(),
+            //                       onLoading: SizedBox.shrink(),
+            //                       onEmpty: Text(''),
+            //                       onIdle: () => Row(
+            //                         children: c.value.mapWidget(
+            //                           (item) => Text('${item.title}'),
+            //                         ),
+            //                       ),
+            //                     ),
+            //                   ),
+            //                   Divider(),
+            //                   Row(
+            //                     children: [
+            //                       Text(
+            //                         '${c.value.wordCount}',
+            //                         style: AppStyles.textStyleA,
+            //                       ),
+            //                       Text('字', style: AppStyles.textStyleC),
+            //                     ],
+            //                   ),
+            //                   // Text('${c.value}'),
+            //                   Divider(),
+            //                 ],
+            //               ),
+            //             ),
+            //           ),
+            //         );
+            //       },
+            //     );
+            //   },
+            //   child: Icon(Icons.info),
+            // ),
+            _buildMoreAction(),
+          ],
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: Obx(
+                () => IndexedStack(
+                  index: visible.value ? 1 : 0,
+                  children: [
+                    ViewLoadingWidget(),
+                    docBody,
+                  ],
+                ),
+              ),
+            ),
+            _buildBottomBar(),
+          ],
+        ),
       ),
     );
   }

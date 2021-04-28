@@ -87,7 +87,10 @@ class NotificationItemWidget extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            "${data.actor != null ? data.actor.name : '系统消息'}",
+            "系统消息".onlyIf(
+              data.notifyType == "system",
+              elseif: () => "${data.actor.name}",
+            ),
             style: AppStyles.textStyleB,
           ),
         ),
@@ -214,6 +217,11 @@ class NotificationItemWidget extends StatelessWidget {
           var item = data.secondSubject.serialize<DocSeri>();
           return item.title;
         }
+    }
+    if (data.notifyType == "system") {
+      return "${data.params['html']}"
+          .replaceAll('<br>', '')
+          .replaceAll('\n', '');
     }
     return '';
   }

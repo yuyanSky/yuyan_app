@@ -15,11 +15,11 @@ class MenuItemWidget extends StatelessWidget {
     return Container(
       child: Row(
         children: [
-          Icon(
-            iconData ?? Icons.error,
-            size: 20,
-            color: Theme.of(context).primaryColor,
-          ),
+          // Icon(
+          // iconData ?? Icons.error,
+          // size: 20,
+          // color: Theme.of(context).primaryColor,
+          // ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(title),
