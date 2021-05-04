@@ -263,7 +263,10 @@ document.querySelectorAll('img[src]')
                   alignment: Alignment.centerLeft,
                 );
                 return Obx(
-                  () => _buildUserBar(c.value.user).onlyIf(
+                  () => _buildUserBar(
+                    c.value.user,
+                    c.value.updatedAt,
+                  ).onlyIf(
                     showUser.value,
                     elseif: () => elseif,
                   ),
@@ -346,7 +349,10 @@ document.querySelectorAll('img[src]')
     );
   }
 
-  Widget _buildUserBar(UserSeri user) {
+  Widget _buildUserBar(
+    UserSeri user,
+    String updatedAt,
+  ) {
     return Container(
       height: 44,
       margin: EdgeInsets.only(right: 3),
@@ -382,7 +388,7 @@ document.querySelectorAll('img[src]')
                     ),
                     SizedBox(height: 2),
                     Text(
-                      "${Util.timeCut(user.updatedAt)}",
+                      "更新于 ${Util.timeCut(updatedAt)}",
                       textAlign: TextAlign.center,
                       style: AppStyles.textStyleCC,
                     )
