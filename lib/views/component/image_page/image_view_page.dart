@@ -1,13 +1,87 @@
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/util/util.dart';
+
+class SingleImageViewer extends StatelessWidget {
+  final String imageUrl;
+
+  SingleImageViewer({
+    Key key,
+    this.imageUrl,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = CachedNetworkImageProvider(imageUrl);
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: PhotoView(
+              backgroundDecoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.8),
+              ),
+              imageProvider: provider,
+              maxScale: 5.0,
+              minScale: 0.1,
+              onTapUp: (_, detail, val) => Get.back(),
+            ),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Row(
+              children: [
+                Spacer(),
+                IconButton(
+                  color: Colors.white,
+                  icon: Icon(Icons.share),
+                  onPressed: () {
+                    var url = imageUrl;
+                    var name = Util.getUrlBaseNameWithSplash(url);
+                    var filepath =
+                        StorageManager.temporaryDirectory.path + name;
+                    debugPrint(filepath);
+                    Dio().download(url, filepath).then((value) {
+                      debugPrint('$value');
+                      ShareExtend.share(filepath, "image");
+                    }).catchError((e) {
+                      debugPrint('error: $e');
+                    });
+                  },
+                ),
+                IconButton(
+                  color: Colors.white,
+                  icon: Icon(Icons.file_download),
+                  onPressed: () async {
+                    // var url = widget.imageUrls[_index.value];
+                    // var name = Util.getUrlBaseNameWithSplash(url);
+                    BotToast.showText(text: '敬请期待');
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class ImageViewerPage extends StatefulWidget {
   final List<String> imageUrls;

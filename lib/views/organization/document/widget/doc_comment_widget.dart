@@ -26,7 +26,8 @@ class DocCommentsWidget extends StatefulWidget {
   _DocCommentsWidgetState createState() => _DocCommentsWidgetState();
 }
 
-class _DocCommentsWidgetState extends State<DocCommentsWidget> {
+class _DocCommentsWidgetState extends State<DocCommentsWidget>
+    with AutomaticKeepAliveClientMixin {
   final _editController = TextEditingController();
 
   void _onReplyTo(DocCommentsController c, CommentDetailSeri data) {
@@ -88,6 +89,8 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: GetBuilder<DocCommentsController>(
@@ -95,15 +98,17 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget> {
         builder: (c) {
           final commentWidget = c.stateBuilder(
             onIdle: () => Scrollbar(
-              child: ListView(
+              child: SingleChildScrollView(
                 physics: ClampingScrollPhysics(),
                 controller: widget.scrollController,
-                children: c.comments.mapWidget(
-                  (data) => CommentDetailItemWidget(
-                    current: data,
-                    comments: c.comments,
-                    onTap: () => _onReplyTo(c, data),
-                    onLongPressed: () => _onDeleteComment(c, data),
+                child: Column(
+                  children: c.comments.mapWidget(
+                    (data) => CommentDetailItemWidget(
+                      current: data,
+                      comments: c.comments,
+                      onTap: () => _onReplyTo(c, data),
+                      onLongPressed: () => _onDeleteComment(c, data),
+                    ),
                   ),
                 ),
               ),
@@ -213,6 +218,9 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class ReplyBottomSheetWidget extends StatelessWidget {

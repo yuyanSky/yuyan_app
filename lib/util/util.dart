@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_simple_treeview/flutter_simple_treeview.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,7 +13,7 @@ import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/controller/app/theme_controller.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
-import 'package:yuyan_app/model/document/toc/toc_seri.dart';
+import 'package:yuyan_app/views/component/image_page/image_view_page.dart';
 
 import 'styles/app_ui.dart';
 
@@ -75,6 +74,17 @@ Widget futureBuilder<T>(
 }
 
 class Util {
+  static showImage(
+    String imageUrl,
+  ) {
+    Get.dialog(
+      SingleImageViewer(
+        imageUrl: imageUrl,
+      ),
+      useSafeArea: false,
+    );
+  }
+
   static showConfirmDialog(
     BuildContext context, {
     String content,
@@ -159,8 +169,6 @@ class Util {
       return Future.value(onError?.call(err));
     }
   }
-
-
 
   static toast(String text) {
     BotToast.showCustomText(

@@ -3,16 +3,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
+import 'package:html/parser.dart' as htmlparser;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:yuyan_app/config/app.dart';
-import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/config/viewstate/view_state_widget.dart';
 import 'package:yuyan_app/controller/organization/doc/doc_controller.dart';
 import 'package:yuyan_app/model/user/user.dart';
+import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/menu_item.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
@@ -83,6 +84,16 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
     await _webViewController.evaluateJavascript(
       source: 'document.body.style.padding="16px";',
     );
+    final js = '''
+document.querySelectorAll('img[src]')
+  .forEach(function (item) {
+		console.log(item);
+		item.onclick = function () {
+			window.flutter_inappwebview.callHandler('showImage', item.outerHTML);
+		};
+});
+    '''; // type: javascript
+    await _webViewController.evaluateJavascript(source: js);
   }
 
   Widget _buildMoreAction() {
@@ -170,12 +181,20 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
       initialUrl: embedUrl,
       initialOptions: InAppWebViewGroupOptions(
         crossPlatform: InAppWebViewOptions(
-            // useShouldOverrideUrlLoading: true,
-
-            ),
+          useShouldOverrideUrlLoading: true,
+        ),
       ),
       onWebViewCreated: (c) {
         _webViewController = c;
+        c.addJavaScriptHandler(
+          handlerName: 'showImage',
+          callback: (args) {
+            final frag = htmlparser.parseFragment(args.first);
+            final attr = frag.nodes.first.attributes;
+            final img = attr['data-raw-src'];
+            Util.showImage(img);
+          },
+        );
       },
       onTitleChanged: (_, title) {
         this.title.value = title;
@@ -193,17 +212,20 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
         _y = y;
       },
       onProgressChanged: (_, progress) {},
+      onDownloadStart: (_, url) {
+        debugPrint('download => $url');
+      },
       shouldOverrideUrlLoading: (_, req) async {
         debugPrint('override request => $req');
-        // if (req.url.endsWith(_param)) {
+        if (req.url.endsWith(_param)) {
+          return ShouldOverrideUrlLoadingAction.ALLOW;
+        }
+        if (req.url.startsWith('https://tracert.alipay.com/')) {
+          return ShouldOverrideUrlLoadingAction.CANCEL;
+        }
+        MyRoute.webview(req.url);
+        return ShouldOverrideUrlLoadingAction.CANCEL;
         // return ShouldOverrideUrlLoadingAction.ALLOW;
-        // }
-        // if (req.url.startsWith('https://tracert.alipay.com/')) {
-        // return ShouldOverrideUrlLoadingAction.CANCEL;
-        // }
-        // MyRoute.webview(req.url);
-        // return ShouldOverrideUrlLoadingAction.CANCEL;
-        return ShouldOverrideUrlLoadingAction.ALLOW;
       },
       onCreateWindow: (_, req) async {
         debugPrint('create window: $req');
