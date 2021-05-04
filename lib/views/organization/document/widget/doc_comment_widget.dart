@@ -125,13 +125,14 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget>
                     bottom: 4,
                   ),
                   child: Text(
-                    "评论",
+                    "评论 ${c.comments.length}",
                     style: AppStyles.textStyleBp,
                   ),
                 ),
                 Expanded(
                   child: commentWidget.onlyIf(
                     !GetUtils.isNullOrBlank(c.comments),
+                    animation: false,
                     elseif: () => Text(
                       '还没有人评论呢！\n'
                       '来做第一个评论的吧',
