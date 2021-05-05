@@ -7,6 +7,7 @@ import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc_lite.dart';
 import 'package:yuyan_app/model/user/user_lite_seri.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
+import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 import 'package:yuyan_app/views/component/nothing_page.dart';
 
@@ -136,7 +137,7 @@ class MyMarkItemWidget extends StatelessWidget {
           Text(
             '$description',
             style: AppStyles.textStyleC,
-          )
+          ).onlyIf(description != null),
         ],
       ),
     );
