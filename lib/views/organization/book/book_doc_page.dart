@@ -59,7 +59,11 @@ class BookDocPage extends StatelessWidget {
         builder: (c) => c.stateBuilder(
           onIdle: () => Scrollbar(
             child: SmartRefresher(
-              enablePullUp: true,
+              enablePullUp: true.onlyIf(
+                // when Book tree, not load more
+                book.layout != 'Book',
+                elseif: () => false,
+              ),
               controller: c.refreshController,
               onRefresh: c.refreshCallback,
               onLoading: c.loadMoreCallback,
