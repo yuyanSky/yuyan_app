@@ -1,16 +1,10 @@
-import 'dart:convert';
-
-import 'package:delta_markdown/delta_markdown.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/widgets/controller.dart';
 import 'package:flutter_quill/widgets/editor.dart';
-import 'package:flutter_quill/widgets/toolbar.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
-import 'package:yuyan_app/config/service/api_repository.dart';
-import 'package:yuyan_app/util/util.dart';
+import 'package:yuyan_app/views/widget/editor/quill_toolbar_widget.dart';
 
 class CommentModalSheet extends StatefulWidget {
   final Future<bool> Function(String mark) onPublish;
@@ -29,62 +23,13 @@ class CommentModalSheet extends StatefulWidget {
 class _CommentModalSheetState extends State<CommentModalSheet> {
   final _controller = QuillController.basic();
   final _scrollController = ScrollController();
+  final focusNode = FocusNode();
   final expanded = false.obs;
   final publishing = false.obs;
-
-  Future<String> _imageUpload(File file) async {
-    var res = await ApiRepository.postAttachFile(
-      path: file.path,
-    );
-    return res.url;
-  }
 
   @override
   Widget build(BuildContext context) {
     var editHeight = Get.height - Get.mediaQuery.viewInsets.bottom - 100;
-    final toolBar = Row(
-      children: [
-        Expanded(
-          child: QuillToolbar.basic(
-            controller: _controller,
-            onImagePickCallback: _imageUpload,
-            showBackgroundColorButton: false,
-            showHeaderStyle: false,
-            showHorizontalRule: false,
-            showColorButton: false,
-            showClearFormat: false,
-            showIndent: false,
-            showHistory: false,
-            showListNumbers: false,
-            showStrikeThrough: false,
-          ),
-        ),
-        Obx(
-          () => TextButton(
-            child: Text('发布'),
-            onPressed: () async {
-              try {
-                publishing.value = true;
-                var delta = _controller.document.toDelta();
-                var deltaStr = jsonEncode(delta.toJson());
-                var markdown = deltaToMarkdown(deltaStr);
-                var result = await widget.onPublish.call(markdown);
-                publishing.value = false;
-                if (result) Get.back();
-              } catch (e) {
-                debugPrint('convert to markdown: $e');
-              }
-            },
-          ).onlyIf(
-            !publishing.value,
-            elseif: () => const CupertinoActivityIndicator().paddingSymmetric(
-              vertical: 14,
-              horizontal: 22,
-            ),
-          ),
-        ).onlyIf(widget.onPublish != null),
-      ],
-    );
 
     final editor = Obx(
       () => Container(
@@ -101,10 +46,11 @@ class _CommentModalSheetState extends State<CommentModalSheet> {
           controller: _controller,
           padding: const EdgeInsets.only(top: 4),
           scrollController: _scrollController,
-          focusNode: FocusNode(),
+          enableInteractiveSelection: true,
+          focusNode: focusNode,
           showCursor: true,
           scrollable: true,
-          autoFocus: true,
+          autoFocus: false,
           readOnly: false,
           expands: false,
         ),
@@ -133,12 +79,18 @@ class _CommentModalSheetState extends State<CommentModalSheet> {
             ),
           ],
         ),
-        toolBar,
+        CommentToolbarWidget(
+          controller: _controller,
+          onPublish: widget.onPublish,
+          focusNode: focusNode,
+          update: () => expanded.update((_) {}),
+        ),
       ],
     );
 
     return SafeArea(
-      maintainBottomViewPadding: true,
+      bottom: false,
+      maintainBottomViewPadding: false,
       minimum: Get.mediaQuery.viewInsets,
       child: Container(
         decoration: BoxDecoration(
