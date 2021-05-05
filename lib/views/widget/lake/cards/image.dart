@@ -10,11 +10,15 @@ import '../lake_render.dart';
 class LakeImageWidget extends StatelessWidget {
   final Map json;
   final List<String> others;
+  final Size size;
+  final EdgeInsets margin;
 
   const LakeImageWidget({
     Key key,
     this.json,
     this.others,
+    this.size,
+    this.margin = const EdgeInsets.all(4),
   }) : super(key: key);
 
   @override
@@ -34,6 +38,10 @@ class LakeImageWidget extends StatelessWidget {
       var ratio = width / height;
       width = width.clamp(0, Get.width);
       height = width / ratio;
+    }
+    if (width == null && height == null && size != null) {
+      width = size.width;
+      height = size.height;
     }
     Widget child;
     if (isSvg) {
@@ -63,7 +71,7 @@ class LakeImageWidget extends StatelessWidget {
         }
       },
       child: Container(
-        margin: const EdgeInsets.all(4),
+        margin: margin,
         child: child,
       ),
     );

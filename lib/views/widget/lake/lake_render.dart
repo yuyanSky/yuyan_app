@@ -2,16 +2,22 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:csslib/parser.dart' as cssparser;
+import 'package:csslib/visitor.dart' as css;
 import 'package:flutter/material.dart';
 import 'package:flutter_highlight/theme_map.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/html_parser.dart';
+
+// ignore: implementation_imports
+import 'package:flutter_html/src/css_parser.dart' as cssutil;
+
+// ignore: implementation_imports
+import 'package:flutter_html/src/layout_element.dart';
 import 'package:flutter_html/style.dart';
-import 'package:csslib/parser.dart' as cssparser;
-import 'package:csslib/visitor.dart' as css;
+import 'package:get/get.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as htmlparser;
-import 'package:get/get.dart';
 import 'package:romanice/romanice.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:yuyan_app/config/route_manager.dart';
@@ -19,32 +25,24 @@ import 'package:yuyan_app/model/document/card/card_link_detail.dart';
 import 'package:yuyan_app/model/document/card/card_video_seri.dart';
 import 'package:yuyan_app/model/document/lake/lake_card_seri.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
-// import 'package:flutter_inappwebview/flutter_inappwebview.dart' as inapp;
-// import 'package:webview_flutter/webview_flutter.dart' as view;
-
-// ignore: implementation_imports
-import 'package:flutter_html/src/layout_element.dart';
-
-// ignore: implementation_imports
-import 'package:flutter_html/src/css_parser.dart' as cssutil;
 import 'package:yuyan_app/views/component/webview/webview_page.dart';
 
-import 'cards/interaction/code_block.dart';
-import 'cards/embed/video.dart';
-import 'widget/label_widget.dart';
 import 'cards/bookmark.dart';
-import 'widget/calendar_widget.dart';
-import 'widget/card_wrap_widget.dart';
+import 'cards/embed/localdoc.dart';
+import 'cards/embed/video.dart';
+import 'cards/file.dart';
 import 'cards/image.dart';
 import 'cards/inline_link.dart';
-import 'cards/embed/localdoc.dart';
+import 'cards/interaction/code_block.dart';
 import 'cards/interaction/locktext.dart';
+import 'cards/interaction/vote.dart';
 import 'cards/mention.dart';
+import 'cards/yuque.dart';
+import 'widget/calendar_widget.dart';
+import 'widget/card_wrap_widget.dart';
+import 'widget/label_widget.dart';
 import 'widget/svg_widget.dart';
 import 'widget/task_item.dart';
-import 'cards/yuque.dart';
-import 'cards/file.dart';
-import 'cards/interaction/vote.dart';
 
 extension ListEx<T extends num> on List<T> {
   T sum() {
@@ -233,8 +231,8 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
       padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
     ),
     'blockquote': Style(
-      color: Colors.grey,
-    ),
+        // color: Colors.grey,
+        ),
     'tbody': Style(
       border: Border.all(
         color: Colors.grey,
@@ -292,9 +290,15 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
           return LakeImageWidget(
             json: {'src': json},
             others: [json],
+            size: Size(16, 16),
+            margin: const EdgeInsets.symmetric(horizontal: 2),
           );
         }
-        return LakeImageWidget(json: json, others: imgUrl);
+        return LakeImageWidget(
+          json: json,
+          others: imgUrl,
+          size: Size(64, 64),
+        );
       case 'youku':
         return EmbedWebviewPage(url: json['url']);
       case 'vote':
@@ -589,9 +593,31 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         );
       },
       'blockquote': (_, child) {
-        return Padding(
-          padding: EdgeInsets.only(left: 8.0),
-          child: Container(
+        Widget body;
+        final classes = _.tree.elementClasses;
+        final alertCard = classes.contains('lake-alert');
+        final alertStyle = {
+          'lake-alert-info': Colors.blue,
+          'lake-alert-warning': Colors.yellow,
+          'lake-alert-success': Colors.green,
+          'lake-alert-danger': Colors.red,
+          'lake-alert-tips': Colors.yellowAccent,
+        };
+        final key = classes.last;
+        if (alertCard) {
+          body = Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(
+                color: alertStyle[key],
+                width: 1,
+              ),
+              color: alertStyle[key].withOpacity(0.2),
+            ),
+            child: child,
+          );
+        } else {
+          body = Container(
             decoration: BoxDecoration(
               border: Border(
                 left: BorderSide(
@@ -601,8 +627,17 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
               ),
             ),
             padding: EdgeInsets.only(left: 4),
-            child: child,
-          ),
+            child: DefaultTextStyle(
+              style: TextStyle(
+                color: Colors.grey,
+              ),
+              child: child,
+            ),
+          );
+        }
+        return Padding(
+          padding: EdgeInsets.only(left: 8.0),
+          child: body,
         );
       },
       'table': (_, child) {
