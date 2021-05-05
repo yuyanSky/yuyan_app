@@ -140,19 +140,19 @@ class _ToDocWidget extends StatelessWidget {
       time = sub2.updatedAt;
     }
 
+    // fix when Doc subject not available
+    if (sub == null) {
+      return SizedBox.shrink();
+    }
+
     return GestureDetector(
       onTap: () {
-        debugPrint('test $item');
-        if (sub != null) {
-          MyRoute.docDetailWebview(
-            bookId: sub.bookId,
-            slug: sub.slug,
-            login: sub2.user.login,
-            book: sub2.slug,
-          );
-        } else {
-          MyRoute.bookDocs(sub2.toBookSeri());
-        }
+        MyRoute.docDetailWebview(
+          bookId: sub.bookId,
+          slug: sub.slug,
+          login: sub2.user.login,
+          book: sub2.slug,
+        );
       },
       child: Container(
         padding: EdgeInsets.only(top: 14, bottom: 20),
