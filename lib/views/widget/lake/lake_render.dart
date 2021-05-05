@@ -595,7 +595,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
       'blockquote': (_, child) {
         Widget body;
         final classes = _.tree.elementClasses;
-        final alertCard = classes.contains('lake-alert');
+        final alertCard = classes?.contains('lake-alert') ?? false;
         final alertStyle = {
           'lake-alert-info': Colors.blue,
           'lake-alert-warning': Colors.yellow,
@@ -603,8 +603,8 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
           'lake-alert-danger': Colors.red,
           'lake-alert-tips': Colors.yellowAccent,
         };
-        final key = classes.last;
         if (alertCard) {
+          final key = classes.last;
           body = Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
