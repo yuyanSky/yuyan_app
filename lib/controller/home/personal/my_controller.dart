@@ -4,7 +4,6 @@ import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
-import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/model/document/action.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/user/group/group.dart';
@@ -37,7 +36,6 @@ class MyUserController extends FetchSavableController<MyUserProvider> {
       : super(
           initialRefresh: true,
           initData: App.userProvider,
-          state: ViewState.loading,
         );
 
   @override
@@ -61,7 +59,6 @@ class MyGroupController extends FetchSavableController<MyGroupProvider> {
       : super(
           initialRefresh: true,
           initData: MyGroupProvider(),
-          state: ViewState.loading,
         );
 
   @override
@@ -91,7 +88,6 @@ class MyFollowingController
       : super(
           initData: MyFollowingProvider(),
           initialRefresh: true,
-          state: ViewState.loading,
         );
 
   int get userId => App.userProvider.data.id;
@@ -125,7 +121,6 @@ class MyFollowerController extends FetchSavableController<MyFollowerProvider> {
       : super(
           initData: MyFollowerProvider(),
           initialRefresh: true,
-          state: ViewState.loading,
         );
 
   int get userId => App.userProvider.data.id;
@@ -159,7 +154,6 @@ class MyBookController extends FetchSavableController<MyBookProvider> {
       : super(
           initData: MyBookProvider(),
           initialRefresh: true,
-          state: ViewState.loading,
         );
 
   @override
@@ -183,7 +177,6 @@ class MyMarkController extends FetchSavableController<MyMarkProvider> {
       : super(
           initData: MyMarkProvider(),
           initialRefresh: true,
-          state: ViewState.loading,
         );
 
   @override
@@ -208,7 +201,6 @@ class MyFollowBookController
       : super(
           initData: MyFollowBookProvider(),
           initialRefresh: true,
-          state: ViewState.loading,
         );
 
   @override
@@ -239,7 +231,6 @@ class MyTopicController extends FetchSavableController<MyTopicProvider> {
   }) : super(
           initData: MyTopicProvider('my_user_topic_$topicState'),
           initialRefresh: true,
-          state: ViewState.loading,
         );
 
   @override
@@ -273,7 +264,6 @@ class MyNoteController extends FetchSavableController<MyNoteProvider> {
       : super(
           initialRefresh: true,
           initData: MyNoteProvider(),
-          state: ViewState.loading,
         );
 
   @override
