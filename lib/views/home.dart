@@ -122,6 +122,7 @@ class _HomeState extends State<Home> {
     return AnimatedBuilder(
       animation: controller.animation,
       builder: (context, child) {
+        final bottom = Get.mediaQuery.viewPadding.bottom;
         return Opacity(
           opacity: controller.height / 56,
           child: CurvedNavigationBar(
@@ -129,7 +130,7 @@ class _HomeState extends State<Home> {
             color: Color.fromRGBO(0, 0, 0, 0.06),
             backgroundColor: Colors.white,
             animationCurve: Curves.easeInQuad,
-            height: controller.height,
+            height: controller.height + bottom / 3,
             items: items,
             onTap: (index) {
               debugPrint('tabIndex: $index');
