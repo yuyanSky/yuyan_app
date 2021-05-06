@@ -154,6 +154,11 @@ class ApiRepository {
     return (asp.data as ApiResponse).data['ok'] == 1;
   }
 
+  static Future<bool> delNotification({String ids = 'all'}) async {
+    var asp = await api.delete('/notifications', data: {'ids': ids});
+    return (asp.data as ApiResponse).data['ok'] == 1;
+  }
+
   static Future<NotificationSeri> getNotificationList(
       {String type = 'readed', int offset = 0, int limit = 100}) async {
     var resp = await api.get(

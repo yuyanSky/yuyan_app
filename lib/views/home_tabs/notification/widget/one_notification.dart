@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
+import 'package:yuyan_app/config/service/api_repository.dart';
+import 'package:yuyan_app/controller/home/notification/notification_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/user/org/organization_lite.dart';
@@ -124,6 +127,34 @@ class NotificationItemWidget extends StatelessWidget {
       ],
     );
 
+    Widget child = Container(
+      height: 70,
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.only(left: 16),
+      color: AppColors.background,
+      child: Row(
+        children: [
+          userAvatar,
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 26,
+                  child: titleWidget,
+                ),
+                Container(
+                  height: 24,
+                  child: contentWidget,
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+
     return GestureDetector(
       onTap: () {
         beforeTab?.call();
@@ -165,32 +196,23 @@ class NotificationItemWidget extends StatelessWidget {
         //   );
         // }
       },
-      child: Container(
-        height: 70,
-        width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.only(left: 16),
-        color: AppColors.background,
-        child: Row(
-          children: [
-            userAvatar,
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 26,
-                    child: titleWidget,
-                  ),
-                  Container(
-                    height: 24,
-                    child: contentWidget,
-                  )
-                ],
-              ),
+      child: Dismissible(
+        key: Key('${data.id}'),
+        background: Container(color: Colors.red),
+        onDismissed: (_) {
+          final c = Get.find<NotificationAllController>();
+          c.value.remove(data);
+          futureResolver(
+            ApiRepository.delNotification(ids: '${data.id}'),
+            onData: (_) => ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('已移除, 不可撤销')),
             ),
-          ],
-        ),
+            onError: (err) => ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('失败:$err')),
+            ),
+          );
+        },
+        child: child,
       ),
     );
   }

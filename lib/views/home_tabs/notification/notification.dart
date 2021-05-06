@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:yuyan_app/config/viewstate/view_state_widget.dart';
 import 'package:yuyan_app/controller/home/notification/notification_controller.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
@@ -34,6 +35,12 @@ class _NotificationTabState extends State<NotificationTab> {
       ),
       body: GetBuilder<NotificationAllController>(
         builder: (c) => c.stateBuilder(
+          onEmpty: ViewEmptyWidget(
+            tip: '暂无消息',
+            child: ViewButtonWidget(
+              onPressed: c.onRefreshCallback,
+            ),
+          ),
           onIdle: () => Column(
             children: [
               _buildCounts(c),
@@ -113,9 +120,10 @@ class _NotificationTabState extends State<NotificationTab> {
               ),
             ),
             Spacer(),
-            IconButton(
-              icon: Icon(Icons.done_all),
-              onPressed: c.readAll,
+            GestureDetector(
+              onLongPress: c.delAll,
+              onTap: c.readAll,
+              child: Icon(Icons.done_all).paddingOnly(right: 8),
             ),
           ],
         ),
