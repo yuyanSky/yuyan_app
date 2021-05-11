@@ -49,8 +49,9 @@ class _NotificationTabState extends State<NotificationTab> {
                   child: SmartRefresher(
                     controller: c.refreshController,
                     onRefresh: c.onRefreshCallback,
-                    child: ListView.builder(
+                    child: ListView.separated(
                       itemCount: c.value.length,
+                      separatorBuilder: (_, i) => Divider(height: 4),
                       itemBuilder: (_, i) {
                         var item = c.value[i];
                         return NotificationItemWidget(

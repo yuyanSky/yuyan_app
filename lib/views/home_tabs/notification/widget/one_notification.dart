@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:html/parser.dart' as htmlparser;
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/controller/home/notification/notification_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc.dart';
+import 'package:yuyan_app/model/notification/notification_item.dart';
+import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/model/user/org/organization_lite.dart';
 import 'package:yuyan_app/model/user/user.dart';
-import 'package:yuyan_app/model/notification/notification_item.dart';
+import 'package:yuyan_app/model/user/user_lite_seri.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
-import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/util/util.dart';
+import 'package:yuyan_app/views/widget/lake/lake_render.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class NotificationItemWidget extends StatelessWidget {
@@ -34,6 +37,7 @@ class NotificationItemWidget extends StatelessWidget {
     "like_artboard": "赞赏了画板稻谷",
     "upload_artboards": "更新了画板",
     "apply_join_group": "申请加入团队",
+    "apply_organization_user": "申请加入空间",
     "new_group_member": "邀请新成员加入团队",
     "join_organization_user": "加入了组织成员",
     "join_group_user": "加入了团队成员",
@@ -45,7 +49,8 @@ class NotificationItemWidget extends StatelessWidget {
     "user_member_will_expire": "会员即将到期",
     "system": "系统通知",
     "apply_collaborator": "申请文档协作",
-    "remove_from_a_group": "移出了团队"
+    "remove_from_a_group": "移出了团队",
+    "use_gift_promo": "兑换权益"
   };
 
   final NotificationItemSeri data;
@@ -75,7 +80,7 @@ class NotificationItemWidget extends StatelessWidget {
         }
       },
       child: Container(
-        margin: EdgeInsets.only(right: 20),
+        margin: EdgeInsets.only(right: 18),
         child: Hero(
           tag: tag,
           child: UserAvatarWidget(
@@ -91,7 +96,7 @@ class NotificationItemWidget extends StatelessWidget {
         Expanded(
           child: Text(
             "系统消息".onlyIf(
-              data.notifyType == "system",
+              data.actor == null,
               elseif: () => "${data.actor.name}",
             ),
             style: AppStyles.textStyleB,
@@ -115,6 +120,7 @@ class NotificationItemWidget extends StatelessWidget {
             "${notifySub.onlyIf(notifySub == '', elseif: () => ' [$notifySub]')}",
             style: AppStyles.textStyleC,
             overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
         ),
         Container(
@@ -128,11 +134,12 @@ class NotificationItemWidget extends StatelessWidget {
     );
 
     Widget child = Container(
-      height: 70,
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.only(left: 16),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       color: AppColors.background,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           userAvatar,
           Expanded(
@@ -141,11 +148,12 @@ class NotificationItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 26,
                   child: titleWidget,
                 ),
                 Container(
-                  height: 24,
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 2,
+                  ),
                   child: contentWidget,
                 )
               ],
@@ -158,10 +166,37 @@ class NotificationItemWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         beforeTab?.call();
+        if (data.params != null) {
+          switch (data.notifyType) {
+            case 'system':
+              return Get.dialog(
+                AlertDialog(
+                  content: LakeRenderWidget(
+                    data: data.params['html'],
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Get.back();
+                        Util.goUrl('/go/notification/${data.id}');
+                      },
+                      child: Text('详情'),
+                    ),
+                    TextButton(
+                      onPressed: () => Get.back(),
+                      child: Text('确认'),
+                    ),
+                  ],
+                ),
+              );
+            case 'use_gift_promo':
+              return Util.goUrl('/settings/member');
+          }
+        }
         switch (data.subjectType) {
           case 'User':
             return MyRoute.user(
-              user: data.actor.toUserLiteSeri(),
+              user: data.subject.serialize<UserLiteSeri>('user_lite'),
               heroTag: tag,
             );
           case 'Doc':
@@ -183,18 +218,6 @@ class NotificationItemWidget extends StatelessWidget {
             }
         }
         return Util.goUrl('/go/notification/${data.id}');
-        // if (((data.subjectType == "Comment") &&
-        //     (data.secondSubjectType == "Doc"))) {
-        //   // 如果是评论的话 Comment 看 second_subject_type 定位
-        //   // print(data.subjectType);
-        //   OpenPage.docWeb(
-        //     context,
-        //     login: data.thirdSubject.user.login,
-        //     bookSlug: data.thirdSubject.slug,
-        //     bookId: data.thirdSubjectId,
-        //     docId: data.secondSubjectId,
-        //   );
-        // }
       },
       child: Dismissible(
         key: Key('${data.id}'),
@@ -202,14 +225,19 @@ class NotificationItemWidget extends StatelessWidget {
         onDismissed: (_) {
           final c = Get.find<NotificationAllController>();
           c.value.remove(data);
+          c.update();
           futureResolver(
             ApiRepository.delNotification(ids: '${data.id}'),
             onData: (_) => ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('已移除, 不可撤销')),
             ),
-            onError: (err) => ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('失败:$err')),
-            ),
+            onError: (err) {
+              // fetch previous data
+              c.onRefreshCallback();
+              return ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('失败: $err')),
+              );
+            },
           );
         },
         child: child,
@@ -218,6 +246,16 @@ class NotificationItemWidget extends StatelessWidget {
   }
 
   String getNotificationSub() {
+    if (data.params != null) {
+      switch (data.notifyType) {
+        case 'system':
+          final content = htmlparser.parseFragment(data.params['html']);
+          return content.text.replaceAll('\n', '');
+        case 'use_gift_promo':
+          final expired = DateTime.tryParse(data.params['expiredTime']);
+          return '语雀会员延长至 ${expired.year}-${expired.month}-${expired.day}';
+      }
+    }
     switch (data.subjectType) {
       case 'User':
         return data.subject.serialize<UserSeri>().name;
@@ -239,11 +277,6 @@ class NotificationItemWidget extends StatelessWidget {
           var item = data.secondSubject.serialize<DocSeri>();
           return item.title;
         }
-    }
-    if (data.notifyType == "system") {
-      return "${data.params['html']}"
-          .replaceAll('<br>', '')
-          .replaceAll('\n', '');
     }
     return '';
   }
