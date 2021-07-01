@@ -1,6 +1,7 @@
+import 'package:yuyan_app/model/topic/labels.dart';
+import 'package:yuyan_app/model/topic/milestone_seri.dart';
 import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/model/user/user.dart';
-import 'package:yuyan_app/model/topic/labels.dart';
 
 import 'collab.dart';
 
@@ -9,10 +10,10 @@ class TopicDetailSeri {
   int iid;
   String title;
   int userId;
-  dynamic assigneeId;
+  int assigneeId;
   int groupId;
-  dynamic milestoneId;
-  dynamic milestone;
+  int milestoneId;
+  MilestoneSeri milestone;
   String format;
   dynamic body;
   String bodyAsl;
@@ -21,13 +22,14 @@ class TopicDetailSeri {
   int labelsCount;
   int public;
   CollabSeri collab;
-  dynamic pinnedAt;
-  dynamic deletedAt;
+  String pinnedAt;
+  String deletedAt;
   String closedAt;
   String createdAt;
   String updatedAt;
+  String blockedAt;
   UserSeri user;
-  dynamic assignee;
+  UserSeri assignee;
   GroupSeri group;
   List<LabelSeri> labels;
   String serializer;
@@ -69,7 +71,9 @@ class TopicDetailSeri {
     assigneeId = json["assignee_id"];
     groupId = json["group_id"];
     milestoneId = json["milestone_id"];
-    milestone = json["milestone"];
+    if (json["milestone"] != null) {
+      milestone = MilestoneSeri.fromJson(json["milestone"]);
+    }
     format = json["format"];
     body = json["body"];
     bodyAsl = json["body_asl"];
@@ -84,8 +88,11 @@ class TopicDetailSeri {
     closedAt = json["closed_at"];
     createdAt = json["created_at"];
     updatedAt = json["updated_at"];
+    blockedAt = json["blocked_at"];
     user = json["user"] != null ? UserSeri.fromJson(json["user"]) : null;
-    assignee = json["assignee"];
+    if (json["assignee"] != null) {
+      assignee = UserSeri.fromJson(json["assignee"]);
+    }
     if (json['group'] != null) {
       group = GroupSeri.fromJson(json["group"]);
     }

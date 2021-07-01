@@ -647,6 +647,14 @@ class ApiRepository {
     return res.data as ApiResponse;
   }
 
+  static Future<bool> putTopicAction({int id, String type}) async {
+    var res = await api.put('/topics/$id/action', data: {
+      // close, reopen, pin, unpin, block, unblock
+      "type": type,
+    });
+    return res.statusCode == 200;
+  }
+
   static Future<List<CommentDetailSeri>> getCommentsList({
     int commentId,
     //comment_type => 要求是 Doc, Topic, ArtboardComment, Resource, DocVersion, Note 其中的一个

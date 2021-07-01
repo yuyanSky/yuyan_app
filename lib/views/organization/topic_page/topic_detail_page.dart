@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:smart_color/smart_color.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/controller/organization/topic/topic_controller.dart';
 import 'package:yuyan_app/model/document/commen/comment_detail.dart';
+import 'package:yuyan_app/model/meta/ability.dart';
+import 'package:yuyan_app/model/topic/labels.dart';
 import 'package:yuyan_app/model/topic/topic_detail_seri.dart';
 import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
@@ -149,12 +154,63 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
                 //TODO(@dreamer2q): 添加话题控制panel
                 PopupMenuButton<VoidCallback>(
                   itemBuilder: (_) => [
+                    if (c.abilities.update)
+                      PopupMenuItem(
+                        value: () {
+                          Util.toast('敬请期待');
+                        },
+                        child: MenuItemWidget(
+                          title: '编辑',
+                        ),
+                      ),
+                    if (c.abilities.destroy)
+                      PopupMenuItem(
+                        value: () => Util.safeHandler(
+                          ApiRepository.putTopicAction(
+                            id: c.value.id,
+                            type: c.value.closedAt == null ? 'close' : 'reopen',
+                          ),
+                          onData: (_) => [c.onRefresh(), Util.toast('成功')],
+                        ),
+                        child: MenuItemWidget(
+                          title: c.value.closedAt == null ? '关闭' : '重新开启',
+                        ),
+                      ),
+                    if (c.abilities.block)
+                      PopupMenuItem(
+                        value: () => Util.safeHandler(
+                          ApiRepository.putTopicAction(
+                            id: c.value.id,
+                            type:
+                                c.value.blockedAt == null ? 'block' : 'unblock',
+                          ),
+                          onData: (_) => [c.onRefresh(), Util.toast('成功')],
+                        ),
+                        child: MenuItemWidget(
+                          title: '屏蔽'.onlyIf(
+                            c.value.blockedAt == null,
+                            elseif: () => '取消屏蔽',
+                          ),
+                        ),
+                      ),
+                    if (c.abilities.pin)
+                      PopupMenuItem(
+                        value: () => Util.safeHandler(
+                          ApiRepository.putTopicAction(
+                            id: c.value.id,
+                            type: c.value.pinnedAt == null ? 'pin' : 'unpin',
+                          ),
+                          onData: (_) => [c.onRefresh(), Util.toast('成功')],
+                        ),
+                        child: MenuItemWidget(
+                          title: c.value.pinnedAt == null ? '置顶' : '取消置顶',
+                        ),
+                      ),
+
+                    /// comment operations
                     PopupMenuItem(
-                      value: () {
-                        var c = Get.find<TopicDetailController>(
-                            tag: '${widget.groupId}');
-                        Util.goUrl('/${widget.groupId}/topics/${c.value.iid}');
-                      },
+                      value: () =>
+                          Util.goUrl('/${c.groupId}/topics/${c.value.iid}'),
                       child: MenuItemWidget(
                         iconData: Icons.open_in_browser,
                         title: '打开网页版',
@@ -201,7 +257,10 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          TopicDescWidget(data: c.value),
+                          TopicDescWidget(
+                            data: c.value,
+                            abilities: c.abilities,
+                          ),
                           _buildCommentList(c.value.id),
                         ],
                       ),
@@ -440,15 +499,48 @@ class _CommentDetailItemWidgetState extends State<CommentDetailItemWidget> {
 
 class TopicDescWidget extends StatelessWidget {
   final TopicDetailSeri data;
+  final MetaAbilitySeri abilities;
 
   const TopicDescWidget({
     Key key,
     this.data,
+    this.abilities,
   }) : super(key: key);
+
+  Widget _labels(List<LabelSeri> labels) {
+    return RichText(
+      overflow: TextOverflow.ellipsis,
+      maxLines: 2,
+      text: TextSpan(
+        children: labels.map((e) {
+          return WidgetSpan(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
+              padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+              decoration: BoxDecoration(
+                color: SmartColor.parse(e.color),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                '${e.name}',
+                style: AppStyles.textStyleCC.copyWith(color: Colors.white),
+              ),
+            ),
+          );
+          return TextSpan(
+            text: ' ${e.name} ',
+            style: TextStyle(
+              backgroundColor: SmartColor.parse(e.color),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    var closedBadge = WidgetSpan(
+    final closedBadge = WidgetSpan(
       child: Container(
         margin: const EdgeInsets.only(left: 12, top: 4, bottom: 4),
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
@@ -467,7 +559,25 @@ class TopicDescWidget extends StatelessWidget {
         ),
       ),
     );
-    var lock = Row(
+    final blockedBadge = WidgetSpan(
+      child: Container(
+        margin: const EdgeInsets.only(left: 12, top: 4, bottom: 4),
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.red,
+          ),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Text(
+          '已屏蔽',
+          style: TextStyle(
+            color: Colors.redAccent,
+          ),
+        ),
+      ),
+    );
+    final lock = Row(
       children: [
         Icon(Icons.lock, size: 11),
         Text('私密', style: AppStyles.textStyleCC),
@@ -475,8 +585,8 @@ class TopicDescWidget extends StatelessWidget {
       ],
     );
 
-    return Container(
-      padding: EdgeInsets.fromLTRB(16, 24, 16, 40),
+    Widget child = Container(
+      padding: EdgeInsets.fromLTRB(16, 24, 16, 20),
       color: AppColors.background,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -494,6 +604,7 @@ class TopicDescWidget extends StatelessWidget {
                     style: AppStyles.textStyleCB,
                   ),
                   if (data.closedAt != null) closedBadge,
+                  if (data.blockedAt != null && abilities.block) blockedBadge,
                 ],
               ),
               style: AppStyles.textStyleA,
@@ -512,7 +623,7 @@ class TopicDescWidget extends StatelessWidget {
               Spacer(),
               if (data.public == 0) lock,
               Text(
-                Util.timeCut(data.updatedAt),
+                Util.timeCut(data.createdAt),
                 style: AppStyles.textStyleC,
               ),
             ],
@@ -521,8 +632,51 @@ class TopicDescWidget extends StatelessWidget {
           LakeRenderWidget(
             data: data.bodyAsl,
           ),
+          DefaultTextStyle(
+            style: AppStyles.textStyleC,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (data.assignee != null)
+                  Row(
+                    children: [
+                      Text('指派给：'),
+                      Text(data.user.name),
+                    ],
+                  ).paddingOnly(top: 32),
+                if (data.milestone != null)
+                  Row(
+                    children: [
+                      Text('看板：'),
+                      Text('${data.milestone.title}'),
+                    ],
+                  ),
+                if (data.labels != null)
+                  _labels(data.labels).paddingOnly(top: 12),
+              ],
+            ),
+          ),
         ],
       ),
+    );
+
+    return Stack(
+      children: [
+        child,
+        if (data.pinnedAt != null)
+          Positioned(
+            left: 8,
+            top: 4,
+            child: ClipPath(
+              clipper: TriangleClipper(),
+              child: Container(
+                color: Colors.green,
+                width: 15,
+                height: 15,
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

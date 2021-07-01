@@ -170,6 +170,24 @@ class Util {
     }
   }
 
+  static Future safeHandler<T>(
+    Future<T> future, {
+    Function(T data) onData,
+    Function(ViewError err) onError,
+  }) async {
+    try {
+      var data = await future;
+      var value = onData?.call(data);
+      return Future.value(value);
+    } catch (err) {
+      final e = ViewStateUtil.handlerError(err);
+      if (onError == null) {
+        return errToast(e);
+      }
+      return Future.value(onError?.call(e));
+    }
+  }
+
   static toast(String text) {
     BotToast.showCustomText(
       onlyOne: true,
@@ -190,6 +208,36 @@ class Util {
           ),
           child: Text(
             "$text",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  static errToast(ViewError err) {
+    BotToast.showCustomText(
+      onlyOne: true,
+      align: Alignment.center,
+      duration: Duration(seconds: 2),
+      toastBuilder: (cancel) {
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          decoration: BoxDecoration(
+            color: ThemeController.to.primarySwatchColor,
+            boxShadow: [
+              BoxShadow(
+                color: Color.fromARGB(55, 0, 0, 0),
+                offset: Offset(1, 2),
+                blurRadius: 4,
+              ),
+            ],
+            borderRadius: BorderRadius.circular(32.0),
+          ),
+          child: Text(
+            "${err.content}",
             style: TextStyle(
               color: Colors.white,
             ),
