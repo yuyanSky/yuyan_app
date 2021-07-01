@@ -129,6 +129,7 @@ class _CommentToolbarWidgetState extends State<CommentToolbarWidget>
   }
 
   _buildBarIcons() {
+    final iconSize = 40.0;
     final height = Get.mediaQuery.viewInsets.bottom;
     if (height > 150 && extraView.value) {
       extraView.value = false;

@@ -57,6 +57,27 @@ class NotificationItemWidget extends StatelessWidget {
   final bool unread;
   final VoidCallback beforeTab;
 
+  bool get deleted => data.subject == null;
+
+  deleteItem() {
+    final c = Get.find<NotificationAllController>();
+    c.value.remove(data);
+    c.update();
+    return futureResolver(
+      ApiRepository.delNotification(ids: '${data.id}'),
+      onData: (_) => ScaffoldMessenger.of(Get.context).showSnackBar(
+        SnackBar(content: Text('已移除')),
+      ),
+      onError: (err) {
+        // fetch previous data
+        c.onRefreshCallback();
+        return ScaffoldMessenger.of(Get.context).showSnackBar(
+          SnackBar(content: Text('失败: $err')),
+        );
+      },
+    );
+  }
+
   NotificationItemWidget({
     Key key,
     @required this.data,
@@ -111,14 +132,17 @@ class NotificationItemWidget extends StatelessWidget {
         )
       ],
     );
-    final notifySub = getNotificationSub();
+    final notifySub = deleted ? '相关内容已删除' : getNotificationSub();
     final contentWidget = Row(
       children: [
         Expanded(
           child: Text(
             "${newsType[data.notifyType] ?? data.notifyType}"
             "${notifySub.onlyIf(notifySub == '', elseif: () => ' [$notifySub]')}",
-            style: AppStyles.textStyleC,
+            style: AppStyles.textStyleC.copyWith(
+              decoration: deleted ? TextDecoration.lineThrough : null,
+              decorationThickness: 1.5,
+            ),
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
           ),
@@ -166,6 +190,23 @@ class NotificationItemWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         beforeTab?.call();
+        if (deleted) {
+          return Get.dialog(
+            AlertDialog(
+              content: Text('此消息已被删除，是否删除记录？'),
+              actions: [
+                TextButton(
+                  onPressed: () => [Get.back(), deleteItem()],
+                  child: Text('删除'),
+                ),
+                TextButton(
+                  onPressed: () => Get.back(),
+                  child: Text('取消'),
+                ),
+              ],
+            ),
+          );
+        }
         if (data.params != null) {
           switch (data.notifyType) {
             case 'system':
@@ -222,24 +263,7 @@ class NotificationItemWidget extends StatelessWidget {
       child: Dismissible(
         key: Key('${data.id}'),
         background: Container(color: Colors.red),
-        onDismissed: (_) {
-          final c = Get.find<NotificationAllController>();
-          c.value.remove(data);
-          c.update();
-          futureResolver(
-            ApiRepository.delNotification(ids: '${data.id}'),
-            onData: (_) => ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('已移除, 不可撤销')),
-            ),
-            onError: (err) {
-              // fetch previous data
-              c.onRefreshCallback();
-              return ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('失败: $err')),
-              );
-            },
-          );
-        },
+        onDismissed: (_) => deleteItem(),
         child: child,
       ),
     );
