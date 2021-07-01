@@ -15,8 +15,10 @@ class ViewErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('error: $error'),
+    return Material(
+      child: Center(
+        child: Text('error: $error'),
+      ),
     );
   }
 }
@@ -69,43 +71,45 @@ class ViewEmptyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        SizedBox(height: top),
-        Stack(
-          children: [
-            Container(
-              height: 240,
-              child: FlareActor(
-                "assets/flares/bird.flr",
-                animation: "eye",
-                fit: BoxFit.fitHeight,
-              ),
-            ),
-            Positioned(
-              bottom: 30,
-              left: 0,
-              right: 0,
-              child: Text(
-                "$tip",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: AppColors.primaryText,
-                  fontFamily: "sans_bold",
-                  fontWeight: FontWeight.w600,
-                  fontSize: fontSize,
+    return Material(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(height: top),
+          Stack(
+            children: [
+              Container(
+                height: 240,
+                child: FlareActor(
+                  "assets/flares/bird.flr",
+                  animation: "eye",
+                  fit: BoxFit.fitHeight,
                 ),
               ),
-            ),
-          ],
-        ),
-        if (child != null)
-          Container(
-            padding: const EdgeInsets.all(4),
-            child: child,
+              Positioned(
+                bottom: 30,
+                left: 0,
+                right: 0,
+                child: Text(
+                  "$tip",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: AppColors.primaryText,
+                    fontFamily: "sans_bold",
+                    fontWeight: FontWeight.w600,
+                    fontSize: fontSize,
+                  ),
+                ),
+              ),
+            ],
           ),
-      ],
+          if (child != null)
+            Container(
+              padding: const EdgeInsets.all(4),
+              child: child,
+            ),
+        ],
+      ),
     );
   }
 }

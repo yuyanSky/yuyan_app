@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/controller/organization/topic/topic_controller.dart';
 import 'package:yuyan_app/model/document/commen/comment_detail.dart';
-import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/model/topic/topic_detail_seri.dart';
+import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
-import 'package:yuyan_app/views/widget/menu_item.dart';
 import 'package:yuyan_app/views/widget/editor/comment_widget.dart';
 import 'package:yuyan_app/views/widget/lake/cards/mention.dart';
 import 'package:yuyan_app/views/widget/lake/lake_render.dart';
+import 'package:yuyan_app/views/widget/menu_item.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class TopicDetailPage extends StatefulWidget {
@@ -32,6 +33,7 @@ class TopicDetailPage extends StatefulWidget {
 
 class _TopicDetailPageState extends State<TopicDetailPage> {
   // final _textController = TextEditingController();
+  final _refreshController = RefreshController();
 
   int _commentId;
   var _hintText = '评论千万条，友善第一条';
@@ -134,66 +136,75 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('话题详情'),
-        actions: [
-          //TODO(@dreamer2q): 添加话题控制panel
-          PopupMenuButton<VoidCallback>(
-            itemBuilder: (_) => [
-              PopupMenuItem(
-                value: () {
-                  var c =
-                      Get.find<TopicDetailController>(tag: '${widget.groupId}');
-                  Util.goUrl('/${widget.groupId}/topics/${c.value.iid}');
-                },
-                child: MenuItemWidget(
-                  iconData: Icons.open_in_browser,
-                  title: '打开网页版',
-                ),
-              ),
-            ],
-            onSelected: (_) => _?.call(),
-          ),
-          // IconButton(
-          //   icon: Icon(Icons.more_horiz),
-          //   onPressed: () {
-          //     showModalBottomSheet(
-          //       context: context,
-          //       builder: (_) => Container(
-          //         child: Column(
-          //           children: [
-          //             ElevatedButton(
-          //               onPressed: () {},
-          //               child: Text('取消订阅'),
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //     );
-          //   },
-          // ),
-        ],
-      ),
-      body: GetBuilder<TopicDetailController>(
-        tag: tag,
-        builder: (c) => c.stateBuilder(onIdle: () {
+    return GetBuilder<TopicDetailController>(
+      tag: tag,
+      builder: (c) => c.stateBuilder(
+        scaffold: true,
+        onIdle: () {
           _commentId = c.value.id;
-          return RefreshIndicator(
-            onRefresh: () async {
-              var comments = Get.find<TopicCommentsController>(tag: tag);
-              await comments.onRefresh();
-              return c.onRefresh();
-            },
-            child: Column(
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('话题详情'),
+              actions: [
+                //TODO(@dreamer2q): 添加话题控制panel
+                PopupMenuButton<VoidCallback>(
+                  itemBuilder: (_) => [
+                    PopupMenuItem(
+                      value: () {
+                        var c = Get.find<TopicDetailController>(
+                            tag: '${widget.groupId}');
+                        Util.goUrl('/${widget.groupId}/topics/${c.value.iid}');
+                      },
+                      child: MenuItemWidget(
+                        iconData: Icons.open_in_browser,
+                        title: '打开网页版',
+                      ),
+                    ),
+                  ],
+                  onSelected: (_) => _?.call(),
+                ),
+                // IconButton(
+                //   icon: Icon(Icons.more_horiz),
+                //   onPressed: () {
+                //     showModalBottomSheet(
+                //       context: context,
+                //       builder: (_) => Container(
+                //         child: Column(
+                //           children: [
+                //             ElevatedButton(
+                //               onPressed: () {},
+                //               child: Text('取消订阅'),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     );
+                //   },
+                // ),
+              ],
+            ),
+            body: Column(
               children: [
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        TopicDescWidget(data: c.value),
-                        _buildCommentList(c.value.id),
-                      ],
+                  child: SmartRefresher(
+                    controller: _refreshController,
+                    onRefresh: () async {
+                      var comments =
+                          Get.find<TopicCommentsController>(tag: tag);
+                      await Future.wait([c.onRefresh(), comments.onRefresh()]);
+                      if (c.isIdleState) {
+                        _refreshController.refreshCompleted();
+                      } else {
+                        _refreshController.refreshFailed();
+                      }
+                    },
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          TopicDescWidget(data: c.value),
+                          _buildCommentList(c.value.id),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -237,7 +248,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
               ],
             ),
           );
-        }),
+        },
       ),
     );
   }

@@ -22,13 +22,14 @@ class GroupById extends StatelessWidget {
     return GetBuilder<GroupInfoController>(
       init: GroupInfoController(groupId),
       tag: '$groupId',
-      builder: (c) => c.pageBuilder(
-        parent: (child) => Scaffold(
-          appBar: AppBar(
-            title: Text('@Group($groupId)'),
-          ),
-          body: child,
-        ),
+      builder: (c) => c.stateBuilder(
+        // parent: (child) => Scaffold(
+        //   appBar: AppBar(
+        //     title: Text('@Group($groupId)'),
+        //   ),
+        //   body: child,
+        // ),
+        scaffold: true,
         onIdle: () => GroupPage(
           initialIndex: index,
           group: GroupSeri.fromJson(

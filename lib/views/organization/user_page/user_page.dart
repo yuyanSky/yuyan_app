@@ -1,3 +1,5 @@
+import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart'
+    as extended;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -9,14 +11,12 @@ import 'package:yuyan_app/model/user/user_lite_seri.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/organization/widget/book_row_widget.dart';
 import 'package:yuyan_app/views/organization/widget/book_stack_widget.dart';
-import 'package:yuyan_app/views/widget/menu_item.dart';
-import 'package:yuyan_app/views/widget/event/affair.dart';
 import 'package:yuyan_app/views/organization/widget/group.dart';
-import 'package:yuyan_app/views/widget/lake/lake_render.dart';
 import 'package:yuyan_app/views/organization/widget/user_flexible_widget.dart';
+import 'package:yuyan_app/views/widget/event/affair.dart';
+import 'package:yuyan_app/views/widget/lake/lake_render.dart';
+import 'package:yuyan_app/views/widget/menu_item.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
-import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart'
-    as extended;
 
 class UserPage extends StatefulWidget {
   final UserLiteSeri user;
@@ -72,6 +72,7 @@ class _UserPageState extends State<UserPage>
       body: extended.NestedScrollView(
         pinnedHeaderSliverHeightBuilder: () => Util.pinnedHeight,
         innerScrollPositionKeyBuilder: () {
+          print('build innerScrollKey: ${_tabController.index}');
           return Key('user_page_tab_${_tabController.index}');
         },
         headerSliverBuilder: (_, inner) => [
@@ -159,50 +160,45 @@ class _UserPageState extends State<UserPage>
               key: Key('user_page_tab_1'),
               nested: true,
               tag: controllerTag,
-              builder: (c) => c.stateBuilder(
-                onIdle: () => ListView.builder(
-                  itemCount: c.value.length,
-                  itemBuilder: (_, i) => BookRowItemWidget(
-                    book: c.value[i],
-                  ),
+              builder: (c) => ListView.builder(
+                itemCount: c.value.length,
+                itemBuilder: (_, i) => BookRowItemWidget(
+                  book: c.value[i],
                 ),
               ),
             ),
             FetchRefreshListViewBuilder<UserGroupController>(
               key: Key('user_page_tab_2'),
+              nested: true,
               tag: controllerTag,
-              builder: (c) => c.stateBuilder(
-                onIdle: () => ListView.builder(
-                  itemCount: c.value.length,
-                  itemBuilder: (_, i) => GroupTileWidget(
-                    group: c.value[i],
-                  ),
+              builder: (c) => ListView.builder(
+                itemCount: c.value.length,
+                itemBuilder: (_, i) => GroupTileWidget(
+                  group: c.value[i],
                 ),
               ),
             ),
             FetchRefreshListViewBuilder<UserFollowingController>(
               key: Key('user_page_tab_3'),
+              nested: true,
               tag: controllerTag,
-              builder: (c) => c.stateBuilder(
-                onIdle: () => ListView.builder(
-                  itemCount: c.value.length,
-                  itemBuilder: (_, i) => UserFollowTileWidget(
-                    user: c.value[i],
-                    hideButton: false,
-                  ),
+              builder: (c) => ListView.builder(
+                itemCount: c.value.length,
+                itemBuilder: (_, i) => UserFollowTileWidget(
+                  user: c.value[i],
+                  hideButton: false,
                 ),
               ),
             ),
             FetchRefreshListViewBuilder<UserFollowerController>(
               key: Key('user_page_tab_4'),
+              nested: true,
               tag: controllerTag,
-              builder: (c) => c.stateBuilder(
-                onIdle: () => ListView.builder(
-                  itemCount: c.value.length,
-                  itemBuilder: (_, i) => UserFollowTileWidget(
-                    user: c.value[i],
-                    hideButton: false,
-                  ),
+              builder: (c) => ListView.builder(
+                itemCount: c.value.length,
+                itemBuilder: (_, i) => UserFollowTileWidget(
+                  user: c.value[i],
+                  hideButton: false,
                 ),
               ),
             ),

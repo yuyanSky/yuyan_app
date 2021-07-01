@@ -3,6 +3,7 @@ import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/model/document/commen/comment_detail.dart';
+import 'package:yuyan_app/model/meta/ability.dart';
 import 'package:yuyan_app/model/topic/topic_detail_seri.dart';
 import 'package:yuyan_app/util/util.dart';
 
@@ -12,9 +13,14 @@ class TopicDetailController extends FetchValueController<TopicDetailSeri> {
 
   TopicDetailController(this.iid, this.groupId);
 
+  MetaAbilitySeri abilities;
+
   @override
-  Future<TopicDetailSeri> fetch() {
-    return ApiRepository.getTopicDetail(iid: iid, groupId: groupId);
+  Future<TopicDetailSeri> fetch() async {
+    final res =
+        await ApiRepository.getTopicDetailRes(iid: iid, groupId: groupId);
+    abilities = MetaAbilitySeri.fromJson(res.meta['abilities']);
+    return TopicDetailSeri.fromJson(res.data);
   }
 }
 

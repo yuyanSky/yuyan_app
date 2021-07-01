@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/base.dart';
 import 'package:yuyan_app/config/net/token.dart';
+import 'package:yuyan_app/model/meta/meta.dart';
 
 class ApiResponse {
   dynamic data;
   int status;
   String message;
+
   Map meta;
+  MetaSeri metaSeri;
 
   Map _raw;
 
@@ -21,6 +24,9 @@ class ApiResponse {
     status = json['status'];
     message = json['message'];
     meta = json['meta'];
+    if (meta != null) {
+      metaSeri = MetaSeri.fromJson(meta);
+    }
   }
 
   bool isError() {

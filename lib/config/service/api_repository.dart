@@ -13,28 +13,28 @@ import 'package:yuyan_app/model/document/commen/comment_detail.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/doc_detail/artboard_seri.dart';
 import 'package:yuyan_app/model/document/doc_detail/doc_detail.dart';
-import 'package:yuyan_app/model/document/tag_seri.dart';
-import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
 import 'package:yuyan_app/model/document/group_home/group_home_seri.dart';
-import 'package:yuyan_app/model/user/group/group_user.dart';
 import 'package:yuyan_app/model/document/note/doclet.dart';
 import 'package:yuyan_app/model/document/note/note.dart';
 import 'package:yuyan_app/model/document/note/note_status.dart';
-import 'package:yuyan_app/model/user/mine/mine_seri.dart';
-import 'package:yuyan_app/model/user/org/organization.dart';
-import 'package:yuyan_app/model/user/org/organization_lite.dart';
+import 'package:yuyan_app/model/document/tag_seri.dart';
 import 'package:yuyan_app/model/document/toc/toc_seri.dart';
 import 'package:yuyan_app/model/document/upload/upload_result_seri.dart';
-import 'package:yuyan_app/model/user/user.dart';
-import 'package:yuyan_app/model/user/user_profile.dart';
-import 'package:yuyan_app/model/user/events/event_seri.dart';
-import 'package:yuyan_app/model/user/events/user_event_seri.dart';
 import 'package:yuyan_app/model/notification/notification.dart';
 import 'package:yuyan_app/model/search/search_result_seri.dart';
 import 'package:yuyan_app/model/serializer/serializer.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/model/topic/topic_detail_seri.dart';
+import 'package:yuyan_app/model/user/events/event_seri.dart';
+import 'package:yuyan_app/model/user/events/user_event_seri.dart';
+import 'package:yuyan_app/model/user/group/group.dart';
+import 'package:yuyan_app/model/user/group/group_user.dart';
+import 'package:yuyan_app/model/user/mine/mine_seri.dart';
+import 'package:yuyan_app/model/user/org/organization.dart';
+import 'package:yuyan_app/model/user/org/organization_lite.dart';
+import 'package:yuyan_app/model/user/user.dart';
+import 'package:yuyan_app/model/user/user_profile.dart';
 
 class ApiRepository {
   static BaseApi api = BaseApi();
@@ -638,6 +638,13 @@ class ApiRepository {
     });
     var asp = (res.data as ApiResponse);
     return TopicDetailSeri.fromJson(asp.data);
+  }
+
+  static Future<ApiResponse> getTopicDetailRes({int iid, int groupId}) async {
+    var res = await api.get('/topics/$iid', queryParameters: {
+      'group_id': groupId,
+    });
+    return res.data as ApiResponse;
   }
 
   static Future<List<CommentDetailSeri>> getCommentsList({

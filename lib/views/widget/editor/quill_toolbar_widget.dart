@@ -129,12 +129,13 @@ class _CommentToolbarWidgetState extends State<CommentToolbarWidget>
   }
 
   _buildBarIcons() {
-    final iconSize = 40.0;
+    final iconSize = 18.0;
     final height = Get.mediaQuery.viewInsets.bottom;
     if (height > 150 && extraView.value) {
       extraView.value = false;
     }
     return QuillToolbar(
+      multiRowsDisplay: false,
       children: [
         QuillIconButton(
           icon: Icon(
@@ -151,32 +152,32 @@ class _CommentToolbarWidgetState extends State<CommentToolbarWidget>
             }
           },
         ),
-        const SizedBox(width: 0.6),
+        SizedBox(width: 0.6),
         ToggleStyleButton(
           attribute: Attribute.bold,
           icon: Icons.format_bold,
           controller: controller,
         ),
-        const SizedBox(width: 0.6),
+        SizedBox(width: 0.6),
         ToggleStyleButton(
           attribute: Attribute.italic,
           icon: Icons.format_italic,
           controller: controller,
         ),
-        const SizedBox(width: 0.6),
+        SizedBox(width: 0.6),
         ToggleStyleButton(
           attribute: Attribute.underline,
           icon: Icons.format_underline,
           controller: controller,
         ),
-        const SizedBox(width: 0.6),
+        SizedBox(width: 0.6),
         ImageButton(
           icon: Icons.image,
           controller: controller,
           imageSource: ImageSource.gallery,
           onImagePickCallback: _imageUpload,
         ),
-        const SizedBox(width: 0.6),
+        SizedBox(width: 0.6),
         ImageButton(
           icon: Icons.photo_camera,
           controller: controller,
@@ -193,21 +194,25 @@ class _CommentToolbarWidgetState extends State<CommentToolbarWidget>
           controller: controller,
           icon: Icons.format_list_numbered,
         ),
+        SizedBox(width: 0.6),
         ToggleStyleButton(
           attribute: Attribute.ul,
           controller: controller,
           icon: Icons.format_list_bulleted,
         ),
+        SizedBox(width: 0.6),
         ToggleCheckListButton(
           attribute: Attribute.unchecked,
           controller: controller,
           icon: Icons.check_box,
         ),
+        SizedBox(width: 0.6),
         ToggleStyleButton(
           attribute: Attribute.codeBlock,
           controller: controller,
           icon: Icons.code,
         ),
+        SizedBox(width: 0.6),
         ToggleStyleButton(
           attribute: Attribute.blockQuote,
           controller: controller,

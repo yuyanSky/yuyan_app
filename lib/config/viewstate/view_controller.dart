@@ -48,7 +48,7 @@ abstract class FetchValueController<T> extends GetxController
 
   /// 数据刷新，调用[fetch]进行数据更新
   /// force = true, 说明要强制更新数据，哪怕[fetch]返回的是[null]数据
-  onRefresh({bool force = false}) async {
+  Future onRefresh({bool force = false}) async {
     try {
       if (!valueAvailable) {
         /// 数据不可用时，变成加载状态

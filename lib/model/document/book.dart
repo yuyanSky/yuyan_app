@@ -1,5 +1,6 @@
+import 'package:yuyan_app/model/meta/ability.dart';
+
 import 'group_home/summary.dart';
-import 'meta/ability.dart';
 import '../user/user.dart';
 
 class BookSeri {

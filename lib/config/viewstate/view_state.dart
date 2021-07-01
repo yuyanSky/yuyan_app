@@ -284,29 +284,49 @@ mixin ControllerStateMixin on GetxController {
   /// and you can use it safely
   /// the [onLoading],[onEmpty], [onError] has its default handler or widget,
   /// so you can focus you main task
+  /// [scaffold] used for page without Scaffold
+  /// [animation] build with FadedAnimation
   Widget stateBuilder<T>({
     WidgetCallback onIdle,
     Widget onLoading,
     Widget onEmpty,
     Widget Function(ViewError error) onError,
+    bool animation = true,
+    bool scaffold = false,
   }) {
+    Widget child;
     switch (state) {
       case ViewState.refreshing:
       case ViewState.idle:
-        return onIdle();
+        child = onIdle();
+        break;
       case ViewState.empty:
-        return onEmpty ?? const ViewEmptyWidget();
+        child = onEmpty ?? const ViewEmptyWidget();
+        break;
       case ViewState.loading:
-        return onLoading ?? const ViewLoadingWidget();
+        child = onLoading ??
+            (scaffold
+                ? const Material(child: const ViewLoadingWidget())
+                : const ViewLoadingWidget());
+        break;
       case ViewState.error:
         if (onError != null) {
-          return onError(error) ?? ViewErrorWidget(error: error);
+          child = onError(error) ?? ViewErrorWidget(error: error);
+        } else {
+          child = ViewErrorWidget(error: error);
         }
-        return ViewErrorWidget(error: error);
+        break;
       default:
-      //当状态为空的情况
+        //当状态为空的情况
+        return SizedBox.shrink();
     }
-    return SizedBox.shrink();
+    if (animation) {
+      child = AnimatedSwitcher(
+        duration: 350.milliseconds,
+        child: child,
+      );
+    }
+    return child;
   }
 
   /// [safeHandler] is a method wrapper which helps catch errors,

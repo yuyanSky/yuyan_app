@@ -1,4 +1,5 @@
-import 'meta/meta.dart';
+
+import 'package:yuyan_app/model/meta/meta.dart';
 
 class CommentSeri {
   String body;

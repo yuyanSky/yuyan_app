@@ -1,11 +1,11 @@
+import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart'
+    as extended;
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
-import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart'
-    as extended;
 
 class FetchRefreshListViewBuilder<T extends FetchListValueController>
     extends StatelessWidget {
@@ -16,15 +16,19 @@ class FetchRefreshListViewBuilder<T extends FetchListValueController>
   final Widget onEmpty;
   final Widget Function(ViewError error) onError;
 
+  final Key key;
+
   FetchRefreshListViewBuilder({
-    Key key,
+    // Key key,
+    this.key,
     this.builder,
     this.tag,
     this.onLoading,
     this.onError,
     this.onEmpty,
     this.nested = false,
-  }) : super(key: key);
+  });
+  // : super(key: key);
 
   @override
   Widget build(BuildContext context) {

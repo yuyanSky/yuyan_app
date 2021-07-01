@@ -106,7 +106,7 @@ dependencies:
   romanice: 1.0.0+1
 
   # 下拉刷新
-  pull_to_refresh: 1.6.4
+  pull_to_refresh: ^2.0.0
 
   # 写入文件
   path_provider: ^2.0.1
@@ -162,6 +162,9 @@ dependencies:
 
   # markdown 渲染器
   flutter_markdown: ^0.6.1
+
+  # 骨架图
+  shimmer: ^2.0.0
 
 
   ## 字符串格式
