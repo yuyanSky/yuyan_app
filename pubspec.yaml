@@ -76,7 +76,7 @@ dependencies:
   # Webview相关
   flutter_webview_plugin:
     git: https://github.com/aboutmydreams/flutter_webview_plugin.git
-  flutter_inappwebview: 4.0.0+4
+  flutter_inappwebview: ^4.0.0+4
   #  flutter_inappwebview: 5.0.4-nullsafety.1
 
 
@@ -126,7 +126,7 @@ dependencies:
   # 分享
   share_extend: ^1.1.9
   # 权限
-  permission_handler: ^6.1.1
+  permission_handler: ^8.0.1
   # flare动画
   flare_flutter: ^3.0.0
 
@@ -155,7 +155,7 @@ dependencies:
   shifting_tabbar: ^0.3.1
 
   # 图片选择器
-  image_picker: ^0.7.2
+  image_picker: ^0.7.3
 
   # lake to markdown
   html2md: ^1.0.1
