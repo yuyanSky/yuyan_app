@@ -56,6 +56,7 @@ class QuickView extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 12)
+                // 设置还是放在最后，等完成了拖拽修改位置、长按删除快捷入口、添加快捷入口后再上
                 // setEntry(context)
               ],
             ),
