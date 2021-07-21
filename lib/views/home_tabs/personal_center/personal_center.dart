@@ -71,7 +71,20 @@ class _PersonalCenterTabState extends State<PersonalCenterTab> {
   @override
   Widget build(BuildContext context) {
     // analytics.logEvent(name: 'my_page', parameters: {'name': '/MyPage'});
-    // List<Widget> widgetList = [];
+    List<Widget> widgetList = [
+      Container(
+        child: GetBuilder<MyUserController>(
+          builder: (c) => c.builder(
+            (state) => MyInfoCardWidget(info: state.data),
+          ),
+        ),
+      ),
+      Expanded(
+        child: SingleChildScrollView(
+          child: _SettingListWidget(),
+        ),
+      ),
+    ];
     // getVersion();
 
     var theme = Theme.of(context);
@@ -85,26 +98,17 @@ class _PersonalCenterTabState extends State<PersonalCenterTab> {
 
           Positioned(
             top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Column(
-              children: [
-                Container(
-                  child: GetBuilder<MyUserController>(
-                    builder: (c) => c.builder(
-                      (state) => MyInfoCardWidget(info: state.data),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: _SettingListWidget(),
-                  ),
-                ),
-              ],
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height - 56,
+              child: ListView.builder(
+                  // controller: _controller,
+                  itemCount: widgetList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return widgetList[index];
+                  }),
             ),
-          )
+          ),
         ],
       ),
     );

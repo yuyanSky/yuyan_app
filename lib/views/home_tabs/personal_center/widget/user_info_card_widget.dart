@@ -24,7 +24,7 @@ class MyInfoCardWidget extends StatelessWidget {
         MediaQuery.of(context).size.width - leftMargin * 3.6 - 95;
     return Container(
       margin: EdgeInsets.only(
-        top: 84,
+        top: 40,
         left: leftMargin,
         right: leftMargin,
         bottom: leftMargin,
@@ -39,9 +39,9 @@ class MyInfoCardWidget extends StatelessWidget {
         color: AppColors.background,
         boxShadow: [
           BoxShadow(
-            color: Color.fromARGB(55, 0, 0, 0),
+            color: Color.fromARGB(40, 0, 0, 0),
             offset: Offset(1, 2),
-            blurRadius: 4,
+            blurRadius: 3,
           ),
         ],
         borderRadius: BorderRadius.all(Radius.circular(20)),
