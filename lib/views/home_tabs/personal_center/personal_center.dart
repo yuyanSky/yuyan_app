@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/home/personal/my_controller.dart';
 import 'package:yuyan_app/controller/app/version_controller.dart';
+import 'package:yuyan_app/views/home_tabs/personal_center/widget/background.dart';
 import 'package:yuyan_app/views/widget/animation.dart';
 import 'package:yuyan_app/views/widget/editor/comment_widget.dart';
 import 'package:yuyan_app/views/widget/setting_item.dart';
@@ -22,50 +22,9 @@ class PersonalCenterTab extends StatefulWidget {
 }
 
 class _PersonalCenterTabState extends State<PersonalCenterTab> {
-  ScrollController _controller;
-
   @override
   void initState() {
     super.initState();
-    _controller = ScrollController();
-  }
-
-  @override
-  void dispose() {
-    //为了避免内存泄露，需要调用 _controller.dispose
-    _controller.dispose();
-    super.dispose();
-  }
-
-  _buildBackground(ThemeData theme) {
-    return Positioned(
-      top: 0,
-      child: ClipPath(
-        clipper: ArcClipper(),
-        child: Container(
-          height: Get.height * 0.33,
-          width: Get.width,
-          decoration: BoxDecoration(
-            color: theme.primaryColor,
-            gradient: LinearGradient(
-              colors: [
-                theme.primaryColor,
-                theme.primaryColor.withAlpha(60),
-              ],
-              begin: FractionalOffset(0, 0),
-              end: FractionalOffset(0, 1),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Color.fromARGB(55, 0, 0, 0),
-                offset: Offset(1, 2),
-                blurRadius: 4,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   @override
@@ -94,8 +53,9 @@ class _PersonalCenterTabState extends State<PersonalCenterTab> {
       body: Stack(
         children: <Widget>[
           // 背景图形
-          _buildBackground(theme),
+          buildBackground(theme),
 
+          // 主体卡片与页面入口
           Positioned(
             top: 0,
             child: Container(
