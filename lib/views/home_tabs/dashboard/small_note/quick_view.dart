@@ -55,7 +55,8 @@ class QuickView extends StatelessWidget {
                     ],
                   ),
                 ),
-                setEntry(context)
+                SizedBox(width: 12)
+                // setEntry(context)
               ],
             ),
           );
