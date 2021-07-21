@@ -82,6 +82,7 @@ class _PersonalCenterTabState extends State<PersonalCenterTab> {
         children: <Widget>[
           // 背景图形
           _buildBackground(theme),
+
           Positioned(
             top: 0,
             bottom: 0,
@@ -90,12 +91,6 @@ class _PersonalCenterTabState extends State<PersonalCenterTab> {
             child: Column(
               children: [
                 Container(
-                  padding: const EdgeInsets.only(
-                    top: 70,
-                    left: 24,
-                    right: 24,
-                    bottom: 20,
-                  ),
                   child: GetBuilder<MyUserController>(
                     builder: (c) => c.builder(
                       (state) => MyInfoCardWidget(info: state.data),
