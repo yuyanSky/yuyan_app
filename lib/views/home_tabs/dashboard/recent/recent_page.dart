@@ -121,7 +121,7 @@ class _UserRecentItemWidget extends StatelessWidget {
           children: <Widget>[
             Container(
               margin: EdgeInsets.only(left: 20),
-              child: AppIcon.iconType(data.subjectType),
+              child: AppIcon.svg(data.subjectType, size: 28),
             ),
             Expanded(
               child: Container(

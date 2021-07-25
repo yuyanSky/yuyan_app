@@ -1,11 +1,12 @@
 import 'package:yuyan_app/model/meta/ability.dart';
 
-import 'group_home/summary.dart';
 import '../user/user.dart';
+import 'group_home/summary.dart';
 
 class BookSeri {
   int id;
   String type;
+  String scene;
   String slug;
   String name;
   int userId;
@@ -46,6 +47,7 @@ class BookSeri {
   BookSeri.fromJson(dynamic json) {
     id = json["id"];
     type = json["type"];
+    scene = json["scene"];
     slug = json["slug"];
     name = json["name"];
     userId = json["user_id"];
@@ -95,6 +97,7 @@ class BookSeri {
     var map = <String, dynamic>{};
     map["id"] = id;
     map["type"] = type;
+    map["scene"] = scene;
     map["slug"] = slug;
     map["name"] = name;
     map["user_id"] = userId;

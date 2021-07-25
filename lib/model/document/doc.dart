@@ -1,9 +1,12 @@
 import 'package:yuyan_app/model/serializer/serializer.dart';
 
-import 'book.dart';
 import '../user/user.dart';
+import 'book.dart';
 
 class DocSeri {
+  get coverDefault =>
+      'https://gw.alipayobjects.com/mdn/prod_resou/afts/img/A*8TQsTpWZtm8AAAAAAAAAAAAAARQnAQ?x-oss-process=image%2Fresize%2Ch_280';
+
   int id;
   int spaceId;
   String type;

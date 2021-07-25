@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yuyan_app/controller/app/theme_controller.dart';
 
 // 白天主题
@@ -132,8 +133,40 @@ class AppStyles {
 }
 
 class AppIcon {
-  static Widget svg(String type) {
-
+  static Widget svg(
+    String type, {
+    double size = 24,
+    VoidCallback onTap,
+    Color color,
+  }) {
+    type = type.toLowerCase();
+    final table = {
+      'doc': 'doc-type-default',
+      'book': 'book-type-default',
+      'sheet': 'book-type-sheet',
+      'thread': 'book-type-thread',
+      'group': 'group-type-default',
+      'design': 'book-type-design',
+      'resource': 'book-type-resource',
+      'mind': 'doc-type-mind',
+      'table': 'doc-type-sheet',
+      'project': 'group-type-project',
+      'reports': 'book-type-reports',
+    };
+    final iconName = table[type] ?? type;
+    final child = SvgPicture.asset(
+      'assets/icons/$iconName.svg',
+      width: size,
+      height: size,
+      color: color,
+    );
+    if (onTap != null) {
+      return GestureDetector(
+        onTap: onTap,
+        child: child,
+      );
+    }
+    return child;
   }
 
   static Widget iconType(

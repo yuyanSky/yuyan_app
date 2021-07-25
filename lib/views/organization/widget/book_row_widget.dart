@@ -51,8 +51,8 @@ class BookRowItemWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.only(left: 26),
-            child: AppIcon.iconType(book.type),
+            margin: EdgeInsets.only(left: 20),
+            child: AppIcon.svg(book.scene ?? book.type, size: 28),
           ),
           Expanded(
             child: Container(

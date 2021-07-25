@@ -1,3 +1,5 @@
+import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart'
+    as extended;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -11,13 +13,11 @@ import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/organization/topic_page/all_topic_page.dart';
 import 'package:yuyan_app/views/organization/topic_page/topic_add_page.dart';
 import 'package:yuyan_app/views/organization/topic_page/topic_item_widget.dart';
-import 'package:yuyan_app/views/widget/action/floating_action_button_widget.dart';
 import 'package:yuyan_app/views/organization/widget/book_row_widget.dart';
-import 'package:yuyan_app/views/widget/menu_item.dart';
 import 'package:yuyan_app/views/organization/widget/user_flexible_widget.dart';
+import 'package:yuyan_app/views/widget/action/floating_action_button_widget.dart';
+import 'package:yuyan_app/views/widget/menu_item.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
-import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart'
-    as extended;
 
 import 'widget/home_widget.dart';
 

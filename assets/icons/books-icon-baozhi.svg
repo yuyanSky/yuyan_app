@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" id="books-icon-baozhi">
+    <g transform="translate(8 8)" fill-rule="evenodd" fill="none">
+        <rect fill="currentColor" width="48" height="48" rx="1.875"></rect>
+        <path fill="#FFF" d="M4 10h40v12H4z"></path>
+        <path fill="currentColor" d="M18.296 15L31 23l-24-.422z"></path>
+        <path fill="currentColor" d="M28.872 14.125l11.836 8h-24z"></path>
+        <path fill="#FFF" d="M28 27h16v12H28z"></path>
+        <rect fill="#FFF" x="4" y="27" width="20" height="4" rx=".938"></rect>
+        <rect fill="#FFF" x="4" y="35" width="20" height="4" rx=".938"></rect>
+    </g>
+</svg>

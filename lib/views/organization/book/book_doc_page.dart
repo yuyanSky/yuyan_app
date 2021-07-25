@@ -78,16 +78,17 @@ class BookDocPage extends StatelessWidget {
         init: BookArtController(bookId),
         builder: (c) => c.stateBuilder(
           onIdle: () => Scrollbar(
-              child: SmartRefresher(
-            controller: c.refreshController,
-            enablePullUp: true,
-            onRefresh: c.refreshCallback,
-            onLoading: c.loadMoreCallback,
-            child: ListView.builder(
-              itemCount: c.value.length,
-              itemBuilder: (_, i) => buildArt(c.value[i]),
+            child: SmartRefresher(
+              controller: c.refreshController,
+              enablePullUp: true,
+              onRefresh: c.refreshCallback,
+              onLoading: c.loadMoreCallback,
+              child: ListView.builder(
+                itemCount: c.value.length,
+                itemBuilder: (_, i) => buildArt(c.value[i]),
+              ),
             ),
-          )),
+          ),
         ),
       );
     }
@@ -266,7 +267,7 @@ class BookDocPage extends StatelessWidget {
                 height: 90,
                 width: 90,
                 child: CachedImageWidget(
-                  url: '${data.cover}',
+                  url: '${data.cover ?? data.coverDefault}',
                 ),
               ),
               Row(children: [

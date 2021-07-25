@@ -160,6 +160,7 @@ flutter:
     - assets/images/news/
     - assets/images/my_page/
     - assets/images/card/
+    - assets/images/default/
     - assets/icons/
 
   fonts:
