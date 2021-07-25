@@ -6,6 +6,7 @@ import 'package:yuyan_app/controller/organization/search/search_controller.dart'
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/user/group/group.dart';
+import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/model/user/user_lite_seri.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/views/home_tabs/discover/widget/book_tile_widget.dart';
@@ -181,8 +182,8 @@ class _SearchResultWidgetState extends State<SearchResultWidget>
             key: PageStorageKey('user'),
             itemCount: data.length,
             itemBuilder: (_, i) {
-              var item = data[i].record.serialize<UserLiteSeri>();
-              return UserTileWidget(user: item);
+              var item = data[i].record.serialize<UserSeri>();
+              return UserTileWidget(user: item.toUserLiteSeri());
             },
           );
         },

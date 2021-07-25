@@ -1,7 +1,7 @@
 import 'package:yuyan_app/model/serializer/serializer.dart';
 
 class SearchHitSeri {
-  String id;
+  int id;
   String type;
   String abstract;
   String bookName;
