@@ -182,7 +182,13 @@ class MyRoute {
     GetPage(name: RouteName.desk, page: () => Home(pageIndex: 1)),
     GetPage(name: RouteName.news, page: () => Home(pageIndex: 2)),
     GetPage(name: RouteName.my, page: () => Home(pageIndex: 3)),
-    GetPage(name: RouteName.myHist, page: () => MyHistPage()),
+    GetPage(
+      name: RouteName.myHist,
+      page: () => MyHistPage(),
+      binding: BindingsBuilder(
+        () => Get.lazyPut(() => MyHistController()),
+      ),
+    ),
     GetPage(
       name: RouteName.editNote,
       page: () => SmallNoteEditor(),
