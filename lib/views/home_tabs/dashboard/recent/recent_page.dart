@@ -21,8 +21,9 @@ class RecentPage extends StatelessWidget {
         (state) => Container(
           width: MediaQuery.of(context).size.width,
           child: AnimationColumnWidget(
-            children:
-                state.data.map((e) => _UserRecentItemWidget(data: e)).toList(),
+            children: state.data.mapWidget(
+              (e) => _UserRecentItemWidget(data: e),
+            ),
           ),
         ),
       ),
@@ -148,40 +149,42 @@ class _UserRecentItemWidget extends StatelessWidget {
                 ),
               ),
             ),
-            PopupMenuButton(
-              itemBuilder: (_) => [
-                if (data.canEdit)
-                  PopupMenuItem(
-                    value: () {
-                      MyRoute.webview(url + '/edit');
-                    },
-                    child: MenuItemWidget(
-                      iconData: Icons.edit,
-                      title: '编辑',
-                    ),
-                  ),
-                PopupMenuItem(
-                  value: () {
-                    ApiRepository.deleteRecentItem(data.id).then((_) {
-                      if (_) {
-                        RecentController.to.remove(data);
-                        BotToast.showText(text: '成功');
-                      }
-                    }).catchError((e) {
-                      BotToast.showText(text: '失败');
-                    });
-                  },
-                  child: MenuItemWidget(
-                    iconData: Icons.delete,
-                    title: '移除记录',
-                  ),
-                ),
-              ],
-              onSelected: (_) => _?.call(),
-            ),
+            ..._buildActions(url)
           ],
         ),
       ),
     );
+  }
+
+  List<Widget> _buildActions(String url) {
+    return [
+      IconButton(
+        onPressed: () {
+          MyRoute.webview(url + '/edit');
+        },
+        icon: Icon(Icons.edit),
+      ).onlyIf(data.canEdit),
+      // PopupMenuButton(
+      //   itemBuilder: (_) => [
+      //     PopupMenuItem(
+      //       value: () {
+      //         ApiRepository.deleteRecentItem(data.id).then((_) {
+      //           if (_) {
+      //             RecentController.to.remove(data);
+      //             BotToast.showText(text: '成功');
+      //           }
+      //         }).catchError((e) {
+      //           BotToast.showText(text: '失败');
+      //         });
+      //       },
+      //       child: MenuItemWidget(
+      //         iconData: Icons.delete,
+      //         title: '移除记录',
+      //       ),
+      //     ),
+      //   ],
+      //   onSelected: (_) => _?.call(),
+      // )
+    ];
   }
 }

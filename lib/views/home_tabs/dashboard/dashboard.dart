@@ -17,7 +17,6 @@ class DashboardTab extends StatefulWidget {
 }
 
 class _DashboardTabState extends State<DashboardTab> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,10 +55,12 @@ class _DashboardTabState extends State<DashboardTab> {
             onLoading: c.onLoadMoreCallback,
             enablePullUp: true,
             child: SingleChildScrollView(
-              child: Column(children: [
-                QuickView(),
-                RecentPage(),
-              ]),
+              child: Column(
+                children: [
+                  QuickView(),
+                  RecentPage(),
+                ],
+              ),
             ),
           );
         },
