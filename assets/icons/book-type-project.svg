@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="book-type-project">
+    <g fill="none" fill-rule="evenodd">
+        <path d="M5.344 3.938h13.312a1.5 1.5 0 011.5 1.5v15.375a1.5 1.5 0 01-1.5 1.5H5.344a1.5 1.5 0 01-1.5-1.5V5.438a1.5 1.5 0 011.5-1.5z"
+              fill="#A9C6F3"></path>
+        <path d="M6.094 5.438h11.812a.75.75 0 01.75.75v13.875a.75.75 0 01-.75.75H6.094a.75.75 0 01-.75-.75V6.188a.75.75 0 01.75-.75z"
+              fill="#FFF"></path>
+        <path d="M8.344 3.563h7.312c.207 0 .375.167.375.374v1.876a.375.375 0 01-.375.375H8.344a.375.375 0 01-.375-.375V3.938c0-.208.168-.376.375-.376z"
+              fill="#4E86E6"></path>
+        <g fill="#4E86E6">
+            <circle cx="1.852" cy="1.781" r="1.781" transform="translate(10.148 1.781)"></circle>
+        </g>
+        <rect fill="#4E86E6" x="7.969" y="8.438" width="8.063" height="1.688"
+              rx=".844"></rect>
+        <rect fill="#4E86E6" x="7.969" y="12.281" width="8.063" height="1.688"
+              rx=".844"></rect>
+        <rect fill="#4E86E6" x="7.969" y="16.125" width="8.063" height="1.688"
+              rx=".844"></rect>
+    </g>
+</svg>

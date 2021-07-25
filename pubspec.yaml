@@ -160,6 +160,7 @@ flutter:
     - assets/images/news/
     - assets/images/my_page/
     - assets/images/card/
+    - assets/icons/
 
   fonts:
     - family: Silom

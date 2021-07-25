@@ -132,6 +132,10 @@ class AppStyles {
 }
 
 class AppIcon {
+  static Widget svg(String type) {
+
+  }
+
   static Widget iconType(
     String iconName, {
     double size,

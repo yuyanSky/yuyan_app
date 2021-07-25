@@ -69,6 +69,11 @@ class _SettingListWidget extends StatelessWidget {
           namedRoute: RouteName.myMark,
         ),
         SettingItemWidget(
+          title: "最近浏览",
+          imgAsset: "history",
+          namedRoute: RouteName.myHist,
+        ),
+        SettingItemWidget(
           title: "关注知识库",
           imgAsset: "follow_book",
           namedRoute: RouteName.myFollowBook,

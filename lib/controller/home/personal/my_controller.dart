@@ -4,14 +4,16 @@ import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
+import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/model/document/action.dart';
 import 'package:yuyan_app/model/document/book.dart';
-import 'package:yuyan_app/model/user/group/group.dart';
+import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/note/note.dart';
+import 'package:yuyan_app/model/topic/topic.dart';
+import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/model/user/mine/mine_seri.dart';
 import 'package:yuyan_app/model/user/org/organization.dart';
 import 'package:yuyan_app/model/user/user.dart';
-import 'package:yuyan_app/model/topic/topic.dart';
 
 class MyUserProvider extends BaseSaveJson<MineSeri> {
   OrganizationSeri get defaultSpace {
@@ -274,5 +276,34 @@ class MyNoteController extends FetchSavableController<MyNoteProvider> {
   @override
   Future fetchData() {
     return ApiRepository.getMyNoteList();
+  }
+}
+
+class MyHistProvider extends BaseSaveListJson<DocSeri> {
+  @override
+  List<DocSeri> convert(json) {
+    return (json as List).map((e) => DocSeri.fromJson(e)).toList();
+  }
+
+  @override
+  String get key => 'user_docs_recent_read';
+}
+
+class MyHistController extends FetchSavableController<MyHistProvider> {
+  MyHistController()
+      : super(
+          initData: MyHistProvider(),
+          initialRefresh: true,
+          state: ViewState.loading,
+        );
+
+  @override
+  Future fetchData() {
+    return ApiRepository.getMineDocs();
+  }
+
+  @override
+  Future fetchMore() {
+    return ApiRepository.getMineDocs(offset: value.length);
   }
 }

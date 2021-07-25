@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="book-type-import">
+    <g fill="none" fill-rule="evenodd">
+        <path d="M10.875 4.969h2.25V20.25a1.125 1.125 0 01-2.25 0V4.969z" fill="#4E86E6"></path>
+        <path d="M17.156 4.713a1.125 1.125 0 01.123 2.243l-.123.007H7.968v9.188c0 .58-.438 1.057-1.002 1.118l-.122.007c-.58 0-1.058-.44-1.119-1.003l-.006-.122V6.16c0-.753.574-1.371 1.308-1.441l.139-.007h9.99z"
+              fill="#4E86E6" fill-rule="nonzero"
+              transform="rotate(45 12 10.994)"></path>
+    </g>
+</svg>

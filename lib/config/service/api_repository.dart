@@ -727,6 +727,24 @@ class ApiRepository {
     return list;
   }
 
+  static Future<List<DocSeri>> getMineDocs({
+    int limit = 100,
+    int offset = 0,
+    String type = 'recent_read',
+  }) async {
+    var res = await api.get(
+      '/mine/docs',
+      queryParameters: {
+        'limit': limit,
+        'offset': offset,
+        'type': type,
+      },
+    );
+    var asp = res.data as ApiResponse;
+    var list = (asp.data as List).map((e) => DocSeri.fromJson(e)).toList();
+    return list;
+  }
+
   ///语雀小记
   static Future<bool> deleteNote(int id) async {
     var res = await api.delete('/notes/$id');

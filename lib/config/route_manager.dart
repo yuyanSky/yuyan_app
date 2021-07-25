@@ -21,6 +21,7 @@ import 'package:yuyan_app/views/home_tabs/personal_center/my_pages/follower_page
 import 'package:yuyan_app/views/home_tabs/personal_center/my_pages/following_page.dart';
 import 'package:yuyan_app/views/home_tabs/personal_center/my_pages/my_book_page.dart';
 import 'package:yuyan_app/views/home_tabs/personal_center/my_pages/my_group_page.dart';
+import 'package:yuyan_app/views/home_tabs/personal_center/my_pages/my_hist_page.dart';
 import 'package:yuyan_app/views/home_tabs/personal_center/my_pages/my_mark_page.dart';
 import 'package:yuyan_app/views/home_tabs/personal_center/my_pages/my_topic_page.dart';
 import 'package:yuyan_app/views/home_tabs/personal_center/settings/about_page.dart';
@@ -53,6 +54,7 @@ class RouteName {
   static const String myFollowBook = '/my/follow_book';
   static const String myRepos = '/my/repos';
   static const String myMark = '/my/mark';
+  static const String myHist = '/my/hist';
   static const String myTopic = '/my/topic';
   static const String myAbout = '/my/about';
   static const String mySuggest = '/my/suggest';
@@ -180,6 +182,7 @@ class MyRoute {
     GetPage(name: RouteName.desk, page: () => Home(pageIndex: 1)),
     GetPage(name: RouteName.news, page: () => Home(pageIndex: 2)),
     GetPage(name: RouteName.my, page: () => Home(pageIndex: 3)),
+    GetPage(name: RouteName.myHist, page: () => MyHistPage()),
     GetPage(
       name: RouteName.editNote,
       page: () => SmallNoteEditor(),
