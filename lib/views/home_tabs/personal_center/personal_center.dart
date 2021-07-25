@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/route_manager.dart';
-import 'package:yuyan_app/controller/home/personal/my_controller.dart';
 import 'package:yuyan_app/controller/app/version_controller.dart';
+import 'package:yuyan_app/controller/home/personal/my_controller.dart';
 import 'package:yuyan_app/views/home_tabs/personal_center/widget/background.dart';
 import 'package:yuyan_app/views/widget/animation.dart';
 import 'package:yuyan_app/views/widget/editor/comment_widget.dart';
@@ -23,50 +23,32 @@ class PersonalCenterTab extends StatefulWidget {
 
 class _PersonalCenterTabState extends State<PersonalCenterTab> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     // analytics.logEvent(name: 'my_page', parameters: {'name': '/MyPage'});
-    List<Widget> widgetList = [
-      Container(
-        child: GetBuilder<MyUserController>(
-          builder: (c) => c.builder(
-            (state) => MyInfoCardWidget(info: state.data),
-          ),
-        ),
-      ),
-      Expanded(
-        child: SingleChildScrollView(
-          child: _SettingListWidget(),
-        ),
-      ),
-    ];
-    // getVersion();
-
     var theme = Theme.of(context);
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
           // 背景图形
           buildBackground(theme),
-
           // 主体卡片与页面入口
-          Positioned(
-            top: 0,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 56,
-              child: ListView.builder(
-                  // controller: _controller,
-                  itemCount: widgetList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return widgetList[index];
-                  }),
+          Positioned.fill(
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(top: 56),
+                    child: GetBuilder<MyUserController>(
+                      builder: (c) => c.builder(
+                        (state) => MyInfoCardWidget(info: state.data),
+                      ),
+                    ),
+                  ),
+                  _SettingListWidget(),
+                ],
+              ),
             ),
           ),
         ],
@@ -79,6 +61,7 @@ class _SettingListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimationColumnWidget(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SettingItemWidget(
           title: "我的收藏",

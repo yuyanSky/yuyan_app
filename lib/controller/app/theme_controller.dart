@@ -58,17 +58,18 @@ class ThemeController extends GetxController {
     _themeData = ThemeData(
       // platform: TargetPlatform.iOS, //这个iOS力学平台在安卓上会报错，这里取消掉！
       // 右滑返回
-      scrollbarTheme: ScrollbarThemeData(
-        radius: Radius.circular(16),
-        thumbColor: MaterialStateProperty.all(Colors.grey),
-      ),
-      appBarTheme: AppBarTheme(
-        centerTitle: true,
-      ),
+      // scrollbarTheme: ScrollbarThemeData(
+      //   radius: Radius.circular(16),
+      //   thumbColor: MaterialStateProperty.all(Colors.grey),
+      // ),
+      // appBarTheme: AppBarTheme(
+      //   centerTitle: true,
+      // ),
+      // primaryColor: _primarySwatchColor,
       primarySwatch: _primarySwatchColor,
-      highlightColor: Color.fromRGBO(255, 255, 255, 0.3),
-      splashColor: Colors.white12,
-      accentColor: Color.fromRGBO(25, 25, 25, 0.8),
+      // highlightColor: Color.fromRGBO(255, 255, 255, 0.3),
+      // splashColor: Colors.white12,
+      // accentColor: Color.fromRGBO(25, 25, 25, 0.8),
     );
   }
 
