@@ -9,9 +9,9 @@ environment:
 
 publish_to: none
 
-dependency_overrides:
-  crypto: 3.0.0
-  url_launcher: ^6.0.2
+#dependency_overrides:
+#  crypto: 3.0.0
+#  url_launcher: ^6.0.2
 
 dependencies:
   flutter:
@@ -23,20 +23,14 @@ dependencies:
   # cupertino_icons: ^1.0.0
   font_awesome_flutter: ^8.7.0
 
-  # 富文本编辑器, Bug多多
-  # zefyr:
-  #  git:
-  #    url: https://github.com/dreamer2q/zefyr.git
-  #    ref: nullsafety
-  #    path: packages/zefyr
-
+  # 富文本编辑器
   notus: 1.0.0-dev.4.0
-
   flutter_quill: 1.6.0
   delta_markdown:
     git:
       url: https://github.com/dreamer2q/delta_markdown.git
       ref: 26d70f68fd74651644cf7b6dcfb0d834b977e0fa
+
   #  notus:
   #    git:
   #      url: git@github.com:dreamer2q/zefyr.git
@@ -45,9 +39,8 @@ dependencies:
 
   # 底部导航栏
   curved_navigation_bar: ^0.4.0-nullsafety.0
-
+  # 解决 sliverList 单 scrollController 滚动问题
   extended_nested_scroll_view: 3.0.0
-
   # HTML渲染部分，主要用于渲染语雀文档
   ## 文档瞄点
   scroll_to_index: 1.0.6
@@ -72,100 +65,73 @@ dependencies:
   flutter_svg: ^0.21.0-nullsafety.0
   ## like动画按钮
   like_button: 2.0.2
-
   # Webview相关
   flutter_webview_plugin:
     git: https://github.com/aboutmydreams/flutter_webview_plugin.git
-#  flutter_inappwebview: 4.0.0+4
+  #  flutter_inappwebview: 4.0.0+4
   flutter_inappwebview: 5.3.2
-
   ## tree
   flutter_simple_treeview:
     git: https://github.com/yuyanSky/flutter_simple_treeview.git
-
   ## 多返回值
   tuple: 2.0.0
-
   # goodlook guide 液体
   liquid_swipe: ^1.5.0
   flutter_swiper: 1.1.6
-
   # 网络请求
   dio: 4.0.0-beta7
   pretty_json: 1.1.0
-
   # 弱提示
   fluttertoast: ^3.1.3
   bot_toast: 3.0.5
-
   # launcher
   url_launcher: ^6.0.2
-
   # 有序列表
   romanice: 1.0.0+1
-
   # 下拉刷新
   pull_to_refresh: ^2.0.0
-
   # 写入文件
   path_provider: ^2.0.1
-
   # 状态管理
   # scoped_model: ^1.0.1
-  get: 4.0.0-nullsafety.2
-
+  get: ^4.2.5
   # 数据分析
   firebase_core: ^1.0.4 # This dependency was added during initial configuration.
   firebase_analytics: ^8.0.1 # add dependency for Google Analytics for Firebase
-
   # 缓存
   shared_preferences: ^2.0.5
-  get_storage: 2.0.1
-
+  get_storage: ^2.0.3
   # 分享
   share_extend: ^1.1.9
   # 权限
-  permission_handler: ^6.1.1
+  permission_handler: ^8.0.1
   # flare动画
   flare_flutter: ^3.0.0
-
   # 裁剪 我的页面顶部背景
   flutter_custom_clippers: ^1.1.0
   # 列表动画
   flutter_staggered_animations: 1.0.0
   # 话题标签颜色
   smart_color: ^0.2.2
-
   # 消息红点
   badges: ^1.1.0
-
   # 评论 下滑出的抽屉
   sliding_up_panel: ^1.0.1
   #  bottom_sheet: 0.0.1-dev.8
   modal_bottom_sheet: 2.0.0
-
   # 更新apk https://github.com/xuexiangjys/XUpdate
   flutter_xupdate: ^1.0.2
-
   # 获取版本号
   package_info: ^0.4.3+2
-
   # 滑动tab
   shifting_tabbar: ^0.3.1
-
   # 图片选择器
-  image_picker: ^0.7.2
-
-  # lake to markdown
-  html2md: ^1.0.1
-
+  image_picker: ^0.7.3 # lake to markdown
+  # html2md: ^1.0.1
   # markdown 渲染器
-  flutter_markdown: ^0.6.1
-
+  # flutter_markdown: ^0.6.1
   # 骨架图
   shimmer: ^2.0.0
-
-
   ## 字符串格式
   recase: 3.0.1
 

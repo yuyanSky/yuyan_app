@@ -32,7 +32,7 @@ class SettingItemWidget extends StatelessWidget {
       ),
       title: Badge(
         padding: EdgeInsets.all(3),
-        position: BadgePosition.topStart(),
+        position: BadgePosition(start: 34),
         alignment: Alignment.centerLeft,
         child: Text(
           '$title',

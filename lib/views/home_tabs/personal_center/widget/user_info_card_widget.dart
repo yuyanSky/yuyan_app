@@ -19,16 +19,29 @@ class MyInfoCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tag = Util.genHeroTag();
-
+    double leftMargin = MediaQuery.of(context).size.width * 0.075;
+    double descriptionWidth =
+        MediaQuery.of(context).size.width - leftMargin * 3.6 - 95;
     return Container(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 8, bottom: 16),
+      margin: EdgeInsets.only(
+        top: 40,
+        left: leftMargin,
+        right: leftMargin,
+        bottom: leftMargin,
+      ),
+      padding: EdgeInsets.only(
+        left: leftMargin * 0.8,
+        right: leftMargin * 0.8,
+        top: 14,
+        bottom: 18,
+      ),
       decoration: BoxDecoration(
         color: AppColors.background,
         boxShadow: [
           BoxShadow(
-            color: Color.fromARGB(55, 0, 0, 0),
+            color: Color.fromARGB(40, 0, 0, 0),
             offset: Offset(1, 2),
-            blurRadius: 4,
+            blurRadius: 3,
           ),
         ],
         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -63,7 +76,7 @@ class MyInfoCardWidget extends StatelessWidget {
                     children: [
                       Container(
                         height: 33,
-                        // width: descriptionWidth,
+                        width: descriptionWidth,
                         margin: EdgeInsets.only(left: 2),
                         child: Row(
                           children: [
@@ -77,10 +90,10 @@ class MyInfoCardWidget extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        // width: descriptionWidth,
+                        width: descriptionWidth,
                         margin: EdgeInsets.only(left: 3),
                         child: Text(
-                          "${info.description ?? 'empty'}",
+                          "${info.description ?? '笔墨待识君'}",
                           textAlign: TextAlign.left,
                           maxLines: 2,
                           style: AppStyles.countTextStyle,
@@ -163,7 +176,7 @@ class InfoNumberItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 64,
+      width: MediaQuery.of(context).size.width * 0.172,
       child: InkWell(
         onTap: () {
           if (namedRoute != null) {

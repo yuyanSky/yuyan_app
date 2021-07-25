@@ -20,6 +20,7 @@ class SettingTile extends StatelessWidget {
           ? Badge(
               padding: EdgeInsets.all(3),
               position: BadgePosition(start: 60),
+              alignment: Alignment.centerLeft,
               child: Text(
                 '$title',
                 textAlign: TextAlign.left,
