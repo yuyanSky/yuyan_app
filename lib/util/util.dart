@@ -501,13 +501,13 @@ extension WidgetEx on Widget {
       return AnimatedSwitcher(
         duration: duration,
         child: child,
-        // transitionBuilder: (child, anim) {
-        //   return SlideTransition(
-        //     position: Tween<Offset>(
-        //       begin: Offset(0, -100),
-        //       end: Offset(0, 0),
-        //     ).animate(anim),
-        //     child: child,
+        // layoutBuilder: (Widget currentChild, List<Widget> previousChildren) {
+        //   return Stack(
+        //     children: <Widget>[
+        //       ...previousChildren,
+        //       if (currentChild != null) currentChild,
+        //     ],
+        //     alignment: Alignment.centerLeft,
         //   );
         // },
       );

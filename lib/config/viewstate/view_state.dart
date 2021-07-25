@@ -293,6 +293,7 @@ mixin ControllerStateMixin on GetxController {
     Widget Function(ViewError error) onError,
     bool animation = true,
     bool scaffold = false,
+    bool centerLayout = false,
   }) {
     Widget child;
     switch (state) {
@@ -324,6 +325,9 @@ mixin ControllerStateMixin on GetxController {
       child = AnimatedSwitcher(
         duration: 350.milliseconds,
         child: child,
+        layoutBuilder: centerLayout
+            ? AnimatedSwitcher.defaultLayoutBuilder
+            : _linearLayoutBuilder,
       );
     }
     return child;
@@ -342,6 +346,17 @@ mixin ControllerStateMixin on GetxController {
       setError(e);
     }
   }
+}
+
+Widget _linearLayoutBuilder(
+    Widget currentChild, List<Widget> previousChildren) {
+  return Stack(
+    children: <Widget>[
+      ...previousChildren,
+      if (currentChild != null) currentChild,
+    ],
+    alignment: Alignment.topCenter,
+  );
 }
 
 //TODO(@dreamer2q): add condition build methods

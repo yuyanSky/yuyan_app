@@ -178,10 +178,14 @@ document.querySelectorAll('img[src]')
   Widget build(BuildContext context) {
     int _y = 0;
     final docBody = InAppWebView(
-      initialUrl: embedUrl,
+      // initialUrl: embedUrl,
+      initialUrlRequest: URLRequest(url: Uri.parse(embedUrl)),
       initialOptions: InAppWebViewGroupOptions(
         crossPlatform: InAppWebViewOptions(
           useShouldOverrideUrlLoading: true,
+        ),
+        android: AndroidInAppWebViewOptions(
+          useHybridComposition: false,
         ),
       ),
       onWebViewCreated: (c) {
@@ -211,25 +215,36 @@ document.querySelectorAll('img[src]')
         }
         _y = y;
       },
-      onProgressChanged: (_, progress) {},
+      onProgressChanged: (_, progress) {
+        debugPrint('progress: $progress');
+      },
       onDownloadStart: (_, url) {
         debugPrint('download => $url');
       },
       shouldOverrideUrlLoading: (_, req) async {
         debugPrint('override request => $req');
-        if (req.url.endsWith(_param)) {
-          return ShouldOverrideUrlLoadingAction.ALLOW;
+        if (req.request.url.toString().endsWith(_param)) {
+          // return ShouldOverrideUrlLoadingAction.ALLOW;
+          return NavigationActionPolicy.ALLOW;
         }
-        if (req.url.startsWith('https://tracert.alipay.com/')) {
-          return ShouldOverrideUrlLoadingAction.CANCEL;
+        const blockUrl = 'https://tracert.alipay.com/';
+        if (req.request.url.toString().startsWith(blockUrl)) {
+          // return ShouldOverrideUrlLoadingAction.CANCEL;
+          return NavigationActionPolicy.CANCEL;
         }
-        MyRoute.webview(req.url);
-        return ShouldOverrideUrlLoadingAction.CANCEL;
+        MyRoute.webview(req.request.url.toString());
+        return NavigationActionPolicy.CANCEL;
         // return ShouldOverrideUrlLoadingAction.ALLOW;
       },
       onCreateWindow: (_, req) async {
         debugPrint('create window: $req');
         return false;
+      },
+      onLoadError: (_, url, code, msg) {
+        debugPrint('load $url: $code $msg');
+      },
+      onLoadHttpError: (_, url, code, msg) {
+        debugPrint('load $url: $code $msg');
       },
       onLoadStart: (_, url) {
         visible.value = false;
@@ -256,6 +271,7 @@ document.querySelectorAll('img[src]')
             builder: (c) => c.stateBuilder(
               onError: (err) => Text('${err.title}'),
               onLoading: Text('${title.value}'),
+              animation: false,
               onIdle: () {
                 title.value = c.value.title;
                 final elseif = Align(

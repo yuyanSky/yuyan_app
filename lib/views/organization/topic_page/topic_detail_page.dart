@@ -163,7 +163,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
                           title: '编辑',
                         ),
                       ),
-                    if (c.abilities.destroy)
+                    if (c.abilities.update)
                       PopupMenuItem(
                         value: () => Util.safeHandler(
                           ApiRepository.putTopicAction(

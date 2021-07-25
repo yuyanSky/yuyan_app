@@ -1,8 +1,10 @@
 import 'dart:io';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:yuyan_app/config/app.dart';

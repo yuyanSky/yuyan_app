@@ -5,8 +5,8 @@ import 'package:package_info/package_info.dart';
 // import 'package:webview_flutter/webview_flutter.dart' as web;
 import 'package:yuyan_app/config/net/token.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
-import 'package:yuyan_app/controller/organization/organization_controller.dart';
 import 'package:yuyan_app/controller/home/personal/my_controller.dart';
+import 'package:yuyan_app/controller/organization/organization_controller.dart';
 
 class App {
   static TokenProvider tokenProvider = TokenProvider();
@@ -49,13 +49,14 @@ class Config {
       "https://apps.apple.com/cn/app/%E8%AF%AD%E7%87%95app/id1502617331";
 
   static get webview => InAppWebViewGroupOptions(
-      // crossPlatform: InAppWebViewOptions(
-      //   userAgent:
-      //       'Mozilla/5.0 AppleWebKit/537.36 Chrome/88.0.4324.181 Mobile Safari/537.36 Yuyan',
-      // ),
-      // android: AndroidInAppWebViewOptions(
-      // cacheMode: AndroidCacheMode.LOAD_NO_CACHE,
-      // useHybridComposition: true,
-      // ),
+        crossPlatform: InAppWebViewOptions(
+          mediaPlaybackRequiresUserGesture: false,
+        ),
+        android: AndroidInAppWebViewOptions(
+          useHybridComposition: true,
+        ),
+        ios: IOSInAppWebViewOptions(
+          allowsInlineMediaPlayback: true,
+        ),
       );
 }

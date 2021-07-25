@@ -53,8 +53,8 @@ class _EmbedWebviewPageState extends State<EmbedWebviewPage> {
             height: height,
             child: InAppWebView(
               initialOptions: Config.webview,
-              initialUrl: uri.toString(),
-              // initialUrlRequest: URLRequest(url: uri),
+              // initialUrl: uri.toString(),
+              initialUrlRequest: URLRequest(url: uri),
               onLoadStart: (c, url) {
                 if (url.toString() != widget.url) {
                   if (widget.lockUrl) c.goBack();
@@ -89,9 +89,22 @@ class _WebviewPageState extends State<WebviewPage> {
   var _url = ''.obs;
   var _title = ''.obs;
 
+  final _initialConfig = InAppWebViewGroupOptions(
+    crossPlatform: InAppWebViewOptions(
+      mediaPlaybackRequiresUserGesture: false,
+      useShouldOverrideUrlLoading: true,
+    ),
+    android: AndroidInAppWebViewOptions(
+      useHybridComposition: true,
+    ),
+    ios: IOSInAppWebViewOptions(
+      allowsInlineMediaPlayback: true,
+    ),
+  );
+
   InAppWebViewController _controller;
 
-  // PullToRefreshController _pullController;
+  PullToRefreshController _pullController;
   bool _forcePopup = false;
 
   @override
@@ -100,24 +113,12 @@ class _WebviewPageState extends State<WebviewPage> {
     _url.value = widget.url;
     _title.value = widget.url;
     debugPrint('webview: ${widget.url}');
-    // _pullController = PullToRefreshController(
-    //   onRefresh: () {
-    //     _controller?.reload()?.then((v) async {
-    //       await _controller.reload();
-    //       Future.doWhile(() async {
-    //         debugPrint('isloading =>  ${await _controller.isLoading()}');
-    //         var loading = await _controller.isLoading();
-    //         if (loading) {
-    //           await Future.delayed(Duration(milliseconds: 100));
-    //           return true;
-    //         }
-    //         _pullController.endRefreshing();
-    //         return false;
-    //       });
-    //     });
-    //     debugPrint('refresh event !');
-    //   },
-    // );
+    _pullController = PullToRefreshController(
+      onRefresh: () {
+        _controller?.reload();
+        debugPrint('refresh event !');
+      },
+    );
   }
 
   @override
@@ -127,7 +128,6 @@ class _WebviewPageState extends State<WebviewPage> {
         if (_controller == null || _forcePopup) return true;
         if (await _controller.canGoBack()) {
           _controller.goBack();
-          // _controller.webStorage.sessionStorage.getItem(key: 'cookie');
           return false;
         }
         return true;
@@ -179,20 +179,40 @@ class _WebviewPageState extends State<WebviewPage> {
         ),
         body: Container(
           child: InAppWebView(
-            initialOptions: Config.webview,
-            // pullToRefreshController: _pullController,
-            initialUrl: widget.url,
-            // initialUrlRequest: URLRequest(
-            //   url: Uri.parse(widget.url),
-            // ),
+            initialOptions: _initialConfig,
+            pullToRefreshController: _pullController,
+            initialUrlRequest: URLRequest(
+              url: Uri.parse(widget.url),
+            ),
             onTitleChanged: (c, title) {
               _title.value = title;
             },
             onLoadStart: (c, url) {
               _url.value = url.toString();
             },
+            onLoadStop: (c, url) {
+              _pullController.endRefreshing();
+            },
             onWebViewCreated: (c) {
               _controller = c;
+            },
+            shouldOverrideUrlLoading: (_, nav) async {
+              final uri = nav.request.url;
+              if (![
+                "http",
+                "https",
+                "file",
+                "chrome",
+                "data",
+                "javascript",
+                "about"
+              ].contains(uri.scheme)) {
+                if (await canLaunch(_url.value)) {
+                  await launch(_url.value);
+                  return NavigationActionPolicy.CANCEL;
+                }
+              }
+              return NavigationActionPolicy.ALLOW;
             },
           ),
         ),

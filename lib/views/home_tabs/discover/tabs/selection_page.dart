@@ -239,10 +239,11 @@ class __ExploreBannerWidgetState extends State<_ExploreBannerWidget>
     return GestureDetector(
       onTap: () {
         // MyRoute.docDetail(bookId: data.bookId, slug: data.slug);
+        final user = data.book.user ?? data.user;
         MyRoute.docDetailWebview(
           bookId: data.bookId,
           slug: data.slug,
-          login: data.user.login,
+          login: user.login,
           book: data.book.slug,
         );
       },
