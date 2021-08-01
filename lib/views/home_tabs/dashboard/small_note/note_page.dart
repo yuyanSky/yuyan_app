@@ -9,8 +9,8 @@ import 'package:yuyan_app/controller/organization/user/user_controller.dart';
 import 'package:yuyan_app/model/document/note/note.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
-import 'package:yuyan_app/views/widget/menu_item.dart';
 import 'package:yuyan_app/views/widget/lake/lake_render.dart';
+import 'package:yuyan_app/views/widget/menu_item.dart';
 
 class SmallNotePage extends StatelessWidget {
   @override
@@ -67,14 +67,14 @@ class _NoteItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-      padding: EdgeInsets.only(bottom: 14, left: 8, right: 8),
+      padding: EdgeInsets.only(left: 8, right: 8),
       decoration: BoxDecoration(
         color: AppColors.background,
         boxShadow: [
           BoxShadow(
             color: Color.fromARGB(25, 0, 0, 0),
-            offset: Offset(1, 2),
-            blurRadius: 2,
+            offset: Offset(1, 1),
+            blurRadius: 1,
           ),
         ],
         borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -87,16 +87,17 @@ class _NoteItemWidget extends StatelessWidget {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            SizedBox(width: 8),
+            AppIcon.svg('notes-icon-default', size: 16),
+            SizedBox(width: 8),
             Text(
               Util.timeCut(item.updatedAt),
-              style: TextStyle(
-                color: Colors.grey.withOpacity(0.5),
-              ),
+              style: AppStyles.countTextStyle,
             ),
             Spacer(),
             PopupMenuButton(
+              icon: Icon(Icons.more_horiz),
               itemBuilder: (_) => [
                 PopupMenuItem(
                   value: () {
@@ -133,19 +134,20 @@ class _NoteItemWidget extends StatelessWidget {
           data: item.description,
           docId: item.id,
         ),
-        if (item.description.endsWith('<!-- note-viewmore -->'))
-          TextButton(
-            onPressed: () {
-              debugPrint('查看全部');
-              Get.to(
-                MyNoteDetailPage(),
-                binding: BindingsBuilder.put(
-                  () => NoteDetailController(item.id),
-                ),
-              );
-            },
-            child: Text('查看全部'),
-          ),
+        TextButton(
+          onPressed: () {
+            Get.to(
+              MyNoteDetailPage(),
+              binding: BindingsBuilder.put(
+                () => NoteDetailController(item.id),
+              ),
+            );
+          },
+          child: Text('查看全部'),
+        ).onlyIf(
+          item.description.endsWith('<!-- note-viewmore -->'),
+          elseif: () => SizedBox(height: 8),
+        ),
       ],
     );
   }
@@ -158,15 +160,28 @@ class MyNoteDetailPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('小记详情'),
       ),
-      body: SingleChildScrollView(
-        child: GetBuilder<NoteDetailController>(
-          builder: (c) => c.stateBuilder(
-            onIdle: () => LakeRenderWidget(
-              data: c.value.doclet.bodyAsl,
-              docId: c.value.docletId,
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: GetBuilder<NoteDetailController>(
+                builder: (c) => c.stateBuilder(
+                  onIdle: () => Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 16,
+                      horizontal: 4,
+                    ),
+                    child: LakeRenderWidget(
+                      data: c.value.doclet.bodyAsl,
+                      docId: c.value.docletId,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

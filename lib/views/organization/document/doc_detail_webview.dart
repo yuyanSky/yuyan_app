@@ -59,7 +59,7 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
 
   var visible = false.obs;
   var canScrollTop = false.obs;
-  var minScrollHeight = 2000;
+  var minScrollHeight = 10000;
   var title = '文档详情'.obs;
   var showUser = true.obs;
   var fontSize = 15.0.obs;

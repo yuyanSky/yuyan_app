@@ -36,13 +36,13 @@ class _SmallNoteEditorState extends State<SmallNoteEditor> {
           return Scaffold(
             appBar: AppBar(
               title: Text('小记'),
-              actions: [
-                _publish(c.value.mirror.id),
-              ],
-              bottom: PreferredSize(
-                preferredSize: Size.fromHeight(45),
-                child: QuillToolbar.basic(
+              actions: [_publish(c.value.mirror.id)],
+            ),
+            body: Column(
+              children: [
+                QuillToolbar.basic(
                   controller: _controller,
+                  multiRowsDisplay: false,
                   onImagePickCallback: (file) async {
                     var controller = Get.find<NoteStatusController>();
                     var res = await ApiRepository.postAttachFile(
@@ -56,20 +56,22 @@ class _SmallNoteEditorState extends State<SmallNoteEditor> {
                     return res.url;
                   },
                 ),
-              ),
-            ),
-            body: QuillEditor(
-              scrollController: _scrollController,
-              autoFocus: false,
-              padding: const EdgeInsets.all(8),
-              controller: _controller,
-              readOnly: false,
-              scrollable: true,
-              expands: true,
-              focusNode: _focusNode,
-              onLaunchUrl: (url) {
-                debugPrint('launch url => $url');
-              },
+                Expanded(
+                  child: QuillEditor(
+                    scrollController: _scrollController,
+                    autoFocus: false,
+                    padding: const EdgeInsets.all(8),
+                    controller: _controller,
+                    readOnly: false,
+                    scrollable: true,
+                    expands: true,
+                    focusNode: _focusNode,
+                    onLaunchUrl: (url) {
+                      debugPrint('launch url => $url');
+                    },
+                  ),
+                ),
+              ],
             ),
           );
         },
