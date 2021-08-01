@@ -2,6 +2,7 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:html/parser.dart' as htmlparser;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -11,6 +12,7 @@ import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/config/viewstate/view_state_widget.dart';
+import 'package:yuyan_app/controller/app/theme_controller.dart';
 import 'package:yuyan_app/controller/organization/doc/doc_controller.dart';
 import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
@@ -40,7 +42,7 @@ class DocDetailWebviewPage extends StatefulWidget {
 }
 
 class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
-  final _param = 'view=doc_embed&from=yuyan&title=1&outline=1';
+  final _param = 'view=doc_embed&from=yuyan&title=1&outline=1&enable_sw=false';
 
   String get tag => '${widget.login}/${widget.login}/${widget.slug}';
 
@@ -53,8 +55,11 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
   }
 
   InAppWebViewController _webViewController;
+  PullToRefreshController _pullToRefreshController;
 
   var visible = false.obs;
+  var canScrollTop = false.obs;
+  var minScrollHeight = 2000;
   var title = '文档详情'.obs;
   var showUser = true.obs;
   var fontSize = 15.0.obs;
@@ -62,6 +67,13 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
   @override
   void initState() {
     super.initState();
+
+    _pullToRefreshController = PullToRefreshController(
+      onRefresh: () {
+        _webViewController?.reload();
+        debugPrint('refresh event !');
+      },
+    );
 
     Get.put(
       DocDetailController(
@@ -180,12 +192,13 @@ document.querySelectorAll('img[src]')
     final docBody = InAppWebView(
       // initialUrl: embedUrl,
       initialUrlRequest: URLRequest(url: Uri.parse(embedUrl)),
+      pullToRefreshController: _pullToRefreshController,
       initialOptions: InAppWebViewGroupOptions(
         crossPlatform: InAppWebViewOptions(
           useShouldOverrideUrlLoading: true,
         ),
         android: AndroidInAppWebViewOptions(
-          useHybridComposition: false,
+          useHybridComposition: true,
         ),
       ),
       onWebViewCreated: (c) {
@@ -214,6 +227,8 @@ document.querySelectorAll('img[src]')
           }
         }
         _y = y;
+        canScrollTop.value = (y > minScrollHeight);
+        // debugPrint('_y => $y');
       },
       onProgressChanged: (_, progress) {
         debugPrint('progress: $progress');
@@ -251,11 +266,18 @@ document.querySelectorAll('img[src]')
         debugPrint('loadStart => $url');
       },
       onLoadStop: (_, url) async {
+        _pullToRefreshController.endRefreshing();
         debugPrint('loadStop => $url');
         await _injectJavascript();
         // 延迟 100 毫秒，等待 JavaScript 执行效果
         Future.delayed(100.milliseconds, () {
           visible.value = true;
+          _webViewController.getContentHeight().then((h) {
+            debugPrint('contentHeight => $h');
+            if (h > minScrollHeight) {
+              minScrollHeight = h ~/ 10;
+            }
+          });
         });
       },
     );
@@ -353,7 +375,26 @@ document.querySelectorAll('img[src]')
                   index: visible.value ? 1 : 0,
                   children: [
                     ViewLoadingWidget(),
-                    docBody,
+                    Stack(
+                      children: [
+                        Positioned.fill(child: docBody),
+                        PositionedDirectional(
+                          bottom: 16,
+                          end: 16,
+                          width: 32,
+                          height: 32,
+                          child: IconButton(
+                            iconSize: 32,
+                            icon: Icon(FontAwesomeIcons.arrowAltCircleUp),
+                            color: ThemeController.to.primarySwatchColor,
+                            onPressed: () {
+                              _webViewController?.scrollTo(
+                                  x: 0, y: 0, animated: true);
+                            },
+                          ).onlyIf(canScrollTop.value),
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ),
