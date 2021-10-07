@@ -171,19 +171,19 @@ class _CommentToolbarWidgetState extends State<CommentToolbarWidget>
           controller: controller,
         ),
         SizedBox(width: 0.6),
-        ImageButton(
-          icon: Icons.image,
-          controller: controller,
-          imageSource: ImageSource.gallery,
-          onImagePickCallback: _imageUpload,
-        ),
-        SizedBox(width: 0.6),
-        ImageButton(
-          icon: Icons.photo_camera,
-          controller: controller,
-          imageSource: ImageSource.camera,
-          onImagePickCallback: _imageUpload,
-        ),
+        // ImageButton(
+        //   icon: Icons.image,
+        //   controller: controller,
+        //   imageSource: ImageSource.gallery,
+        //   onImagePickCallback: _imageUpload,
+        // ),
+        // SizedBox(width: 0.6),
+        // ImageButton(
+        //   icon: Icons.photo_camera,
+        //   controller: controller,
+        //   imageSource: ImageSource.camera,
+        //   onImagePickCallback: _imageUpload,
+        // ),
         VerticalDivider(
           indent: 16,
           endIndent: 16,

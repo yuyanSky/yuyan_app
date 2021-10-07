@@ -37,6 +37,7 @@ android/yuyan.jks
 .pub-cache/
 .pub/
 /build/
+ios/build/
 
 # Web related
 lib/generated_plugin_registrant.dart

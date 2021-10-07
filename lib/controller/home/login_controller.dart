@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/token.dart';
 import 'package:yuyan_app/config/route_manager.dart';
@@ -49,7 +50,7 @@ class LoginController extends FetchValueController<TokenJsonSeri> {
 
   // 隐藏语雀第三方登录， iOS 审核需要
   onStateChanged(state) {
-    Timer(Duration(milliseconds: 100), (){
+    Timer(Duration(milliseconds: 100), () {
       final js = 'document.querySelector(".third-login").style.display="none";';
       controller.evalJavascript(js);
     });
@@ -72,20 +73,23 @@ class LoginController extends FetchValueController<TokenJsonSeri> {
 
   @override
   Future<TokenJsonSeri> fetch() async {
-    var token = await Api2Repository.getTokenByCode(code: _code);
-    
+    const cookieURL = 'https://www.yuque.com/dashboard';
+    final cookieManager = WebviewCookieManager();
+    final token = await Api2Repository.getTokenByCode(code: _code);
+    final cookies = await cookieManager.getCookies(cookieURL);
 
-    String cookies = await controller.getAllCookies("https://www.yuque.com/dashboard");
-    debugPrint("token.toString()===========");
-    debugPrint(cookies);
-    debugPrint("token.toString()===========");
-    if (cookies == null) throw '没有Cookie';
-    // 判断是否有认证 Cookie
-    var valid =
-        cookies.contains("_yuque_session") && cookies.contains("ctoken");
-    if (!valid) throw '不合法的会话';
+    // debugPrint("token.toString()===========");
+    // debugPrint(cookies);
+    // debugPrint("token.toString()===========");
+
+    if (cookies.length < 3) throw 'Cookie 异常';
+    const needed = ['_yuque_session', 'yuque_ctoken'];
+    if (cookies.where((c) => needed.contains(c.name)).length != 2) {
+      throw '登录凭据获取失败';
+    }
+
     //保存登陆凭据
-    token.loadCookies(cookies);
+    token.loadCookies2(cookies);
     provider.updateData(token);
     Future.delayed(Duration(milliseconds: 300), () {
       App.analytics.logLogin(loginMethod: 'webview');

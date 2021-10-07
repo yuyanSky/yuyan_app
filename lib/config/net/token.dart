@@ -1,13 +1,20 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/base.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 
 class TokenJsonSeri {
+  // APIv2 X-Auth-Token
   String accessToken;
-  String session;
-  String cToken;
 
+  // x-csrf-token
+  String cToken;
+  // _yuque_session
+  String session;
+
+  // cookie backup
   String allCookie;
 
   TokenJsonSeri.fromJson(Map json) {
@@ -39,6 +46,22 @@ class TokenJsonSeri {
     debugPrint(cookieData['_TRACERT_COOKIE__SESSION']);
     cToken = cookieData['yuque_ctoken'];
     session = cookieData['_yuque_session'];
+  }
+
+  loadCookies2(List<Cookie> cookies) {
+    allCookie = cookies.map((k) => '${k.name}=${k.value}').join(';');
+    cookies.forEach((cookie) {
+      final n = cookie.name;
+      final v = cookie.value;
+      switch (n) {
+        case "_yuque_session":
+          session = v;
+          break;
+        case "yuque_ctoken":
+          cToken = v;
+          break;
+      }
+    });
   }
 
   String getCookie() {

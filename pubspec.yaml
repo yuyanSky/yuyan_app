@@ -2,7 +2,7 @@ name: yuyan_app
 
 description: 语燕，一款第三方语雀移动客户端
 
-version: 1.1.1+1.1.1
+version: 1.2+0
 
 environment:
   sdk: ">=2.10.0 <3.0.0"
@@ -25,11 +25,13 @@ dependencies:
 
   # 富文本编辑器
   notus: 1.0.0-dev.4.0
-  flutter_quill: 1.6.0
-  delta_markdown:
-    git:
-      url: https://github.com/dreamer2q/delta_markdown.git
-      ref: 26d70f68fd74651644cf7b6dcfb0d834b977e0fa
+  # flutter_quill: 1.6.0
+  flutter_quill: ^2.0.5
+  delta_markdown: ^0.3.0
+  # delta_markdown:
+  # git:
+  # url: https://github.com/dreamer2q/delta_markdown.git
+  # ref: 26d70f68fd74651644cf7b6dcfb0d834b977e0fa
 
   #  notus:
   #    git:
@@ -54,7 +56,8 @@ dependencies:
   ## clipboard复制代码
   clipboard: 0.1.2+8
   ## 组件显示，支持缩放
-  photo_view: ^0.11.1
+  # photo_view: ^0.11.1
+  photo_view: ^0.12.0
   ## 图片缓存
   cached_network_image: ^2.0.0
   ## 图片查看，编辑
@@ -66,10 +69,11 @@ dependencies:
   ## like动画按钮
   like_button: 2.0.2
   # Webview相关
-  flutter_webview_plugin:
-    git: https://github.com/aboutmydreams/flutter_webview_plugin.git
+  flutter_webview_plugin: ^0.4.0
   #  flutter_inappwebview: 4.0.0+4
-  flutter_inappwebview: 5.3.2
+  flutter_inappwebview: ^5.3.2
+  # cookie manager: getAllCookies
+  webview_cookie_manager: ^2.0.6
   ## tree
   flutter_simple_treeview:
     git: https://github.com/yuyanSky/flutter_simple_treeview.git
@@ -82,8 +86,10 @@ dependencies:
   dio: 4.0.0-beta7
   pretty_json: 1.1.0
   # 弱提示
-  fluttertoast: ^3.1.3
-  bot_toast: 3.0.5
+  # fluttertoast: ^3.1.3
+  fluttertoast: ^8.0.8
+  # bot_toast: 3.0.5
+  bot_toast: ^4.0.1
   # launcher
   url_launcher: ^6.0.2
   # 有序列表
@@ -124,9 +130,10 @@ dependencies:
   # 获取版本号
   package_info: ^0.4.3+2
   # 滑动tab
-  shifting_tabbar: ^0.3.1
+  # shifting_tabbar: ^0.3.1
+  shifting_tabbar: ^1.0.2
   # 图片选择器
-  image_picker: ^0.7.3 # lake to markdown
+  image_picker: ^0.8.2 # lake to markdown
   # html2md: ^1.0.1
   # markdown 渲染器
   # flutter_markdown: ^0.6.1
