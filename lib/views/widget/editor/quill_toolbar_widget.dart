@@ -251,7 +251,11 @@ class _CommentToolbarWidgetState extends State<CommentToolbarWidget>
         Row(
           children: [
             Expanded(
-              child: _buildBarIcons(),
+              child: QuillToolbar.basic(
+                controller: controller,
+                multiRowsDisplay: false,
+                onImagePickCallback: _imageUpload,
+              ),
             ),
             Obx(
               () => TextButton(
