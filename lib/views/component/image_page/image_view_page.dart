@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +20,8 @@ class SingleImageViewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = CachedNetworkImageProvider(imageUrl);
+    // final provider = CachedNetworkImageProvider(imageUrl);
+    final provider = NetworkImage(imageUrl);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Stack(
