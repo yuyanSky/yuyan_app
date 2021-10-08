@@ -546,9 +546,7 @@ document.querySelectorAll('img[src]')
   Widget __commentInfo(DocCommentsController c) {
     return GestureDetector(
       onTap: () {
-        if (GetUtils.isNullOrBlank(c.value?.meta)) {
-          return;
-        }
+        if (GetUtils.isNullOrBlank(c.value?.data)) return;
         showBarModalBottomSheet(
           context: context,
           builder: (_) {
@@ -571,7 +569,7 @@ document.querySelectorAll('img[src]')
           ),
           Text(
             "评论已关闭".onlyIf(
-              GetUtils.isNull(c.value?.meta),
+              GetUtils.isNull(c.value?.data),
               elseif: () => "${c.comments.length} 人评论 说点什么呢⋯⋯",
             ),
             style: TextStyle(
