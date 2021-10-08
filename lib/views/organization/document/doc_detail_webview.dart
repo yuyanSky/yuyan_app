@@ -282,126 +282,124 @@ document.querySelectorAll('img[src]')
       },
     );
 
-    return Theme(
-      data: ThemeData(primaryColor: Colors.white),
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: AppBar(
-          backgroundColor: AppColors.background,
-          title: GetBuilder<DocDetailController>(
-            tag: tag,
-            builder: (c) => c.stateBuilder(
-              onError: (err) => Text('${err.title}'),
-              onLoading: Text('${title.value}'),
-              animation: false,
-              onIdle: () {
-                title.value = c.value.title;
-                final elseif = Align(
-                  child: Text('${title.value}'),
-                  alignment: Alignment.centerLeft,
-                );
-                return Obx(
-                  () => _buildUserBar(
-                    c.value.user,
-                    c.value.updatedAt,
-                  ).onlyIf(
-                    showUser.value,
-                    elseif: () => elseif,
-                  ),
-                );
-              },
-            ),
-          ),
-          actions: [
-            // GestureDetector(
-            //   onTap: () {
-            //     showMaterialModalBottomSheet(
-            //       context: context,
-            //       builder: (_) {
-            //         return Container(
-            //           margin: const EdgeInsets.all(8),
-            //           padding: const EdgeInsets.all(8),
-            //           child: GetBuilder<DocDetailController>(
-            //             tag: tag,
-            //             builder: (c) => c.stateBuilder(
-            //               onIdle: () => Column(
-            //                 mainAxisSize: MainAxisSize.min,
-            //                 children: [
-            //                   Text('标签'),
-            //                   GetBuilder<DocTagController>(
-            //                     init: DocTagController(c.value.id),
-            //                     tag: tag,
-            //                     builder: (c) => c.stateBuilder(
-            //                       onError: (err) => SizedBox.shrink(),
-            //                       onLoading: SizedBox.shrink(),
-            //                       onEmpty: Text(''),
-            //                       onIdle: () => Row(
-            //                         children: c.value.mapWidget(
-            //                           (item) => Text('${item.title}'),
-            //                         ),
-            //                       ),
-            //                     ),
-            //                   ),
-            //                   Divider(),
-            //                   Row(
-            //                     children: [
-            //                       Text(
-            //                         '${c.value.wordCount}',
-            //                         style: AppStyles.textStyleA,
-            //                       ),
-            //                       Text('字', style: AppStyles.textStyleC),
-            //                     ],
-            //                   ),
-            //                   // Text('${c.value}'),
-            //                   Divider(),
-            //                 ],
-            //               ),
-            //             ),
-            //           ),
-            //         );
-            //       },
-            //     );
-            //   },
-            //   child: Icon(Icons.info),
-            // ),
-            _buildMoreAction(),
-          ],
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: Obx(
-                () => IndexedStack(
-                  index: visible.value ? 1 : 0,
-                  children: [
-                    ViewLoadingWidget(),
-                    Stack(
-                      children: [
-                        Positioned.fill(child: docBody),
-                        PositionedDirectional(
-                          bottom: 16,
-                          end: 16,
-                          width: 32,
-                          height: 32,
-                          child: IconButton(
-                            iconSize: 32,
-                            icon: Icon(FontAwesomeIcons.arrowAltCircleUp),
-                            color: ThemeController.to.primarySwatchColor,
-                            onPressed: () {
-                              _webViewController?.scrollTo(
-                                  x: 0, y: 0, animated: true);
-                            },
-                          ).onlyIf(canScrollTop.value),
-                        )
-                      ],
-                    ),
-                  ],
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        backgroundColor: AppColors.background,
+        foregroundColor: Colors.black,
+        title: GetBuilder<DocDetailController>(
+          tag: tag,
+          builder: (c) => c.stateBuilder(
+            onError: (err) => Text('${err.title}'),
+            onLoading: Text('${title.value}'),
+            animation: false,
+            onIdle: () {
+              title.value = c.value.title;
+              final elseif = Align(
+                child: Text('${title.value}'),
+                alignment: Alignment.centerLeft,
+              );
+              return Obx(
+                () => _buildUserBar(
+                  c.value.user,
+                  c.value.updatedAt,
+                ).onlyIf(
+                  showUser.value,
+                  elseif: () => elseif,
                 ),
+              );
+            },
+          ),
+        ),
+        actions: [
+          // GestureDetector(
+          //   onTap: () {
+          //     showMaterialModalBottomSheet(
+          //       context: context,
+          //       builder: (_) {
+          //         return Container(
+          //           margin: const EdgeInsets.all(8),
+          //           padding: const EdgeInsets.all(8),
+          //           child: GetBuilder<DocDetailController>(
+          //             tag: tag,
+          //             builder: (c) => c.stateBuilder(
+          //               onIdle: () => Column(
+          //                 mainAxisSize: MainAxisSize.min,
+          //                 children: [
+          //                   Text('标签'),
+          //                   GetBuilder<DocTagController>(
+          //                     init: DocTagController(c.value.id),
+          //                     tag: tag,
+          //                     builder: (c) => c.stateBuilder(
+          //                       onError: (err) => SizedBox.shrink(),
+          //                       onLoading: SizedBox.shrink(),
+          //                       onEmpty: Text(''),
+          //                       onIdle: () => Row(
+          //                         children: c.value.mapWidget(
+          //                           (item) => Text('${item.title}'),
+          //                         ),
+          //                       ),
+          //                     ),
+          //                   ),
+          //                   Divider(),
+          //                   Row(
+          //                     children: [
+          //                       Text(
+          //                         '${c.value.wordCount}',
+          //                         style: AppStyles.textStyleA,
+          //                       ),
+          //                       Text('字', style: AppStyles.textStyleC),
+          //                     ],
+          //                   ),
+          //                   // Text('${c.value}'),
+          //                   Divider(),
+          //                 ],
+          //               ),
+          //             ),
+          //           ),
+          //         );
+          //       },
+          //     );
+          //   },
+          //   child: Icon(Icons.info),
+          // ),
+          _buildMoreAction(),
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Obx(
+              () => IndexedStack(
+                index: visible.value ? 1 : 0,
+                children: [
+                  ViewLoadingWidget(),
+                  Stack(
+                    children: [
+                      Positioned.fill(child: docBody),
+                      PositionedDirectional(
+                        bottom: 16,
+                        end: 16,
+                        width: 32,
+                        height: 32,
+                        child: IconButton(
+                          iconSize: 32,
+                          icon: Icon(FontAwesomeIcons.arrowAltCircleUp),
+                          color: ThemeController.to.primarySwatchColor,
+                          onPressed: () {
+                            _webViewController?.scrollTo(
+                                x: 0, y: 0, animated: true);
+                          },
+                        ).onlyIf(canScrollTop.value),
+                      )
+                    ],
+                  ),
+                ],
               ),
             ),
-            _buildBottomBar(),
-          ],
-        ),
+          ),
+          _buildBottomBar(),
+        ],
       ),
     );
   }
