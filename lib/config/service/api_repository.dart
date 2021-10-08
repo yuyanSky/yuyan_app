@@ -160,7 +160,7 @@ class ApiRepository {
   }
 
   static Future<NotificationSeri> getNotificationList(
-      {String type = 'readed', int offset = 0, int limit = 100}) async {
+      {String type = 'seen', int offset = 0, int limit = 100}) async {
     var resp = await api.get(
       '/notifications',
       queryParameters: {'type': type, 'offset': offset, 'limit': limit},

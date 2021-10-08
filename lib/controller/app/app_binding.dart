@@ -41,8 +41,9 @@ class HomePageBinding extends Bindings {
     Get.lazyPut(() => MyFollowingController());
     Get.lazyPut(() => MyFollowerController());
 
-    Future.delayed(10.seconds, () {
-      Get.put(NotificationService());
-    });
+    // Disable this feature
+    // Future.delayed(10.seconds, () {
+    //   Get.put(NotificationService());
+    // });
   }
 }

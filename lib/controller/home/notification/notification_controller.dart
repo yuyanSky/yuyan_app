@@ -79,13 +79,13 @@ class NotificationAllController
   @override
   Future fetchData() async {
     unread = await ApiRepository.getNotificationList(type: 'unread');
-    readed = await ApiRepository.getNotificationList(type: 'readed');
-    system = await ApiRepository.getNotificationList(type: 'system');
+    readed = await ApiRepository.getNotificationList(type: 'seen');
+    // system = await ApiRepository.getNotificationList(type: 'system');
 
     return [
       ...unread.notifications,
       ...readed.notifications,
-      ...system.notifications,
+      // ...system.notifications,
     ];
   }
 
