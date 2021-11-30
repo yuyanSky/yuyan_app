@@ -27,7 +27,8 @@ class LoginController extends FetchValueController<TokenJsonSeri> {
       "scope": "group,repo,doc,topic,artboard",
       "redirect_uri": "yuyan://login",
     };
-    final query = param.keys.map((key) => '$key=${param[key]}').join('&');
+    final query =
+        param.keys.map((key) => '$key=${param[key]}').toList().join('&');
     return _baseUrl + query;
   }
 

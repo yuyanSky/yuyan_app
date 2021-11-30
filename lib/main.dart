@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:scroll_to_index/util.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/storage_manager.dart';

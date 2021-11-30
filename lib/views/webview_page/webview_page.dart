@@ -53,8 +53,7 @@ class _EmbedWebviewPageState extends State<EmbedWebviewPage> {
             height: height,
             child: InAppWebView(
               initialOptions: Config.webview,
-              initialUrl: uri.toString(),
-              // initialUrlRequest: URLRequest(url: uri),
+              initialUrlRequest: URLRequest(url: uri),
               onLoadStart: (c, url) {
                 if (url.toString() != widget.url) {
                   if (widget.lockUrl) c.goBack();
@@ -181,10 +180,10 @@ class _WebviewPageState extends State<WebviewPage> {
           child: InAppWebView(
             initialOptions: Config.webview,
             // pullToRefreshController: _pullController,
-            initialUrl: widget.url,
-            // initialUrlRequest: URLRequest(
-            //   url: Uri.parse(widget.url),
-            // ),
+            initialUrlRequest: URLRequest(
+              url: Uri.parse(widget.url),
+            ),
+
             onTitleChanged: (c, title) {
               _title.value = title;
             },
