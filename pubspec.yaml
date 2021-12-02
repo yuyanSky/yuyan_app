@@ -99,8 +99,8 @@ dependencies:
   # scoped_model: ^1.0.1
   get: ^4.2.5
   # 数据分析
-  firebase_core: ^1.0.4 # This dependency was added during initial configuration.
-  firebase_analytics: ^8.0.1 # add dependency for Google Analytics for Firebase
+  firebase_core: ^1.10.0 # This dependency was added during initial configuration.
+  firebase_analytics: ^8.3.4 # add dependency for Google Analytics for Firebase
   # 缓存
   shared_preferences: ^2.0.5
   get_storage: ^2.0.3
