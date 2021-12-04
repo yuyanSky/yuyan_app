@@ -32,10 +32,10 @@ class CodeBlockWidget extends StatelessWidget {
 
   CodeBlockWidget(
     String input, {
-    this.language,
+    required this.language,
     this.theme = const {},
-    this.padding,
-    this.textStyle,
+    required this.padding,
+    required this.textStyle,
     int tabSize = 8, // TODO: https://github.com/flutter/flutter/issues/50087
   }) : source = input.replaceAll('\t', ' ' * tabSize);
 

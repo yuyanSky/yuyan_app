@@ -8,7 +8,7 @@ class LakeBookmarkWidget extends StatelessWidget {
 
   LakeBookmarkWidget({
     Key? key,
-    this.json,
+    required this.json,
   }) : super(key: key);
 
   @override
