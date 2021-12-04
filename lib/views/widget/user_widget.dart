@@ -104,10 +104,10 @@ class UserTileWidget extends StatelessWidget {
     );
     return GestureDetector(
       onTap: () {
-        MyRoute.user(
-          user: user,
-          heroTag: heroTag,
-        );
+        // MyRoute.user(
+        //   user: user,
+        //   heroTag: heroTag,
+        // );
       },
       child: child,
     );
@@ -132,7 +132,7 @@ class UserFollowTileWidget extends StatelessWidget {
     // String tag = Util.genHeroTag();
     return GestureDetector(
       onTap: () {
-        MyRoute.user(user: user.toUserLiteSeri());
+        // MyRoute.user(user: user.toUserLiteSeri());
       },
       child: Container(
         height: 70,
@@ -257,10 +257,10 @@ class UserActionTileWidget extends StatelessWidget {
     );
     return GestureDetector(
       onTap: () {
-        MyRoute.user(
-          user: user,
-          heroTag: tag,
-        );
+        // MyRoute.user(
+        //   user: user,
+        //   heroTag: tag,
+        // );
       },
       child: child,
     );

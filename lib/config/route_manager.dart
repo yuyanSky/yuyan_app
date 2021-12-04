@@ -1,12 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/controller/app/app_binding.dart';
 import 'package:yuyan_app/controller/home/personal/my_controller.dart';
-import 'package:yuyan_app/model/document/book.dart';
-import 'package:yuyan_app/model/user/group/group.dart';
-import 'package:yuyan_app/model/user/user_lite_seri.dart';
 import 'package:yuyan_app/views/component/webview/webview_page.dart';
 import 'package:yuyan_app/views/entrance/guide/guide_page.dart';
 import 'package:yuyan_app/views/entrance/login/login_page.dart';
@@ -26,12 +20,6 @@ import 'package:yuyan_app/views/home_tabs/personal_center/my_pages/my_mark_page.
 import 'package:yuyan_app/views/home_tabs/personal_center/my_pages/my_topic_page.dart';
 import 'package:yuyan_app/views/home_tabs/personal_center/settings/about_page.dart';
 import 'package:yuyan_app/views/home_tabs/personal_center/settings/setting_page.dart';
-import 'package:yuyan_app/views/organization/book/book_doc_page.dart';
-import 'package:yuyan_app/views/organization/document/doc_detail_page.dart';
-import 'package:yuyan_app/views/organization/document/doc_detail_webview.dart';
-import 'package:yuyan_app/views/organization/group_page/group_page.dart';
-import 'package:yuyan_app/views/organization/topic_page/topic_detail_page.dart';
-import 'package:yuyan_app/views/organization/user_page/user_page.dart';
 import 'package:yuyan_app/views/widget/lake/cards/mention.dart';
 
 class RouteName {
@@ -63,23 +51,23 @@ class RouteName {
 }
 
 class MyRoute {
-  static topic(int iid, int groupId) {
-    Get.to(
-      TopicDetailPage(
-        commentId: iid,
-        groupId: groupId,
-      ),
-    );
-  }
+  // static topic(int iid, int groupId) {
+  //   Get.to(
+  //     TopicDetailPage(
+  //       commentId: iid,
+  //       groupId: groupId,
+  //     ),
+  //   );
+  // }
 
-  static bookDocs(BookSeri book) {
-    Get.to(
-      BookDocPage(
-        book: book,
-      ),
-      preventDuplicates: false,
-    );
-  }
+  // static bookDocs(BookSeri book) {
+  //   Get.to(
+  //     BookDocPage(
+  //       book: book,
+  //     ),
+  //     preventDuplicates: false,
+  //   );
+  // }
 
   static webview(
     String url, {
@@ -94,50 +82,50 @@ class MyRoute {
     );
   }
 
-  static docDetailWebview({
-    @required int bookId,
-    @required String slug,
-    @required String login,
-    @required String book,
-  }) {
-    Get.to(
-      DocDetailWebviewPage(
-        login: login,
-        book: book,
-        bookId: bookId,
-        slug: slug,
-      ),
-    );
-  }
+  // static docDetailWebview({
+  //   required int bookId,
+  //   required String slug,
+  //   required String login,
+  //   required String book,
+  // }) {
+  //   Get.to(
+  //     DocDetailWebviewPage(
+  //       login: login,
+  //       book: book,
+  //       bookId: bookId,
+  //       slug: slug,
+  //     ),
+  //   );
+  // }
 
-  static docDetail({
-    @required int bookId,
-    @required String slug,
-    @required String login,
-    @required String book,
-  }) {
-    Get.to(
-      DocDetailPage(
-        bookId: bookId,
-        slug: slug,
-      ),
-      preventDuplicates: false,
-    );
-  }
+  // static docDetail({
+  //   required int bookId,
+  //   required String slug,
+  //   required String login,
+  //   required String book,
+  // }) {
+  //   Get.to(
+  //     DocDetailPage(
+  //       bookId: bookId,
+  //       slug: slug,
+  //     ),
+  //     preventDuplicates: false,
+  //   );
+  // }
 
   // 打开其他用户的页面
-  static user({
-    @required UserLiteSeri user,
-    String heroTag,
-  }) {
-    Get.to(
-      UserPage(
-        user: user,
-        heroTag: heroTag,
-      ),
-      preventDuplicates: false,
-    );
-  }
+  // static user({
+  //   required UserLiteSeri user,
+  //   String heroTag,
+  // }) {
+  //   Get.to(
+  //     UserPage(
+  //       user: user,
+  //       heroTag: heroTag,
+  //     ),
+  //     preventDuplicates: false,
+  //   );
+  // }
 
   static userByLogin(String login) {
     Get.to(
@@ -156,19 +144,19 @@ class MyRoute {
     );
   }
 
-  static group({
-    @required GroupSeri group,
-    String tag,
-    int pageIndex = 0,
-  }) {
-    Get.to(
-      GroupPage(
-        group: group,
-        heroTag: tag,
-      ),
-      preventDuplicates: false,
-    );
-  }
+  // static group({
+  //   required GroupSeri group,
+  //   required String tag,
+  //   int pageIndex = 0,
+  // }) {
+  //   Get.to(
+  //     GroupPage(
+  //       group: group,
+  //       heroTag: tag,
+  //     ),
+  //     preventDuplicates: false,
+  //   );
+  // }
 
   static List<GetPage> pages = [
     GetPage(
@@ -243,58 +231,58 @@ class MyRoute {
       name: RouteName.myTopic,
       page: () => MyTopicPage(),
     ),
-    GetPage(
-      name: RouteName.myAbout,
-      page: () => AboutPage(),
-      middlewares: [OrgSpaceMiddleware()],
-    ),
-    GetPage(
-      name: RouteName.mySuggest,
-      page: () => GroupById(
-        index: 2,
-        groupId: 671004,
-      ),
-      middlewares: [OrgSpaceMiddleware()],
-    ),
-    GetPage(
-      name: RouteName.spaceEnsure,
-      page: () => SpaceEnsurePage(),
-    ),
+    // GetPage(
+    //   name: RouteName.myAbout,
+    //   page: () => AboutPage(),
+    //   middlewares: [OrgSpaceMiddleware()],
+    // ),
+    // GetPage(
+    //   name: RouteName.mySuggest,
+    //   page: () => GroupById(
+    //     index: 2,
+    //     groupId: 671004,
+    //   ),
+    //   middlewares: [OrgSpaceMiddleware()],
+    // ),
+    // GetPage(
+    //   name: RouteName.spaceEnsure,
+    //   page: () => SpaceEnsurePage(),
+    // ),
   ];
 }
 
-class SpaceEnsurePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    debugPrint('space_ensure_page: arguments=> ${Get.arguments}');
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('INFO'),
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(22),
-        child: Center(
-          child: Text(
-            "当前所在的空间不支持此操作\n"
-            "请回到个人空间后重试",
-          ),
-        ),
-      ),
-    );
-  }
-}
+// class SpaceEnsurePage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     debugPrint('space_ensure_page: arguments=> ${Get.arguments}');
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('INFO'),
+//       ),
+//       body: Container(
+//         padding: const EdgeInsets.all(22),
+//         child: Center(
+//           child: Text(
+//             "当前所在的空间不支持此操作\n"
+//             "请回到个人空间后重试",
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
-class OrgSpaceMiddleware extends GetMiddleware {
-  @override
-  RouteSettings redirect(String route) {
-    switch (route) {
-      case RouteName.myAbout:
-      case RouteName.mySuggest:
-        if (App.currentSpaceProvider.isDefault) {
-          return null;
-        }
-        return RouteSettings(name: RouteName.spaceEnsure);
-    }
-    return null;
-  }
-}
+// class OrgSpaceMiddleware extends GetMiddleware {
+//   @override
+//   RouteSettings redirect(String route) {
+//     switch (route) {
+//       case RouteName.myAbout:
+//       case RouteName.mySuggest:
+//         if (App.currentSpaceProvider.isDefault) {
+//           return null;
+//         }
+//         return RouteSettings(name: RouteName.spaceEnsure);
+//     }
+//     return null;
+//   }
+// }

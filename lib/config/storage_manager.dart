@@ -9,14 +9,14 @@ import 'package:path_provider/path_provider.dart';
 
 class StorageManager {
   //保存 app config相关信息
-  static SharedPreferences sharedPreferences;
+  static late SharedPreferences sharedPreferences;
 
   // 临时目录，保存照片
-  static Directory temporaryDirectory;
+  static late Directory temporaryDirectory;
 
   // 离线可以使用的数据
   // static LocalStorage localStorage;
-  static GetStorage getStorage;
+  static late GetStorage getStorage;
 
   //初始化，同步操作会阻塞，尽量减少储存量
   static init() async {
@@ -32,11 +32,11 @@ class StorageManager {
 abstract class BaseSavableJson<T> extends GetxController {
   String get key;
 
-  T _data;
+  late T _data;
 
   T get data => _data;
 
-  bool get isNullOrEmpty => GetUtils.isNullOrBlank(data);
+  bool? get isNullOrEmpty => GetUtils.isNullOrBlank(data);
 
   set data(T newData) {
     _data = newData;
@@ -48,7 +48,7 @@ abstract class BaseSavableJson<T> extends GetxController {
 
   saveJson();
 
-  updateData([T newData]) => data = newData ?? data;
+  updateData([T? newData]) => data = newData ?? data;
 
   T convert(json);
 }
