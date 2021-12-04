@@ -23,10 +23,10 @@ class CommentToolbarWidget extends StatefulWidget {
 
   const CommentToolbarWidget({
     Key? key,
-    this.controller,
-    this.onPublish,
-    this.focusNode,
-    this.update,
+    required this.controller,
+    required this.onPublish,
+    required this.focusNode,
+    required this.update,
   }) : super(key: key);
 
   @override

@@ -10,7 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 /// Fetches an HTTP resource from the specified [url] using the specified [headers].
-Future<Uint8List> _httpGet(String url, {Map<String, String> headers}) async {
+Future<Uint8List> _httpGet(String url, {Map<String, String>? headers}) async {
   final HttpClient httpClient = HttpClient();
   final Uri uri = Uri.base.resolve(url);
   final HttpClientRequest request = await httpClient.getUrl(uri);
@@ -35,16 +35,15 @@ class SvgNetworkProvider extends ImageProvider<SvgImageKey> {
   /// Useful for [DecorationImage].
   /// If not specified, will use size from [Image].
   /// If [Image] not specifies size too, will use default size 100x100.
-  final Size size; // nullable
+  final Size? size; // nullable
 
   /// Color to tint the SVG
-  final Color color;
+  final Color? color;
 
   /// Width and height can also be specified from [Image] constrictor.
   /// Default size is 100x100 logical pixels.
   /// Different size can be specified in [Image] parameters
-  const SvgNetworkProvider(this.url, {this.size, this.color})
-      : assert(url != null);
+  const SvgNetworkProvider(this.url, {this.size, this.color});
 
   @override
   Future<SvgImageKey> obtainKey(ImageConfiguration configuration) {
@@ -88,7 +87,7 @@ class SvgNetworkProvider extends ImageProvider<SvgImageKey> {
         key.pixelHeight.toDouble(),
       ),
       clipToViewBox: false,
-      colorFilter: ColorFilter.mode(key.color, BlendMode.srcATop),
+      colorFilter: ColorFilter.mode(key.color!, BlendMode.srcATop),
     );
     final ui.Image image = await picture.toImage(
       key.pixelWidth,
@@ -116,16 +115,15 @@ class SvgStringProvider extends ImageProvider<SvgImageKey> {
   /// Useful for [DecorationImage].
   /// If not specified, will use size from [Image].
   /// If [Image] not specifies size too, will use default size 100x100.
-  final Size size; // nullable
+  final Size? size; // nullable
 
   /// Color to tint the SVG
-  final Color color;
+  final Color? color;
 
   /// Width and height can also be specified from [Image] constrictor.
   /// Default size is 100x100 logical pixels.
   /// Different size can be specified in [Image] parameters
-  const SvgStringProvider(this.data, {this.size, this.color})
-      : assert(data != null);
+  const SvgStringProvider(this.data, {this.size, this.color});
 
   @override
   Future<SvgImageKey> obtainKey(ImageConfiguration configuration) {
@@ -166,7 +164,7 @@ class SvgStringProvider extends ImageProvider<SvgImageKey> {
         key.pixelHeight.toDouble(),
       ),
       clipToViewBox: false,
-      colorFilter: ColorFilter.mode(key.color, BlendMode.srcATop),
+      colorFilter: ColorFilter.mode(key.color!, BlendMode.srcATop),
     );
     final ui.Image image = await picture.toImage(
       key.pixelWidth,
@@ -194,10 +192,7 @@ class SvgImageKey {
     required this.pixelHeight,
     required this.scale,
     this.color,
-  })  : assert(data != null),
-        assert(pixelWidth != null),
-        assert(pixelHeight != null),
-        assert(scale != null);
+  });
 
   final String data;
 
@@ -210,7 +205,7 @@ class SvgImageKey {
   final int pixelHeight;
 
   /// Color to tint the SVG
-  final Color color;
+  final Color? color;
 
   /// Used to calculate logical size from physical, i.e.
   /// logicalWidth = [pixelWidth] / [scale],

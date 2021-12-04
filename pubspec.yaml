@@ -105,7 +105,7 @@ dependencies:
   shared_preferences: ^2.0.5
   get_storage: ^2.0.3
   # 分享
-  share_extend: ^1.1.9
+  share_extend: ^2.0.0
   # 权限
   permission_handler: ^8.3.0
   # flare动画

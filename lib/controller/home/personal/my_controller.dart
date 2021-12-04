@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
@@ -60,6 +59,7 @@ class MyGroupController extends FetchSavableController<MyGroupProvider> {
   MyGroupController()
       : super(
           initialRefresh: true,
+          fetchData: s,
           initData: MyGroupProvider(),
         );
 

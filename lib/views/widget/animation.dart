@@ -12,10 +12,10 @@ class AnimationListWidget extends StatelessWidget {
 
   AnimationListWidget({
     Key? key,
-    this.controller,
-    this.itemCount,
-    this.itemBuilder,
-    this.physics,
+    required this.controller,
+    required this.itemCount,
+    required this.itemBuilder,
+    required this.physics,
     this.shrinkWrap = false,
     this.animationType = 1,
   }) : super(key: key);
@@ -51,7 +51,7 @@ class AnimationChildWidget extends StatelessWidget {
   const AnimationChildWidget({
     Key? key,
     this.index = 0,
-    this.child,
+    required this.child,
   }) : super(key: key);
 
   @override
@@ -80,7 +80,7 @@ class AnimationColumnWidget extends StatelessWidget {
     Key? key,
     this.mainAxisAlignment = MainAxisAlignment.center,
     this.crossAxisAlignment = CrossAxisAlignment.start,
-    this.children,
+    required this.children,
     this.milliseconds = 375,
     this.animationType = 1,
   }) : super(key: key);
@@ -116,7 +116,7 @@ class AnimationRowWidget extends StatelessWidget {
     Key? key,
     this.mainAxisAlignment = MainAxisAlignment.center,
     this.crossAxisAlignment = CrossAxisAlignment.start,
-    this.children,
+    required this.children,
   }) : super(key: key);
 
   @override

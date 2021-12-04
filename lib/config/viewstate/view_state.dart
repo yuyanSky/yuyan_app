@@ -215,7 +215,7 @@ mixin ControllerStateMixin on GetxController {
     error = ViewStateUtil.handlerError(e);
 
     state = ViewState.error;
-    onError?.call();
+    onError.call();
 
     //used for debug
     ViewStateUtil.errorPrint(e, stack);

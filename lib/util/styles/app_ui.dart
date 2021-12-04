@@ -136,8 +136,8 @@ class AppIcon {
   static Widget svg(
     String type, {
     double size = 24,
-    VoidCallback onTap,
-    Color color,
+    VoidCallback? onTap,
+    Color? color,
   }) {
     type = type.toLowerCase();
     final table = {
@@ -171,8 +171,8 @@ class AppIcon {
 
   static Widget iconType(
     String iconName, {
-    double size,
-    VoidCallback onTap,
+    double? size,
+    VoidCallback? onTap,
   }) {
     Map<String, Icon> iconDic = {
       "doc": Icon(
@@ -247,7 +247,7 @@ class AppIcon {
         BotToast.showText(text: 'iconName: $iconName not mapped to an icon!');
       },
     );
-    var iconWidget = iconDic[iconName?.toLowerCase()];
+    var iconWidget = iconDic[iconName.toLowerCase()];
     if (iconWidget == null) return fallback;
     if (onTap == null) return iconWidget;
     return InkWell(
