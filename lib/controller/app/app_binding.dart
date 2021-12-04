@@ -15,7 +15,7 @@ class AppBinding extends Bindings {
     Get.put(ThemeController());
     Get.put(BottomNavigatorController());
 
-    Get.put(App.currentSpaceProvider);
+    // Get.put(App.currentSpaceProvider);
 
     Get.lazyPut(() => VersionController(), fenix: true);
   }

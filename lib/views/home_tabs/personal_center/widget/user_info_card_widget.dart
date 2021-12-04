@@ -12,8 +12,8 @@ class MyInfoCardWidget extends StatelessWidget {
   final MineSeri info;
 
   MyInfoCardWidget({
-    Key key,
-    @required this.info,
+    Key? key,
+    required this.info,
   }) : super(key: key);
 
   @override
@@ -117,8 +117,8 @@ class MyInfoNumberWidget extends StatelessWidget {
   final MineSeri info;
 
   MyInfoNumberWidget({
-    Key key,
-    @required this.info,
+    Key? key,
+    required this.info,
   }) : super(key: key);
 
   @override
@@ -167,7 +167,7 @@ class InfoNumberItemWidget extends StatelessWidget {
   final String namedRoute;
 
   InfoNumberItemWidget({
-    Key key,
+    Key? key,
     this.title,
     this.number,
     this.namedRoute,

@@ -7,7 +7,7 @@ import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class QuickSetPage extends StatelessWidget {
-  const QuickSetPage({Key key}) : super(key: key);
+  const QuickSetPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class _QuickSetItemWidget extends StatelessWidget {
   final QuickLinkSeri data;
 
   _QuickSetItemWidget({
-    Key key,
+    Key? key,
     this.data,
   }) : super(key: key);
 

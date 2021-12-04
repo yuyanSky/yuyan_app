@@ -9,7 +9,7 @@ class LakeVideoPlayWidget extends StatefulWidget {
   final CardVideoSeri item;
 
   const LakeVideoPlayWidget({
-    Key key,
+    Key? key,
     this.item,
   }) : super(key: key);
 

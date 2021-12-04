@@ -11,7 +11,7 @@ class AnimationListWidget extends StatelessWidget {
   final bool shrinkWrap;
 
   AnimationListWidget({
-    Key key,
+    Key? key,
     this.controller,
     this.itemCount,
     this.itemBuilder,
@@ -49,7 +49,7 @@ class AnimationChildWidget extends StatelessWidget {
   final Widget child;
 
   const AnimationChildWidget({
-    Key key,
+    Key? key,
     this.index = 0,
     this.child,
   }) : super(key: key);
@@ -77,7 +77,7 @@ class AnimationColumnWidget extends StatelessWidget {
   final int animationType;
 
   AnimationColumnWidget({
-    Key key,
+    Key? key,
     this.mainAxisAlignment = MainAxisAlignment.center,
     this.crossAxisAlignment = CrossAxisAlignment.start,
     this.children,
@@ -113,7 +113,7 @@ class AnimationRowWidget extends StatelessWidget {
   final CrossAxisAlignment crossAxisAlignment;
 
   AnimationRowWidget({
-    Key key,
+    Key? key,
     this.mainAxisAlignment = MainAxisAlignment.center,
     this.crossAxisAlignment = CrossAxisAlignment.start,
     this.children,

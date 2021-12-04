@@ -59,13 +59,13 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Widget _builder(BuildContext context, Widget child) {
+  Widget _builder(BuildContext context, Widget? child) {
     final toast = toastBuilder(context, child);
     final keyboard = GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        if (Get.focusScope.hasPrimaryFocus) {
-          Get.focusScope.unfocus();
+        if (Get.focusScope!.hasPrimaryFocus) {
+          Get.focusScope!.unfocus();
         }
       },
       child: toast,

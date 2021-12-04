@@ -28,9 +28,9 @@ class ThemeController extends GetxController {
     Colors.brown,
   ];
 
-  int _colorIndex;
-  MaterialColor _primarySwatchColor;
-  ThemeData _themeData;
+  late int _colorIndex;
+  late MaterialColor _primarySwatchColor;
+  late ThemeData _themeData;
 
   MaterialColor get primarySwatchColor => _primarySwatchColor;
 

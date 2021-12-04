@@ -12,7 +12,7 @@ class GroupById extends StatelessWidget {
   final int index;
 
   const GroupById({
-    Key key,
+    Key? key,
     this.groupId,
     this.index = 0,
   }) : super(key: key);
@@ -45,7 +45,7 @@ class UserByLoginPage extends StatelessWidget {
   final String login;
 
   const UserByLoginPage({
-    Key key,
+    Key? key,
     this.login,
   }) : super(key: key);
 
@@ -82,7 +82,7 @@ class LakeMentionWidget extends StatelessWidget {
   final double fontSize;
 
   const LakeMentionWidget({
-    Key key,
+    Key? key,
     this.name,
     this.login,
     this.fontSize = 12,

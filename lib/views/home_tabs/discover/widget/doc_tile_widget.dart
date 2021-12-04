@@ -12,7 +12,7 @@ class DocTileWidget extends StatelessWidget {
   final DocSeri item;
 
   const DocTileWidget({
-    Key key,
+    Key? key,
     this.item,
   }) : super(key: key);
 

@@ -17,8 +17,8 @@ class LabelWidget extends StatelessWidget {
   final VoidCallback onTap;
 
   LabelWidget({
-    Key key,
-    @required this.label,
+    Key? key,
+    required this.label,
     this.style,
     this.onTap,
     this.colorIndex = 6,

@@ -7,7 +7,7 @@ class NothingPage extends StatelessWidget {
   final double top;
 
   const NothingPage({
-    Key key,
+    Key? key,
     this.top = 0,
     this.text = "",
   }) : super(key: key);

@@ -6,7 +6,7 @@ class FloatingActionWidget extends StatelessWidget {
   final Widget child;
 
   const FloatingActionWidget({
-    Key key,
+    Key? key,
     this.button,
     this.onPressed,
     this.child,

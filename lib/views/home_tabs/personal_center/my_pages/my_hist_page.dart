@@ -31,7 +31,7 @@ class DocHistWidget extends StatelessWidget {
   final DocSeri item;
 
   DocHistWidget({
-    Key key,
+    Key? key,
     this.item,
   }) : super(key: key);
 

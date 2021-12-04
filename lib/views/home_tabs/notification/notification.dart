@@ -11,7 +11,7 @@ import 'package:yuyan_app/views/organization/widget/org_spacet.dart';
 import 'widget/one_notification.dart';
 
 class NotificationTab extends StatefulWidget {
-  NotificationTab({Key key}) : super(key: key);
+  NotificationTab({Key? key}) : super(key: key);
 
   @override
   _NotificationTabState createState() => _NotificationTabState();

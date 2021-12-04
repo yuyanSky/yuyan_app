@@ -18,7 +18,7 @@ class EmbedWebviewPage extends StatefulWidget {
   final Widget header;
 
   const EmbedWebviewPage({
-    Key key,
+    Key? key,
     this.url,
     this.header,
     this.lockUrl = true,
@@ -77,7 +77,7 @@ class WebviewPage extends StatefulWidget {
   final String url;
 
   const WebviewPage({
-    Key key,
+    Key? key,
     this.url,
   }) : super(key: key);
 

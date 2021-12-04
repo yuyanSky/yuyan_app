@@ -42,8 +42,8 @@ class UserTileWidget extends StatelessWidget {
   final UserLiteSeri user;
 
   const UserTileWidget({
-    Key key,
-    this.user,
+    Key? key,
+    required this.user,
   }) : super(key: key);
 
   @override
@@ -120,9 +120,9 @@ class UserFollowTileWidget extends StatelessWidget {
   final bool hideButton;
 
   const UserFollowTileWidget({
-    Key key,
-    this.user,
-    this.isFollow,
+    Key? key,
+    required this.user,
+    required this.isFollow,
     this.hideButton = true,
   }) : super(key: key);
 
@@ -194,16 +194,16 @@ class UserFollowTileWidget extends StatelessWidget {
 
 class UserActionTileWidget extends StatelessWidget {
   final UserLiteSeri user;
-  final String title;
-  final String subTitle;
+  final String? title;
+  final String? subTitle;
   final String actionTime;
 
   UserActionTileWidget({
-    Key key,
-    this.user,
+    Key? key,
+    required this.user,
     this.title,
     this.subTitle,
-    this.actionTime,
+    required this.actionTime,
   }) : super(key: key);
 
   @override
@@ -239,7 +239,7 @@ class UserActionTileWidget extends StatelessWidget {
             ),
           ),
         ),
-        if (!GetUtils.isNullOrBlank(actionTime))
+        if (!GetUtils.isNullOrBlank(actionTime)!)
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -268,11 +268,11 @@ class UserActionTileWidget extends StatelessWidget {
 }
 
 class UserAvatarWidget extends StatelessWidget {
-  final String avatar;
+  final String? avatar;
   final double height;
 
   UserAvatarWidget({
-    Key key,
+    Key? key,
     this.avatar,
     this.height = 34,
   }) : super(key: key);

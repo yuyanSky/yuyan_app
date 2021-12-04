@@ -41,7 +41,7 @@ class MyMarkItemWidget extends StatelessWidget {
   final ActionSeri data;
 
   const MyMarkItemWidget({
-    Key key,
+    Key? key,
     this.data,
   }) : super(key: key);
 

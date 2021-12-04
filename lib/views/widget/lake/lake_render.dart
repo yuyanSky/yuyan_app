@@ -145,7 +145,7 @@ class LakeRenderWidget extends StatefulWidget {
   final int docId; //docId used for vote card
 
   LakeRenderWidget({
-    Key key,
+    Key? key,
     this.docId,
     this.data = '<h1>Empty Page</h1>',
     this.shrinkWrap = false,

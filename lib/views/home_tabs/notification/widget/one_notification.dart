@@ -79,8 +79,8 @@ class NotificationItemWidget extends StatelessWidget {
   }
 
   NotificationItemWidget({
-    Key key,
-    @required this.data,
+    Key? key,
+    required this.data,
     this.beforeTab,
     this.unread = false,
   }) : super(key: key);

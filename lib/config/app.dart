@@ -6,15 +6,13 @@ import 'package:package_info/package_info.dart';
 import 'package:yuyan_app/config/net/token.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/controller/home/personal/my_controller.dart';
-import 'package:yuyan_app/controller/organization/organization_controller.dart';
 
 class App {
   static TokenProvider tokenProvider = TokenProvider();
-  static CurrSpaceProvider currentSpaceProvider = CurrSpaceProvider();
   static MyUserProvider userProvider = MyUserProvider();
   static FirebaseAnalytics analytics = FirebaseAnalytics();
 
-  static PackageInfo version;
+  static late PackageInfo version;
 
   static init() async {
     version = await PackageInfo.fromPlatform();

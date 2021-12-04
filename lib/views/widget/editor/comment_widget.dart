@@ -11,7 +11,7 @@ class CommentModalSheet extends StatefulWidget {
   final String hintText;
 
   CommentModalSheet({
-    Key key,
+    Key? key,
     this.onPublish,
     this.hintText,
   }) : super(key: key);

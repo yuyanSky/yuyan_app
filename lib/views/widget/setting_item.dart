@@ -11,11 +11,11 @@ class SettingItemWidget extends StatelessWidget {
   final bool badge;
 
   const SettingItemWidget({
-    Key key,
-    this.title,
-    this.imgAsset,
-    this.namedRoute,
-    this.badge,
+    Key? key,
+    required this.title,
+    required this.imgAsset,
+    required this.namedRoute,
+    required this.badge,
   }) : super(key: key);
 
   @override

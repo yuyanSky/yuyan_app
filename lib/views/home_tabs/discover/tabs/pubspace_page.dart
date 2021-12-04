@@ -8,7 +8,7 @@ import 'package:yuyan_app/views/home_tabs/discover/widget/book_tile_widget.dart'
 import 'package:yuyan_app/views/organization/widget/group.dart';
 
 class SpacePubPage extends StatefulWidget {
-  SpacePubPage({Key key}) : super(key: key);
+  SpacePubPage({Key? key}) : super(key: key);
 
   @override
   _SpacePubPageState createState() => _SpacePubPageState();
@@ -85,7 +85,7 @@ class TileListWidget extends StatelessWidget {
   final EdgeInsets margin;
 
   const TileListWidget({
-    Key key,
+    Key? key,
     this.title,
     this.children,
     this.divide = true,

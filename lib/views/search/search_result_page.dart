@@ -20,7 +20,7 @@ class SearchResultWidget extends StatefulWidget {
   final RxInt initIndex;
 
   const SearchResultWidget({
-    Key key,
+    Key? key,
     this.query,
     this.initIndex,
   }) : super(key: key);

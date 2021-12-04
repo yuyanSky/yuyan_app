@@ -9,7 +9,7 @@ class LakeYuqueCardWidget extends StatelessWidget {
   final LakeCardSeri card;
 
   const LakeYuqueCardWidget({
-    Key key,
+    Key? key,
     this.card,
   }) : super(key: key);
 
@@ -56,8 +56,8 @@ class LakeYuqueCardWidget extends StatelessWidget {
 
 class YuquePremiumPurchase extends StatelessWidget {
   YuquePremiumPurchase({
-    Key key,
-    @required this.json,
+    Key? key,
+    required this.json,
   }) : super(key: key);
 
   final Map json;

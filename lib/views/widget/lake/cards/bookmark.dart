@@ -7,7 +7,7 @@ class LakeBookmarkWidget extends StatelessWidget {
   final Map json;
 
   LakeBookmarkWidget({
-    Key key,
+    Key? key,
     this.json,
   }) : super(key: key);
 

@@ -189,10 +189,10 @@ class SvgStringProvider extends ImageProvider<SvgImageKey> {
 @immutable
 class SvgImageKey {
   const SvgImageKey({
-    @required this.data,
-    @required this.pixelWidth,
-    @required this.pixelHeight,
-    @required this.scale,
+    required this.data,
+    required this.pixelWidth,
+    required this.pixelHeight,
+    required this.scale,
     this.color,
   })  : assert(data != null),
         assert(pixelWidth != null),

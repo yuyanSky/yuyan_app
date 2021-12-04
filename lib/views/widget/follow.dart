@@ -11,9 +11,9 @@ class FollowButtonWidget extends StatefulWidget {
   final bool initialFollow;
 
   FollowButtonWidget({
-    Key key,
-    this.user,
-    this.initialFollow,
+    Key? key,
+    required this.user,
+    required this.initialFollow,
   }) : super(key: key);
 
   @override

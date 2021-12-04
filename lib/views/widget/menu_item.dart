@@ -5,9 +5,9 @@ class MenuItemWidget extends StatelessWidget {
   final String title;
 
   const MenuItemWidget({
-    Key key,
-    @required this.title,
-    this.iconData,
+    Key? key,
+    required this.title,
+    required this.iconData,
   }) : super(key: key);
 
   @override

@@ -5,14 +5,14 @@ import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/controller/home/login_controller.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  FlutterWebviewPlugin webviewPlugin;
+  late FlutterWebviewPlugin webviewPlugin;
 
   @override
   void initState() {

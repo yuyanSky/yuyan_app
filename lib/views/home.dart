@@ -36,7 +36,7 @@ class Home extends StatefulWidget {
   final int pageIndex;
 
   Home({
-    Key key,
+    Key? key,
     this.pageIndex = 0,
   }) : super(key: key);
 
@@ -47,7 +47,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<Widget> pageList = [];
   DateTime _prevBackTime = DateTime.now();
-  RxInt tabIndex;
+  late RxInt tabIndex;
 
   @override
   void initState() {

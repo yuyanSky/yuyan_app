@@ -11,7 +11,7 @@ class VoteCardWidget extends StatelessWidget {
   final int docId;
 
   const VoteCardWidget({
-    Key key,
+    Key? key,
     this.json,
     this.docId,
   }) : super(key: key);

@@ -28,7 +28,7 @@ class MyFollowBookPage
 class MyFollowBookItemWidget extends StatelessWidget {
   final ActionSeri data;
 
-  const MyFollowBookItemWidget({Key key, this.data}) : super(key: key);
+  const MyFollowBookItemWidget({Key? key, this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

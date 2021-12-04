@@ -56,7 +56,7 @@ class _RecommendItemWidget extends StatelessWidget {
   final Serializer item;
 
   const _RecommendItemWidget({
-    Key key,
+    Key? key,
     this.item,
   }) : super(key: key);
 
@@ -202,7 +202,7 @@ class _ExploreBannerWidget extends StatefulWidget {
   final List<DocSeri> data;
 
   _ExploreBannerWidget({
-    Key key,
+    Key? key,
     this.data,
   }) : super(key: key);
 

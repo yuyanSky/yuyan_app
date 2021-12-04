@@ -8,7 +8,7 @@ import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class NoteButton extends StatelessWidget {
-  const NoteButton({Key key}) : super(key: key);
+  const NoteButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +108,7 @@ class _QuickLinkEntryWidget extends StatelessWidget {
   final QuickLinkSeri data;
 
   _QuickLinkEntryWidget({
-    Key key,
+    Key? key,
     this.data,
   }) : super(key: key);
 

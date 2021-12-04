@@ -9,7 +9,7 @@ class LakeLockTextWidget extends StatelessWidget {
   final Map json;
 
   LakeLockTextWidget({
-    Key key,
+    Key? key,
     this.json,
   }) : super(key: key);
 

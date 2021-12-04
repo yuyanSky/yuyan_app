@@ -5,10 +5,10 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
 class BottomNavigatorController extends GetxController
-    with SingleGetTickerProviderMixin {
+    with GetSingleTickerProviderStateMixin {
   // var navIndex = 0.obs;
 
-  AnimationController _animateController;
+  late AnimationController _animateController;
   final Duration _duration = Duration(milliseconds: 300);
 
   Animation get animation => CurvedAnimation(
@@ -24,17 +24,17 @@ class BottomNavigatorController extends GetxController
         .contains(notification.metrics.axisDirection)) {
       return true;
     }
-    if (notification.metrics.pixels > 500) {
-      if (notification.scrollDelta > 5) {
-        if (_animateController.status != AnimationStatus.reverse) {
-          _animateController.reverse();
-        }
-      } else if (notification.scrollDelta < 5) {
-        if (_animateController.status != AnimationStatus.forward) {
-          _animateController.forward();
-        }
-      }
-    }
+    // if (notification.metrics.pixels > 500) {
+    //   if (notification.scrollDelta > 5) {
+    //     if (_animateController.status != AnimationStatus.reverse) {
+    //       _animateController.reverse();
+    //     }
+    //   } else if (notification.scrollDelta < 5) {
+    //     if (_animateController.status != AnimationStatus.forward) {
+    //       _animateController.forward();
+    //     }
+    //   }
+    // }
     return false;
   }
 

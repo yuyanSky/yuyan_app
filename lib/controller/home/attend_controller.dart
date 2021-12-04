@@ -10,7 +10,6 @@ class AttendDataProvider extends BaseSaveListJson<EventSeri> {
 
   @override
   List<EventSeri> convert(json) {
-    if (json == null) return null;
     var data = (json as List).map((e) => EventSeri.fromJson(e)).toList();
     return data;
   }

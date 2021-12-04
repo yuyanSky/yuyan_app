@@ -9,7 +9,7 @@ import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/animation.dart';
 
 class RecentPage extends StatelessWidget {
-  RecentPage({Key key}) : super(key: key);
+  RecentPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class _UserRecentItemWidget extends StatelessWidget {
   final UserRecentSeri data;
 
   _UserRecentItemWidget({
-    Key key,
+    Key? key,
     this.data,
   }) : super(key: key);
 

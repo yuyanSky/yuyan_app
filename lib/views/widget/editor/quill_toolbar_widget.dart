@@ -22,7 +22,7 @@ class CommentToolbarWidget extends StatefulWidget {
   final VoidCallback update;
 
   const CommentToolbarWidget({
-    Key key,
+    Key? key,
     this.controller,
     this.onPublish,
     this.focusNode,

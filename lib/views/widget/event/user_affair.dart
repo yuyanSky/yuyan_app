@@ -15,7 +15,7 @@ class UserAffairTileWidget extends StatelessWidget {
 
   UserAffairTileWidget(
     this.item, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -49,7 +49,7 @@ class _ActionTile extends StatelessWidget {
   final String actionTime;
 
   const _ActionTile({
-    Key key,
+    Key? key,
     this.child,
     this.user,
     this.action,
@@ -80,7 +80,7 @@ class _DocTileNoUser extends StatelessWidget {
   final DocSeri item;
 
   const _DocTileNoUser({
-    Key key,
+    Key? key,
     this.item,
   }) : super(key: key);
 

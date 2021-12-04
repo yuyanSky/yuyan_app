@@ -16,14 +16,14 @@ class VersionController extends GetxController {
       "https://service-kuz2fghy-1256880247.gz.apigw.tencentcs.com/release/yuyan_v2?v=";
   var _isLatest = true.obs;
 
-  bool get isLatest => _isLatest?.value ?? true;
-  String _message;
+  bool get isLatest => _isLatest.value;
+  late String _message;
   String _version = App.version.version;
 
   String get appVersion => _version;
 
   String get getMessage => _message;
-  UpdateJson _updateJson;
+  late UpdateJson _updateJson;
 
   UpdateJson get updateJson => _updateJson;
 
@@ -66,23 +66,6 @@ class VersionController extends GetxController {
       }).catchError((error) {
         print(error);
       });
-
-      FlutterXUpdate.setUpdateHandler(
-          onUpdateError: (Map<String, dynamic> message) async {
-        print(message);
-        //下载失败
-        if (message["code"] == 4000) {
-          FlutterXUpdate.showRetryUpdateTipDialog(
-            retryContent: "下载失败，重试一下？",
-            retryUrl: checkUrl + "$_version",
-          );
-        }
-        _message = "$message";
-        update();
-      }, onUpdateParse: (String json) async {
-        //这里是自定义json解析
-        return customParseJson(json);
-      });
     } else if ((Platform.isIOS)) {}
   }
 
@@ -107,7 +90,6 @@ class VersionController extends GetxController {
   }
 
   checkVersion(BuildContext context) {
-    //TODO(@dreamer2q): ........
     checkUpdateDefault();
     if (isLatest) {
       Util.toast("已是最新版本啦~");

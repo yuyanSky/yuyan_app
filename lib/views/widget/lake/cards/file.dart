@@ -8,8 +8,8 @@ class LakeFileCardWidget extends StatelessWidget {
   final Map json;
 
   const LakeFileCardWidget({
-    Key key,
-    @required this.json,
+    Key? key,
+    required this.json,
   }) : super(key: key);
 
   @override

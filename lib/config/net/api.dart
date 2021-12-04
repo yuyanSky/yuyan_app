@@ -1,19 +1,18 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/base.dart';
 import 'package:yuyan_app/config/net/token.dart';
 import 'package:yuyan_app/model/meta/meta.dart';
 
 class ApiResponse {
-  dynamic data;
-  int status;
-  String message;
+  late dynamic data;
+  late int status;
+  late String message;
 
-  Map meta;
-  MetaSeri metaSeri;
+  late Map meta;
+  late MetaSeri metaSeri;
 
-  Map _raw;
+  late Map _raw;
 
   Map get raw => _raw;
 
@@ -30,7 +29,7 @@ class ApiResponse {
   }
 
   bool isError() {
-    return data == null && status != null;
+    return data == null;
   }
 
   String errorDescription() {
@@ -73,17 +72,14 @@ class ApiError implements Exception {
   DioError dio;
 
   ApiError({
-    @required this.response,
-    this.dio,
+    required this.response,
+    required this.dio,
   });
 
   @override
   String toString() {
     var desc = response.errorDescription();
-    if (dio != null) {
-      return '${dio.request.method} ${dio.request.path} => $desc';
-    }
-    return desc;
+    return '${dio.request!.method} ${dio.request!.path} => $desc';
   }
 }
 

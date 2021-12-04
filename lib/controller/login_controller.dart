@@ -43,7 +43,7 @@ class LoginController extends FetchValueController<TokenJsonSeri> {
       controller.hide();
       //获取Code
       var uri = Uri.parse(url);
-      _code = uri.queryParameters['code'];
+      _code = uri.queryParameters['code']!;
       onRefresh(force: true);
     }
   }
@@ -91,7 +91,7 @@ class LoginController extends FetchValueController<TokenJsonSeri> {
     //保存登陆凭据
     token.loadCookies2(cookies);
     provider.updateData(token);
-    Future.delayed(Duration(milliseconds: 300), () {
+    Future.delayed(Duration(milliseconds: 500), () {
       App.analytics.logLogin(loginMethod: 'webview');
       Get.offAllNamed(RouteName.home);
     });

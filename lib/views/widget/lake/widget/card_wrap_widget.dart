@@ -13,7 +13,7 @@ class LakeCardWrapWidget extends StatelessWidget {
   final EdgeInsets margin;
 
   LakeCardWrapWidget({
-    Key key,
+    Key? key,
     this.type,
     this.child,
     this.params,

@@ -33,8 +33,6 @@ class PrintInterceptor extends InterceptorsWrapper {
   }
 
   String getResponseDebug(Response resp) {
-    if (resp == null)
-      return 'PrintInterceptor => getResponseDebug => parameter resp is null';
     //debug purpose
     var debug = '\nin response to ==> ' + getRequestDebug(resp.request);
     debug += '\nresponse--> ${resp.statusCode} ${resp.statusMessage}';
@@ -59,14 +57,15 @@ class PrintInterceptor extends InterceptorsWrapper {
         debug += '\n\tdata-->\n${resp.data}\n';
       }
     }
-    if (resp.isRedirect != null && resp.isRedirect) {
-      debug += '\n\tredirects-->\n${resp.redirects.map((e) => e.location).toString()}\n';
+    if (resp.isRedirect != null && resp.isRedirect!) {
+      debug +=
+          '\n\tredirects-->\n${resp.redirects.map((e) => e.location).toString()}\n';
     }
     return debug;
   }
 
   String getErrorDebug(DioError err) {
-    String debug = getResponseDebug(err.response);
+    String debug = getResponseDebug(err.response!);
     debug += '\nerrorType--> ${err.type}';
     debug += '\n\terror--> ${err.error}';
     return debug;

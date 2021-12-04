@@ -10,7 +10,7 @@ class BookTileWidget extends StatelessWidget {
   final BookSeri item;
 
   const BookTileWidget({
-    Key key,
+    Key? key,
     this.item,
   }) : super(key: key);
 
@@ -80,7 +80,7 @@ class BookTileWidgetFlat extends StatelessWidget {
   final BookSeri item;
 
   const BookTileWidgetFlat({
-    Key key,
+    Key? key,
     this.item,
   }) : super(key: key);
 

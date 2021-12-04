@@ -9,7 +9,7 @@ class ViewErrorWidget extends StatelessWidget {
   final ViewError error;
 
   const ViewErrorWidget({
-    Key key,
+    Key? key,
     this.error,
   }) : super(key: key);
 
@@ -29,7 +29,7 @@ class ViewButtonWidget extends StatelessWidget {
   final VoidCallback onPressed;
 
   const ViewButtonWidget({
-    Key key,
+    Key? key,
     this.icon,
     this.child = const Text('刷新'),
     this.onPressed,

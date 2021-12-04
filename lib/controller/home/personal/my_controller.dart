@@ -63,15 +63,15 @@ class MyGroupController extends FetchSavableController<MyGroupProvider> {
           initData: MyGroupProvider(),
         );
 
-  @override
-  Future fetchData() {
-    return ApiRepository.getGroupList();
-  }
+  // @override
+  // Future fetchData() {
+  //   return ApiRepository.getGroupList();
+  // }
 
-  @override
-  Future fetchMore() {
-    return ApiRepository.getGroupList();
-  }
+  // @override
+  // Future fetchMore() {
+  //   return ApiRepository.getGroupList();
+  // }
 }
 
 class MyFollowingProvider extends BaseSaveListJson<UserSeri> {
@@ -229,7 +229,7 @@ class MyTopicController extends FetchSavableController<MyTopicProvider> {
   final String topicState;
 
   MyTopicController({
-    @required this.topicState,
+    required this.topicState,
   }) : super(
           initData: MyTopicProvider('my_user_topic_$topicState'),
           initialRefresh: true,

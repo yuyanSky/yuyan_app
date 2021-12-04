@@ -14,7 +14,7 @@ class SingleImageViewer extends StatelessWidget {
   final String imageUrl;
 
   SingleImageViewer({
-    Key key,
+    Key? key,
     this.imageUrl,
   }) : super(key: key);
 
@@ -88,9 +88,9 @@ class ImageViewerPage extends StatefulWidget {
   final String initUrl;
 
   const ImageViewerPage({
-    Key key,
-    @required this.imageUrls,
-    @required this.initUrl,
+    Key? key,
+    required this.imageUrls,
+    required this.initUrl,
   })  : assert(imageUrls != null),
         assert(initUrl != null),
         super(key: key);

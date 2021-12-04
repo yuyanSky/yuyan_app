@@ -43,7 +43,7 @@ class LoginController extends FetchValueController<TokenJsonSeri> {
       controller.hide();
       //获取Code
       var uri = Uri.parse(url);
-      _code = uri.queryParameters['code'];
+      _code = uri.queryParameters['code']!;
       onRefresh(force: true);
     }
   }

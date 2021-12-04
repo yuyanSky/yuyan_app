@@ -11,8 +11,8 @@ class SmartImageWidget extends StatelessWidget {
   final bool circular;
 
   const SmartImageWidget({
-    Key key,
-    this.url,
+    Key? key,
+    required this.url,
     this.circular = false,
   }) : super(key: key);
 

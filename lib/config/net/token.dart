@@ -7,15 +7,15 @@ import 'package:yuyan_app/config/storage_manager.dart';
 
 class TokenJsonSeri {
   // APIv2 X-Auth-Token
-  String accessToken;
+  late String accessToken;
 
   // x-csrf-token
-  String cToken;
+  late String cToken;
   // _yuque_session
-  String session;
+  late String session;
 
   // cookie backup
-  String allCookie;
+  late String allCookie;
 
   TokenJsonSeri.fromJson(Map json) {
     if (json['error'] != null) {
@@ -24,9 +24,9 @@ class TokenJsonSeri {
 
     accessToken = json['access_token'];
     // try load from store
-    allCookie ??= json['all_cookie'];
-    session ??= json['session'];
-    cToken ??= json['ctoken'];
+    allCookie = json['all_cookie'];
+    session = json['session'];
+    cToken = json['ctoken'];
   }
 
   loadCookies(String cookie) {
@@ -44,8 +44,8 @@ class TokenJsonSeri {
 
     debugPrint(cookieData['_yuque_session']);
     debugPrint(cookieData['_TRACERT_COOKIE__SESSION']);
-    cToken = cookieData['yuque_ctoken'];
-    session = cookieData['_yuque_session'];
+    cToken = cookieData['yuque_ctoken']!;
+    session = cookieData['_yuque_session']!;
   }
 
   loadCookies2(List<Cookie> cookies) {
@@ -108,42 +108,41 @@ mixin TokenMixin on BaseHttp {
   }
 
   setToken(TokenJsonSeri token) {
-    if (token != null) {
-      options.headers['X-Auth-Token'] = token.accessToken;
-      options.headers['Cookie'] = token.getCookie();
-      options.headers['x-csrf-token'] = token.cToken;
-    }
+    options.headers['X-Auth-Token'] = token.accessToken;
+    options.headers['Cookie'] = token.getCookie();
+    options.headers['x-csrf-token'] = token.cToken;
   }
 }
 
 mixin OrganizationMixin on BaseHttp {
-  var spaceProvider = App.currentSpaceProvider;
-  String _defaultBaseUrl;
+  // var spaceProvider = App.currentSpaceProvider;
+  late String _defaultBaseUrl;
 
   init() {
     super.init();
     _defaultBaseUrl = options.baseUrl;
     debugPrint('_defaultBaseUrl => $_defaultBaseUrl');
-    //初始化orgSpace
-    debugPrint('init OrganizationMixin');
-    setOrgSpace(spaceProvider.data?.login);
-    spaceProvider.addListener(() {
-      debugPrint('!!!! change of organization !!!!!');
-      setOrgSpace(spaceProvider.data?.login);
+    // 初始化orgSpace
+    // debugPrint('init OrganizationMixin');
+    // setOrgSpace(spaceProvider.data?.login);
+    // spaceProvider.addListener(() {
+    //   debugPrint('!!!! change of organization !!!!!');
+    //   setOrgSpace(spaceProvider.data?.login);
 
-      App.analytics.logEvent(
-        name: 'change_org_space',
-        parameters: spaceProvider.data?.toJson(),
-      );
-    });
+    //   App.analytics.logEvent(
+    //     name: 'change_org_space',
+    //     parameters: spaceProvider.data?.toJson(),
+    //   );
+    // });
   }
 
   setOrgSpace(String space) {
     debugPrint("change namespace: $space");
-    if (spaceProvider.isDefault) {
-      options.baseUrl = _defaultBaseUrl;
-    } else {
-      options.baseUrl = _defaultBaseUrl.replaceFirst("www", space);
-    }
+    options.baseUrl = _defaultBaseUrl;
+    // if (spaceProvider.isDefault) {
+    //   options.baseUrl = _defaultBaseUrl;
+    // } else {
+    //   options.baseUrl = _defaultBaseUrl.replaceFirst("www", space);
+    // }
   }
 }

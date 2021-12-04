@@ -59,7 +59,7 @@ class _NoteItemWidget extends StatelessWidget {
   final NoteSeri item;
 
   const _NoteItemWidget({
-    Key key,
+    Key? key,
     this.item,
   }) : super(key: key);
 

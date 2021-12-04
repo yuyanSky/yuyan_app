@@ -123,9 +123,9 @@ dependencies:
   #  bottom_sheet: 0.0.1-dev.8
   modal_bottom_sheet: 2.0.0
   # 更新apk https://github.com/xuexiangjys/XUpdate
-  flutter_xupdate: ^1.0.2
+  flutter_xupdate: ^2.0.2
   # 获取版本号
-  package_info: ^0.4.3+2
+  package_info: ^2.0.2
   # 滑动tab
   # shifting_tabbar: ^0.3.1
   shifting_tabbar: ^1.0.2

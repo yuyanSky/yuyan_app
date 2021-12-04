@@ -9,7 +9,7 @@ class LakeLocalDocWidget extends StatelessWidget {
   final Map json;
 
   const LakeLocalDocWidget({
-    Key key,
+    Key? key,
     this.json,
   }) : super(key: key);
 

@@ -9,7 +9,7 @@ class Guide3 extends StatefulWidget {
 }
 
 class _Guide3State extends State<Guide3> {
-  int onPressedTimes;
+  late int onPressedTimes;
 
   @override
   void initState() {

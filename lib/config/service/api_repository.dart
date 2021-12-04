@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:tuple/tuple.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/api.dart';
@@ -28,13 +27,9 @@ import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/model/topic/topic_detail_seri.dart';
 import 'package:yuyan_app/model/user/events/event_seri.dart';
 import 'package:yuyan_app/model/user/events/user_event_seri.dart';
-import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/model/user/group/group_user.dart';
 import 'package:yuyan_app/model/user/mine/mine_seri.dart';
-import 'package:yuyan_app/model/user/org/organization.dart';
-import 'package:yuyan_app/model/user/org/organization_lite.dart';
 import 'package:yuyan_app/model/user/user.dart';
-import 'package:yuyan_app/model/user/user_profile.dart';
 
 class ApiRepository {
   static BaseApi api = BaseApi();
@@ -104,14 +99,14 @@ class ApiRepository {
     return res.data.current;
   }
 
-  static Future<DocletSeri> getUserReadme({int userId}) async {
+  static Future<DocletSeri> getUserReadme({required int userId}) async {
     var res = await api.get('/users/$userId/readme');
     var asp = (res.data as ApiResponse);
     return DocletSeri.fromJson(asp.data['doclet']);
   }
 
   static Future<ApiResponse> getUserEvents({
-    int userId,
+    required int userId,
     int limit = 20,
     int offset = 0,
   }) async {
@@ -169,68 +164,70 @@ class ApiRepository {
     return NotificationSeri.fromJson(asp.data);
   }
 
-  static Future<List<OrganizationSeri>> getMyOrganizationList() async {
-    var resp = await api.get('/mine/organizations');
-    var asp = resp.data as ApiResponse;
-    var list =
-        (asp.data as List).map((e) => OrganizationSeri.fromJson(e)).toList();
-    return list;
-  }
+  // static Future<List<OrganizationSeri>> getMyOrganizationList() async {
+  //   var resp = await api.get('/mine/organizations');
+  //   var asp = resp.data as ApiResponse;
+  //   var list =
+  //       (asp.data as List).map((e) => OrganizationSeri.fromJson(e)).toList();
+  //   return list;
+  // }
 
-  static Future<List<OrganizationLiteSeri>> getOrganizationList(
-      {int userId}) async {
-    var resp = await api.get('/users/$userId/organizations');
-    var asp = resp.data as ApiResponse;
-    var list = (asp.data as List)
-        .map((e) => OrganizationLiteSeri.fromJson(e))
-        .toList();
-    return list;
-  }
+  // static Future<List<OrganizationLiteSeri>> getOrganizationList(
+  //     {required int userId}) async {
+  //   var resp = await api.get('/users/$userId/organizations');
+  //   var asp = resp.data as ApiResponse;
+  //   var list = (asp.data as List)
+  //       .map((e) => OrganizationLiteSeri.fromJson(e))
+  //       .toList();
+  //   return list;
+  // }
 
-  static Future<UserProfileSeri> getUserProfile({int userId}) async {
-    userId ??= App.userProvider.data.id;
-    var res = await api.get("/users/$userId/profile");
-    var asp = (res.data as ApiResponse);
-    return UserProfileSeri.fromJson(asp.data);
-  }
+  // static Future<UserProfileSeri> getUserProfile({required int userId}) async {
+  //   userId ??= App.userProvider.data.id;
+  //   var res = await api.get("/users/$userId/profile");
+  //   var asp = (res.data as ApiResponse);
+  //   return UserProfileSeri.fromJson(asp.data);
+  // }
 
-  static Future<List<GroupSeri>> getOrgGroupList({int orgId}) async {
-    orgId ??= App.currentSpaceProvider.data.id;
-    var res = await api.get('/organizations/$orgId/groups');
-    var asp = (res.data as ApiResponse);
-    var list = (asp.data as List).map((e) => GroupSeri.fromJson(e)).toList();
-    return list;
-  }
+  // static Future<List<GroupSeri>> getOrgGroupList({int orgId}) async {
+  //   orgId ??= App.currentSpaceProvider.data.id;
+  //   var res = await api.get('/organizations/$orgId/groups');
+  //   var asp = (res.data as ApiResponse);
+  //   var list = (asp.data as List).map((e) => GroupSeri.fromJson(e)).toList();
+  //   return list;
+  // }
 
-  static Future<List<GroupSeri>> getGroupList({
-    int userId,
-    int offset = 0,
-  }) async {
-    userId ??= App.userProvider.data.id;
-    var res = await api.get(
-      "/users/$userId/groups",
-      queryParameters: {
-        'offset': offset,
-      },
-    );
-    var asp = (res.data as ApiResponse);
-    var list = (asp.data as List).map((e) => GroupSeri.fromJson(e)).toList();
-    return list;
-  }
+  // static Future<List<GroupSeri>> getGroupList({
+  //   required int userId,
+  //   int offset = 0,
+  // }) async {
+  //   userId ??= App.userProvider.data.id;
+  //   var res = await api.get(
+  //     "/users/$userId/groups",
+  //     queryParameters: {
+  //       'offset': offset,
+  //     },
+  //   );
+  //   var asp = (res.data as ApiResponse);
+  //   var list = (asp.data as List).map((e) => GroupSeri.fromJson(e)).toList();
+  //   return list;
+  // }
 
-  static Future<List<GroupUserSeri>> getGroupMemberList({int groupId}) async {
+  static Future<List<GroupUserSeri>> getGroupMemberList(
+      {required int groupId}) async {
     var res = await api.get("/groups/$groupId/users?with_count=true");
     var data = (res.data as ApiResponse).data as List;
     return data.map((e) => GroupUserSeri.fromJson(e)).toList();
   }
 
-  static Future<BookStackSeri> getUserBookStack({int userId}) async {
+  static Future<BookStackSeri> getUserBookStack({required int userId}) async {
     var res = await api.get('/users/$userId/book_stack');
     var data = (res.data as ApiResponse).data;
     return BookStackSeri.fromJson(data['stack']);
   }
 
-  static Future<List<BookStackSeri>> getBookStack({int groupId}) async {
+  static Future<List<BookStackSeri>> getBookStack(
+      {required int groupId}) async {
     var res = await api.get("/groups/$groupId/bookstacks");
     var asp = (res.data as ApiResponse).data;
     var list = (asp as List).map((e) => BookStackSeri.fromJson(e)).toList();
@@ -238,7 +235,7 @@ class ApiRepository {
   }
 
   static Future<Tuple2<List<GroupViewBlockSeri>, ApiResponse>> getGroupHome(
-      {int groupId}) async {
+      {required int groupId}) async {
     var res = await api.get(
       '/groups/$groupId/homepage',
       queryParameters: {'include_data': true},
@@ -257,9 +254,9 @@ class ApiRepository {
     return Tuple2.fromList([list, asp]);
   }
 
-  //目前仅用于获取Group的动态
+  // 目前仅用于获取Group的动态
   static Future<Tuple2<List<UserEventSeri>, ApiResponse>> getViewBlocks({
-    int blockId,
+    required int blockId,
     int offset = 0,
   }) async {
     var resp = await api.get('/view_blocks/$blockId', queryParameters: {
@@ -272,8 +269,8 @@ class ApiRepository {
   }
 
   static Future<ApiResponse> getResources({
-    int bookId,
-    int parentId,
+    required int bookId,
+    required int parentId,
     int offset = 0,
   }) async {
     var res = await api.get(
@@ -288,7 +285,7 @@ class ApiRepository {
   }
 
   static Future<ApiResponse> getResourceParents({
-    int resourceId,
+    required int resourceId,
     int level = 3,
   }) async {
     var res = await api.get(
@@ -301,12 +298,12 @@ class ApiRepository {
   }
 
   static Future<List<BookSeri>> getOrgBookList({
-    int orgId,
+    required int orgId,
     int limit = 200,
   }) async {
-    if (orgId == null) {
-      orgId = App.currentSpaceProvider.data.id;
-    }
+    // if (orgId == null) {
+    //   orgId = App.currentSpaceProvider.data.id;
+    // }
     var res = await api.get(
       '/organizations/$orgId/books',
       queryParameters: {
@@ -319,7 +316,7 @@ class ApiRepository {
   }
 
   static Future<List<BookSeri>> getBookList({
-    int userId,
+    required int userId,
     int limit = 200,
   }) async {
     var res = await api.get(
@@ -334,7 +331,7 @@ class ApiRepository {
     return list;
   }
 
-  static Future<bool> getIfFollow({int userId}) async {
+  static Future<bool> getIfFollow({required int userId}) async {
     var res = await api.get(
       "/actions/user-owned",
       queryParameters: {
@@ -348,7 +345,7 @@ class ApiRepository {
   }
 
   static Future<List<UserSeri>> getFollowingList({
-    int userId,
+    required int userId,
     int offset = 0,
   }) async {
     // var res = await api.get(
@@ -372,7 +369,7 @@ class ApiRepository {
   }
 
   static Future<List<UserSeri>> getFollowerList({
-    int userId,
+    required int userId,
     int offset = 0,
   }) async {
     // var res = await api.get(
@@ -395,7 +392,7 @@ class ApiRepository {
     return (asp.data['data'] as List).map((e) => UserSeri.fromJson(e)).toList();
   }
 
-  static Future<bool> followUser({int userId}) async {
+  static Future<bool> followUser({required int userId}) async {
     var res = await api.post("/actions", data: {
       "action_type": "follow",
       "target_type": "User",
@@ -406,7 +403,7 @@ class ApiRepository {
     return data.targetId == userId;
   }
 
-  static Future<bool> unfollowUser({int userId}) async {
+  static Future<bool> unfollowUser({required int userId}) async {
     var res = await api.delete("/actions", data: {
       "action_type": "follow",
       "target_type": "User",
@@ -447,7 +444,7 @@ class ApiRepository {
 
   // 查看是否收藏(文章或团队)
   static Future<bool> getIfMark({
-    @required int targetId,
+    required int targetId,
     String targetType = "Doc",
   }) async {
     var res = await api.get("/actions", queryParameters: {
@@ -460,8 +457,8 @@ class ApiRepository {
   }
 
   static Future<bool> toggleMark({
-    @required int targetId,
-    String targetType,
+    required int targetId,
+    required String targetType,
     bool marked = false,
   }) {
     return marked
@@ -470,7 +467,7 @@ class ApiRepository {
   }
 
   static Future<bool> mark({
-    @required int targetId,
+    required int targetId,
     String targetType = "Doc",
   }) async {
     var res = await api.post("/mine/marks", data: {
@@ -483,7 +480,7 @@ class ApiRepository {
   }
 
   static Future<bool> unmark({
-    @required int targetId,
+    required int targetId,
     String targetType = "Doc",
   }) async {
     var res = await api.delete("/mine/marks", data: {
@@ -496,7 +493,7 @@ class ApiRepository {
   }
 
   static Future<ActionSeri> doLike(
-      {bool unlike = false, int target, String type = 'Doc'}) async {
+      {bool unlike = false, required int target, String type = 'Doc'}) async {
     return doAction(
       actionType: 'like',
       targetId: target,
@@ -506,7 +503,7 @@ class ApiRepository {
   }
 
   static Future<bool> getIfLike({
-    int targetId,
+    required int targetId,
     String targetType = 'Doc',
   }) async {
     var res = await getAction(
@@ -519,7 +516,7 @@ class ApiRepository {
   }
 
   static Future<ApiResponse> getLikeUsers({
-    int targetId,
+    required int targetId,
     String targetType = 'Doc',
   }) async {
     var res = await getAction(
@@ -534,8 +531,8 @@ class ApiRepository {
   static Future<ApiResponse> getAction(
     String path, {
     String actionType = 'like',
-    int targetId,
-    String targetType,
+    required int targetId,
+    required String targetType,
     int limit = 20,
     int offset = 0,
   }) async {
@@ -551,12 +548,12 @@ class ApiRepository {
 
   static Future<ActionSeri> doAction({
     // like, watch, follow, watch-comments, watch-topics, mark, read, reaction
-    @required String actionType,
-    @required int targetId,
+    required String actionType,
+    required int targetId,
     // Doc, Book, Artboard, ArtboardGroup,
     // ArtboardComment, Comment, Topic, User,
     // Resource, DocVersion, Quan, Note
-    @required String targetType,
+    required String targetType,
     bool del = false,
   }) async {
     var data = {
@@ -585,9 +582,9 @@ class ApiRepository {
 
   /// TOPIC [话题] 相关
   static Future<CommentDetailSeri> postComment({
-    int commentId,
-    String comment,
-    int parentId,
+    required int commentId,
+    required String comment,
+    required int parentId,
     String commentType = 'Topic',
     bool lake = false,
   }) async {
@@ -613,9 +610,9 @@ class ApiRepository {
   }
 
   static Future<TopicDetailSeri> addTopic({
-    String title,
-    String body,
-    int groupId,
+    required String title,
+    required String body,
+    required int groupId,
   }) async {
     Map<String, dynamic> data = {
       "group_id": groupId,
@@ -632,7 +629,8 @@ class ApiRepository {
     return TopicDetailSeri.fromJson(asp);
   }
 
-  static Future<TopicDetailSeri> getTopicDetail({int iid, int groupId}) async {
+  static Future<TopicDetailSeri> getTopicDetail(
+      {required int iid, required int groupId}) async {
     var res = await api.get('/topics/$iid', queryParameters: {
       'group_id': groupId,
     });
@@ -640,14 +638,16 @@ class ApiRepository {
     return TopicDetailSeri.fromJson(asp.data);
   }
 
-  static Future<ApiResponse> getTopicDetailRes({int iid, int groupId}) async {
+  static Future<ApiResponse> getTopicDetailRes(
+      {required int iid, required int groupId}) async {
     var res = await api.get('/topics/$iid', queryParameters: {
       'group_id': groupId,
     });
     return res.data as ApiResponse;
   }
 
-  static Future<bool> putTopicAction({int id, String type}) async {
+  static Future<bool> putTopicAction(
+      {required int id, required String type}) async {
     var res = await api.put('/topics/$id/action', data: {
       // close, reopen, pin, unpin, block, unblock
       "type": type,
@@ -656,7 +656,7 @@ class ApiRepository {
   }
 
   static Future<List<CommentDetailSeri>> getCommentsList({
-    int commentId,
+    required int commentId,
     //comment_type => 要求是 Doc, Topic, ArtboardComment, Resource, DocVersion, Note 其中的一个
     String commentType = 'Topic',
   }) async {
@@ -666,7 +666,7 @@ class ApiRepository {
   }
 
   static Future<ApiResponse> getComments({
-    int commentId,
+    required int commentId,
     //comment_type => 要求是 Doc, Topic, ArtboardComment, Resource, DocVersion, Note 其中的一个
     String commentType = 'Topic',
   }) async {
@@ -680,7 +680,7 @@ class ApiRepository {
   }
 
   static Future<List<TopicSeri>> getTopicList({
-    int groupId,
+    required int groupId,
     int offset = 0,
     String state = 'open',
     int limit = 100,
@@ -753,7 +753,7 @@ class ApiRepository {
   }
 
   static Future<String> convertLake({
-    String markdown,
+    required String markdown,
   }) async {
     var res = await api.post(
       '/docs/convert',
@@ -772,7 +772,7 @@ class ApiRepository {
   }
 
   static Future<NoteSeri> postNote({
-    String html,
+    required String html,
     int id = 0,
     String type = 'all',
   }) async {
@@ -811,7 +811,7 @@ class ApiRepository {
   }
 
   static Future<NoteSeri> getNoteDetail({
-    int noteId,
+    required int noteId,
   }) async {
     var res = await api.get('/notes/$noteId');
     var asp = (res.data as ApiResponse);
@@ -825,20 +825,20 @@ class ApiRepository {
   }
 
   static Future<UploadResultSeri> postAttachFile({
-    String path, //文件路径
-    String attachableType,
-    int attachableId, //讨论区=>groupId, 小记=>noteId
+    required String path, //文件路径
+    String attachableType: "",
+    int attachableId: 0, //讨论区=>groupId, 小记=>noteId
     String type = 'image', //一般情况下都是image
     // String attachUuid = '',
-    ProgressCallback progressCallback, //进度回调函数
+    required ProgressCallback progressCallback, //进度回调函数
   }) async {
     /// attachableType: Doclet: 小记 doc: 文档; 讨论区-> User,
     var name = path.substring(path.lastIndexOf('/') + 1);
     Map<String, dynamic> query = {
       "type": type,
       "ctoken": App.tokenProvider.data.cToken,
-      "attachable_id": attachableId ?? '',
-      "attachable_type": attachableType ?? '',
+      "attachable_id": attachableId,
+      "attachable_type": attachableType,
     };
     var image = await MultipartFile.fromFile(path, filename: name);
     FormData formData = FormData.fromMap({"file": image});
@@ -858,7 +858,7 @@ class ApiRepository {
   }
 
   ///文档
-  static Future<List<TagSeri>> getDocTags({int docId}) async {
+  static Future<List<TagSeri>> getDocTags({required int docId}) async {
     var res = await api.get(
       '/tags',
       queryParameters: {
@@ -869,7 +869,7 @@ class ApiRepository {
     return data.map((e) => TagSeri.fromJson(e)).toList();
   }
 
-  static Future<List<TocSeri>> getBookTocList({int bookId}) async {
+  static Future<List<TocSeri>> getBookTocList({required int bookId}) async {
     var res = await api.get(
       '/catalog_nodes',
       queryParameters: {'book_id': bookId},
@@ -879,7 +879,8 @@ class ApiRepository {
     return list;
   }
 
-  static Future<DocDetailSeri> getDocDetail({int bookId, String slug}) async {
+  static Future<DocDetailSeri> getDocDetail(
+      {required int bookId, required String slug}) async {
     var res = await api.get('/docs/$slug', queryParameters: {
       'book_id': bookId,
       // in order to obtain additional information
@@ -893,7 +894,8 @@ class ApiRepository {
     return DocDetailSeri.fromJson(asp.data);
   }
 
-  static Future<List<ArtboardSeri>> getBookArtboardList({int bookId}) async {
+  static Future<List<ArtboardSeri>> getBookArtboardList(
+      {required int bookId}) async {
     var res = await api.get(
       '/artboard_groups',
       queryParameters: {'book_id': bookId},
@@ -902,7 +904,7 @@ class ApiRepository {
     return asp.map((e) => ArtboardSeri.fromJson(e)).toList();
   }
 
-  static Future<List<DocSeri>> getBookDocList({int bookId}) async {
+  static Future<List<DocSeri>> getBookDocList({required int bookId}) async {
     var res = await api.get('/books/$bookId/docs', queryParameters: {
       'include_contributors': true,
       'include_hits': true,
@@ -914,7 +916,8 @@ class ApiRepository {
   }
 
   //视频
-  static Future<CardVideoResSeri> getCardVideo({String videoId}) async {
+  static Future<CardVideoResSeri> getCardVideo(
+      {required String videoId}) async {
     var res = await api.get('/video', queryParameters: {
       'video_id': videoId,
       'ctoken': App.tokenProvider.data.cToken,
@@ -924,10 +927,10 @@ class ApiRepository {
 
   //投票
   static Future<VoteDetailSeri> getVoteDetail({
-    int docId,
-    String voteId,
-    List<String> items,
-    String deadline,
+    required int docId,
+    required String voteId,
+    required List<String> items,
+    required String deadline,
   }) async {
     var res = await api.get(
       '/votes',
@@ -943,7 +946,8 @@ class ApiRepository {
     return VoteDetailSeri.fromJson(data.data);
   }
 
-  static Future<String> decryptText({String pwd, String text}) async {
+  static Future<String> decryptText(
+      {required String pwd, required String text}) async {
     var res = await api.post(
       '/services/crypto',
       data: {
@@ -983,10 +987,10 @@ class ApiRepository {
     // 0902 => 色情淫秽
     // 0903 => 反社会、暴力
     // 0904 => 其它(毒品、借贷、枪支等),
-    @required String reason,
-    int targetId,
+    required String reason,
+    required int targetId,
     String targetType = 'Doc',
-    String url,
+    required String url,
   }) async {
     var data = {
       'meta': {

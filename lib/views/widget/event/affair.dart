@@ -17,7 +17,7 @@ class AffairTileWidget extends StatelessWidget {
 
   const AffairTileWidget(
     this.item, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -56,7 +56,7 @@ class AffairTileWidget extends StatelessWidget {
 class _ToUserWidget extends StatelessWidget {
   final EventSeri item;
 
-  const _ToUserWidget({Key key, this.item}) : super(key: key);
+  const _ToUserWidget({Key? key, this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +121,7 @@ class _ToUserWidget extends StatelessWidget {
 class _ToDocWidget extends StatelessWidget {
   final EventSeri item;
 
-  const _ToDocWidget({Key key, this.item}) : super(key: key);
+  const _ToDocWidget({Key? key, this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -336,7 +336,7 @@ class _ToDocWidget extends StatelessWidget {
 class _UserFollowWidget extends StatelessWidget {
   final UserLiteSeri user;
 
-  const _UserFollowWidget({Key key, this.user}) : super(key: key);
+  const _UserFollowWidget({Key? key, this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -438,7 +438,7 @@ class _UserFollowWidget extends StatelessWidget {
 class _ToBookWidget extends StatelessWidget {
   final EventSeri item;
 
-  const _ToBookWidget({Key key, this.item}) : super(key: key);
+  const _ToBookWidget({Key? key, this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -498,7 +498,7 @@ class _ToBookWidget extends StatelessWidget {
 class _DocBookWidget extends StatelessWidget {
   final BookEventSeri book;
 
-  const _DocBookWidget({Key key, this.book}) : super(key: key);
+  const _DocBookWidget({Key? key, this.book}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

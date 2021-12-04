@@ -86,7 +86,7 @@ abstract class FetchRefreshListViewPage<T extends FetchSavableController>
 
   FetchRefreshListViewPage({
     this.key,
-    @required this.title,
+    required this.title,
   }) : super(key: key);
 
   Widget buildChild();

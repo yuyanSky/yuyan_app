@@ -11,11 +11,8 @@ class Api2Repository {
   static BaseApi api = BaseApi(baseUrl: _baseUrl);
 
   static Future<TokenJsonSeri> getTokenByCode({
-    String code,
+    required String code,
   }) async {
-    if (api == null) {
-      throw 'API instance not initialized';
-    }
     var res = await api.post(
       'https://www.yuque.com/oauth2/token',
       data: {
@@ -25,17 +22,17 @@ class Api2Repository {
         "code": code,
       },
     );
-    
+
     var data = (res.data as ApiResponse).raw;
     return TokenJsonSeri.fromJson(data);
   }
 
   static Future<UserDetailSeri> getUserDetail({
-    int userId,
-    String userLogin,
+    int? userId,
+    String userLogin: "",
   }) async {
     Response res;
-    if (userId == null && userLogin == null) {
+    if (userId == null && userLogin == "") {
       res = await api.get("$_baseUrl/user");
     } else {
       res = await api.get("$_baseUrl/users/${userId ?? userLogin}");
@@ -45,15 +42,15 @@ class Api2Repository {
   }
 
   static Future<UserSeri> getGroupDetail({
-    int groupId,
-    String groupLogin,
+    int? groupId,
+    required String groupLogin,
   }) async {
     Response res = await api.get("$_baseUrl/groups/${groupId ?? groupLogin}");
     var asp = (res.data as ApiResponse);
     return UserSeri.fromJson(asp.data);
   }
 
-  static Future<BookSeri> getBookDetail({int bookId}) async {
+  static Future<BookSeri> getBookDetail({required int bookId}) async {
     var res = await api.get('$_baseUrl/repos/$bookId');
     var asp = (res.data as ApiResponse);
     return BookSeri.fromJson(asp.data);

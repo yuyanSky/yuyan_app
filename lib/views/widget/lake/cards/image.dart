@@ -14,7 +14,7 @@ class LakeImageWidget extends StatelessWidget {
   final EdgeInsets margin;
 
   const LakeImageWidget({
-    Key key,
+    Key? key,
     this.json,
     this.others,
     this.size,
@@ -82,7 +82,7 @@ class CachedImageWidget extends StatelessWidget {
   final String url;
 
   const CachedImageWidget({
-    Key key,
+    Key? key,
     this.url,
   }) : super(key: key);
 
