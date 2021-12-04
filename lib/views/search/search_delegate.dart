@@ -16,7 +16,7 @@ class SearchBarDelegate extends SearchDelegate {
       IconButton(
         icon: Icon(Icons.clear),
         onPressed: () {
-          if (query.length > 0 && query != null) {
+          if (query.length > 0) {
             query = "";
           } else {
             close(context, "");
@@ -60,7 +60,7 @@ class SearchBarDelegate extends SearchDelegate {
       Util.toast(tipList.rand());
     } else {
       pageIndex.value = index;
-      showResults(null);
+      // showResults(null);
     }
   }
 

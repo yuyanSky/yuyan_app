@@ -117,7 +117,7 @@ dependencies:
   # 话题标签颜色
   smart_color: ^0.2.2
   # 消息红点
-  badges: ^1.1.0
+  badges: ^2.0.2
   # 评论 下滑出的抽屉
   sliding_up_panel: ^1.0.1
   #  bottom_sheet: 0.0.1-dev.8

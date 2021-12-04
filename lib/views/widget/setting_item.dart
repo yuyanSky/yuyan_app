@@ -8,14 +8,14 @@ class SettingItemWidget extends StatelessWidget {
   final String title;
   final String imgAsset;
   final String namedRoute;
-  final bool badge;
+  final bool? badge;
 
   const SettingItemWidget({
     Key? key,
     required this.title,
     required this.imgAsset,
     required this.namedRoute,
-    required this.badge,
+    this.badge,
   }) : super(key: key);
 
   @override
@@ -46,7 +46,7 @@ class SettingItemWidget extends StatelessWidget {
         child: Icon(Icons.chevron_right),
       ),
       onTap: () {
-        if (namedRoute != null) Get.toNamed(namedRoute);
+        Get.toNamed(namedRoute);
       },
     );
   }
