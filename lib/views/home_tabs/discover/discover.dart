@@ -44,34 +44,38 @@ class _DiscoverTabState extends State<DiscoverTab>
             SearchActionWidget(),
           ],
           elevation: 0.0,
-          title: TabBar(
-            controller: _tabController,
-            labelColor: Colors.white,
-            indicatorColor: Colors.white.withOpacity(0.95),
-            indicatorSize: TabBarIndicatorSize.label,
-            indicatorWeight: 3.0,
-            tabs: [
-              Tab(text: "关注"),
-              Tab(text: "精选").onlyIf(
-                c.isDefault,
-                elseif: () => Tab(
-                  text: '空间',
-                ),
-              ),
-            ],
-          ),
+          title: Tab(text: "关注"),
+
+          // TabBar(
+          //   controller: _tabController,
+          //   labelColor: Colors.white,
+          //   indicatorColor: Colors.white.withOpacity(0.95),
+          //   indicatorSize: TabBarIndicatorSize.label,
+          //   indicatorWeight: 3.0,
+          //   tabs: [
+          //     Tab(text: "关注"),
+          //     Tab(text: "精选").onlyIf(
+          //       c.isDefault,
+          //       elseif: () => Tab(
+          //         text: '空间',
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ),
-        body: TabBarView(
-          key: PageStorageKey('tab1_page'),
-          controller: _tabController,
-          children: [
-            AttentionPage(),
-            SelectionPage().onlyIf(
-              c.isDefault,
-              elseif: () => SpacePubPage(),
-            ),
-          ],
-        ),
+        body: AttentionPage(),
+
+        // TabBarView(
+        //   key: PageStorageKey('tab1_page'),
+        //   controller: _tabController,
+        //   children: [
+        //     AttentionPage(),
+        //     SelectionPage().onlyIf(
+        //       c.isDefault,
+        //       elseif: () => SpacePubPage(),
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }
