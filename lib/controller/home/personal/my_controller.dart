@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
@@ -229,7 +228,7 @@ class MyTopicController extends FetchSavableController<MyTopicProvider> {
   final String topicState;
 
   MyTopicController({
-    @required this.topicState,
+    this.topicState,
   }) : super(
           initData: MyTopicProvider('my_user_topic_$topicState'),
           initialRefresh: true,

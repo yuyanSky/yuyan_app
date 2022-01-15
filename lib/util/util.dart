@@ -361,7 +361,7 @@ class Util {
   }
 
   // 使用参考：https://juejin.cn/post/6844903822028963847
-  static showWindow({String title, @required Widget child}) {
+  static showWindow({String title, Widget child}) {
     Get.dialog(
       SimpleDialog(
         contentPadding: EdgeInsets.only(left: 10, right: 10, bottom: 12),

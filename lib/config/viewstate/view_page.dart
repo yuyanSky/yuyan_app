@@ -9,7 +9,7 @@ import 'package:yuyan_app/config/viewstate/view_state.dart';
 
 class FetchRefreshListViewBuilder<T extends FetchListValueController>
     extends StatelessWidget {
-  final bool nested;
+  // final bool nested;
   final String tag;
   final Widget Function(T) builder;
   final Widget onLoading;
@@ -26,7 +26,7 @@ class FetchRefreshListViewBuilder<T extends FetchListValueController>
     this.onLoading,
     this.onError,
     this.onEmpty,
-    this.nested = false,
+    // this.nested = false,
   });
   // : super(key: key);
 
@@ -55,7 +55,7 @@ class FetchRefreshListViewBuilder<T extends FetchListValueController>
         }
         return c.stateBuilder(
           onIdle: () {
-            var child = Scrollbar(
+            return Scrollbar(
               child: SmartRefresher(
                 controller: c.refreshController,
                 onRefresh: c.refreshCallback,
@@ -64,11 +64,6 @@ class FetchRefreshListViewBuilder<T extends FetchListValueController>
                 child: builder(c),
               ),
             );
-            if (!nested) {
-              return child;
-            }
-            return extended.NestedScrollViewInnerScrollPositionKeyWidget(
-                key, child);
           },
           onLoading: onLoading,
           onEmpty: onEmpty,
@@ -86,7 +81,7 @@ abstract class FetchRefreshListViewPage<T extends FetchSavableController>
 
   FetchRefreshListViewPage({
     this.key,
-    @required this.title,
+    this.title,
   }) : super(key: key);
 
   Widget buildChild();

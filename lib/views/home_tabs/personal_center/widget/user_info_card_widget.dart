@@ -13,7 +13,7 @@ class MyInfoCardWidget extends StatelessWidget {
 
   MyInfoCardWidget({
     Key key,
-    @required this.info,
+    this.info,
   }) : super(key: key);
 
   @override
@@ -118,7 +118,7 @@ class MyInfoNumberWidget extends StatelessWidget {
 
   MyInfoNumberWidget({
     Key key,
-    @required this.info,
+    this.info,
   }) : super(key: key);
 
   @override

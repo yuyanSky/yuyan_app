@@ -10,7 +10,7 @@ class LakeSvgPicture extends StatelessWidget {
 
   const LakeSvgPicture({
     Key key,
-    @required this.url,
+    this.url,
     this.width,
     this.height,
   }) : super(key: key);

@@ -1,5 +1,4 @@
 import 'package:badges/badges.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';

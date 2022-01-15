@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';

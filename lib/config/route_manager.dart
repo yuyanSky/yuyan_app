@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/app.dart';
@@ -95,10 +94,10 @@ class MyRoute {
   }
 
   static docDetailWebview({
-    @required int bookId,
-    @required String slug,
-    @required String login,
-    @required String book,
+    int bookId,
+    String slug,
+    String login,
+    String book,
   }) {
     Get.to(
       DocDetailWebviewPage(
@@ -111,10 +110,10 @@ class MyRoute {
   }
 
   static docDetail({
-    @required int bookId,
-    @required String slug,
-    @required String login,
-    @required String book,
+    int bookId,
+    String slug,
+    String login,
+    String book,
   }) {
     Get.to(
       DocDetailPage(
@@ -127,7 +126,7 @@ class MyRoute {
 
   // 打开其他用户的页面
   static user({
-    @required UserLiteSeri user,
+    UserLiteSeri user,
     String heroTag,
   }) {
     Get.to(
@@ -157,7 +156,7 @@ class MyRoute {
   }
 
   static group({
-    @required GroupSeri group,
+    GroupSeri group,
     String tag,
     int pageIndex = 0,
   }) {

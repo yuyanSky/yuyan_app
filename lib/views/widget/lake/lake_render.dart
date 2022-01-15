@@ -111,8 +111,8 @@ class HtmlUtil {
         }
         return ans;
       case 2:
-        final rome = Romanice.standard();
-        return rome.toRoman(index).toLowerCase();
+        final rome = ToRoman();
+        return rome(index).toLowerCase();
     }
     return 'null';
   }

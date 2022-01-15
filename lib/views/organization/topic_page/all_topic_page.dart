@@ -11,7 +11,7 @@ class GroupTopicAllPage extends StatelessWidget {
 
   GroupTopicAllPage({
     Key key,
-    @required this.groupId,
+    this.groupId,
   }) : super(key: key);
 
   String get tag => '$groupId';

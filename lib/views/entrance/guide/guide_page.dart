@@ -37,7 +37,7 @@ class GuidePage extends StatelessWidget {
         LiquidSwipe(
           pages: pages,
           fullTransitionValue: 230,
-          enableSlideIcon: true,
+          // enableSlideIcon: true,
           enableLoop: false,
           positionSlideIcon: 0.5,
           waveType: WaveType.liquidReveal,

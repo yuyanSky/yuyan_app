@@ -1,5 +1,4 @@
-import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart'
-    as extended;
+import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -24,7 +23,7 @@ class UserPage extends StatefulWidget {
 
   UserPage({
     Key key,
-    @required this.user,
+    this.user,
     this.heroTag,
   })  : assert(user != null),
         super(key: key);
@@ -69,12 +68,13 @@ class _UserPageState extends State<UserPage>
     var userId = widget.user.id;
     var controllerTag = '$userId';
     return Scaffold(
-      body: extended.NestedScrollView(
+      body: ExtendedNestedScrollView(
         pinnedHeaderSliverHeightBuilder: () => Util.pinnedHeight,
-        innerScrollPositionKeyBuilder: () {
-          print('build innerScrollKey: ${_tabController.index}');
-          return Key('user_page_tab_${_tabController.index}');
-        },
+        // innerScrollPositionKeyBuilder: () {
+        // print('build innerScrollKey: ${_tabController.index}');
+        // return Key('user_page_tab_${_tabController.index}');
+        // },
+        onlyOneScrollInBody: true,
         headerSliverBuilder: (_, inner) => [
           SliverAppBar(
             leading: IconButton(
@@ -158,7 +158,6 @@ class _UserPageState extends State<UserPage>
             ),
             FetchRefreshListViewBuilder<UserBookController>(
               key: Key('user_page_tab_1'),
-              nested: true,
               tag: controllerTag,
               builder: (c) => ListView.builder(
                 itemCount: c.value.length,
@@ -169,7 +168,6 @@ class _UserPageState extends State<UserPage>
             ),
             FetchRefreshListViewBuilder<UserGroupController>(
               key: Key('user_page_tab_2'),
-              nested: true,
               tag: controllerTag,
               builder: (c) => ListView.builder(
                 itemCount: c.value.length,
@@ -180,7 +178,6 @@ class _UserPageState extends State<UserPage>
             ),
             FetchRefreshListViewBuilder<UserFollowingController>(
               key: Key('user_page_tab_3'),
-              nested: true,
               tag: controllerTag,
               builder: (c) => ListView.builder(
                 itemCount: c.value.length,
@@ -192,7 +189,6 @@ class _UserPageState extends State<UserPage>
             ),
             FetchRefreshListViewBuilder<UserFollowerController>(
               key: Key('user_page_tab_4'),
-              nested: true,
               tag: controllerTag,
               builder: (c) => ListView.builder(
                 itemCount: c.value.length,
@@ -223,28 +219,23 @@ class _UserHomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: extended.NestedScrollViewInnerScrollPositionKeyWidget(
-        key,
-        Scrollbar(
-          child: SmartRefresher(
-            controller: _refresh,
-            onRefresh: () async {
-              await Future.wait([
-                Util.refreshController<UserReadmeController>(tag: tag),
-                Util.refreshController<UserStackController>(tag: tag),
-                Util.refreshController<UserEventsController>(tag: tag),
-              ]);
-              _refresh.refreshCompleted();
-            },
-            child: ListView(
-              children: [
-                _buildReadme(),
-                _buildBookStack(),
-                _buildEvents(),
-              ],
-            ),
-          ),
+    return Scrollbar(
+      child: SmartRefresher(
+        controller: _refresh,
+        onRefresh: () async {
+          await Future.wait([
+            Util.refreshController<UserReadmeController>(tag: tag),
+            Util.refreshController<UserStackController>(tag: tag),
+            Util.refreshController<UserEventsController>(tag: tag),
+          ]);
+          _refresh.refreshCompleted();
+        },
+        child: ListView(
+          children: [
+            _buildReadme(),
+            _buildBookStack(),
+            _buildEvents(),
+          ],
         ),
       ),
     );

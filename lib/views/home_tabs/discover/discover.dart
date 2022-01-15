@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/controller/organization/organization_controller.dart';
-import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/organization/widget/org_spacet.dart';
 import 'package:yuyan_app/views/search/search_action_widget.dart';
 import 'tabs/attention_page.dart';
-import 'tabs/pubspace_page.dart';
-import 'tabs/selection_page.dart';
 
 class DiscoverTab extends StatefulWidget {
   final Key key;

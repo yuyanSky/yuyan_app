@@ -57,7 +57,7 @@ class LakeYuqueCardWidget extends StatelessWidget {
 class YuquePremiumPurchase extends StatelessWidget {
   YuquePremiumPurchase({
     Key key,
-    @required this.json,
+    this.json,
   }) : super(key: key);
 
   final Map json;

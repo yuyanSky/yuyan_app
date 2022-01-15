@@ -18,8 +18,8 @@ class DocCommentsWidget extends StatefulWidget {
 
   DocCommentsWidget({
     Key key,
-    @required this.tag,
-    @required this.scrollController,
+    this.tag,
+    this.scrollController,
   }) : super(key: key);
 
   @override
@@ -234,8 +234,8 @@ class ReplyBottomSheetWidget extends StatelessWidget {
     Key key,
     this.replyTo,
     this.hintText = '评论千万条，友善第一条',
-    @required this.postController,
-    @required this.editingController,
+    this.postController,
+    this.editingController,
   }) : super(key: key);
 
   @override

@@ -1,5 +1,4 @@
-import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart'
-    as extended;
+import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -73,12 +72,13 @@ class _GroupPageState extends State<GroupPage>
   Widget build(BuildContext context) {
     var group = widget.group;
     return Scaffold(
-      body: extended.NestedScrollView(
+      body: ExtendedNestedScrollView(
         pinnedHeaderSliverHeightBuilder: () => Util.pinnedHeight,
-        innerScrollPositionKeyBuilder: () {
-          var key = 'group_page_tab_${_tabController.index}';
-          return Key(key);
-        },
+        // innerScrollPositionKeyBuilder: () {
+        //   var key = 'group_page_tab_${_tabController.index}';
+        //   return Key(key);
+        // },
+        onlyOneScrollInBody: true,
         headerSliverBuilder: (_, inner) => [
           SliverAppBar(
             leading: BackButton(),
@@ -170,7 +170,6 @@ class _GroupPageState extends State<GroupPage>
       FetchRefreshListViewBuilder<GroupBookController>(
         key: Key('group_page_tab_1'),
         tag: tag,
-        nested: true,
         builder: (c) => ListView.builder(
           itemCount: c.value.length,
           itemBuilder: (_, i) => BookRowItemWidget(
@@ -207,20 +206,17 @@ class _GroupPageState extends State<GroupPage>
             onPressed: () => Get.to(
               TopicAddPage(groupId: c.groupId),
             ).then((_) => c.onRefresh()),
-            child: extended.NestedScrollViewInnerScrollPositionKeyWidget(
-              Key('group_page_tab_2'),
-              Scrollbar(
-                child: SmartRefresher(
-                  controller: c.refreshController,
-                  onLoading: c.loadMoreCallback,
-                  onRefresh: c.refreshCallback,
-                  enablePullUp: true,
-                  child: ListView.builder(
-                    itemCount: c.value.length,
-                    itemBuilder: (_, i) => TopicTileWidget(
-                      topic: c.value[i],
-                      showLabel: true,
-                    ),
+            child: Scrollbar(
+              child: SmartRefresher(
+                controller: c.refreshController,
+                onLoading: c.loadMoreCallback,
+                onRefresh: c.refreshCallback,
+                enablePullUp: true,
+                child: ListView.builder(
+                  itemCount: c.value.length,
+                  itemBuilder: (_, i) => TopicTileWidget(
+                    topic: c.value[i],
+                    showLabel: true,
                   ),
                 ),
               ),
@@ -232,7 +228,6 @@ class _GroupPageState extends State<GroupPage>
       FetchRefreshListViewBuilder<GroupMemberController>(
         key: Key('group_page_tab_3'),
         tag: tag,
-        nested: true,
         builder: (c) => ListView.builder(
           itemCount: c.value.length,
           itemBuilder: (_, i) => UserFollowTileWidget(

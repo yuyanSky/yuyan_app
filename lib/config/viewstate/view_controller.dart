@@ -197,7 +197,7 @@ abstract class FetchSavableController<T extends BaseSavableJson>
   FetchSavableController({
     bool initialRefresh = false,
     ViewState state = ViewState.idle,
-    @required T initData,
+    T initData,
   })  : refreshController = RefreshController(),
         _initialRefresh = initialRefresh,
         assert(initData != null, 'initData must not be null'),

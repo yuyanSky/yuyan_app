@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:smart_color/smart_color.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
@@ -14,6 +12,7 @@ import 'package:yuyan_app/model/meta/ability.dart';
 import 'package:yuyan_app/model/topic/labels.dart';
 import 'package:yuyan_app/model/topic/topic_detail_seri.dart';
 import 'package:yuyan_app/model/user/user.dart';
+import 'package:yuyan_app/util/library/smart_color.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/editor/comment_widget.dart';
@@ -382,8 +381,8 @@ class CommentDetailItemWidget extends StatefulWidget {
 
   CommentDetailItemWidget({
     Key key,
-    @required this.current,
-    @required this.comments,
+    this.current,
+    this.comments,
     this.onTap,
     this.onLongPressed,
   }) : super(key: key);
@@ -525,12 +524,6 @@ class TopicDescWidget extends StatelessWidget {
                 '${e.name}',
                 style: AppStyles.textStyleCC.copyWith(color: Colors.white),
               ),
-            ),
-          );
-          return TextSpan(
-            text: ' ${e.name} ',
-            style: TextStyle(
-              backgroundColor: SmartColor.parse(e.color),
             ),
           );
         }).toList(),

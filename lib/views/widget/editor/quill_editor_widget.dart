@@ -47,7 +47,7 @@ class QuillEditorWidget extends StatelessWidget {
 
   const QuillEditorWidget({
     Key key,
-    @required this.controller,
+    this.controller,
     this.padding = EdgeInsets.zero,
     this.autoFocus = false,
     this.readOnly = false,

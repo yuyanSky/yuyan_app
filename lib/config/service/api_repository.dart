@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:tuple/tuple.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/api.dart';
@@ -447,7 +446,7 @@ class ApiRepository {
 
   // 查看是否收藏(文章或团队)
   static Future<bool> getIfMark({
-    @required int targetId,
+    int targetId,
     String targetType = "Doc",
   }) async {
     var res = await api.get("/actions", queryParameters: {
@@ -460,7 +459,7 @@ class ApiRepository {
   }
 
   static Future<bool> toggleMark({
-    @required int targetId,
+    int targetId,
     String targetType,
     bool marked = false,
   }) {
@@ -470,7 +469,7 @@ class ApiRepository {
   }
 
   static Future<bool> mark({
-    @required int targetId,
+    int targetId,
     String targetType = "Doc",
   }) async {
     var res = await api.post("/mine/marks", data: {
@@ -483,7 +482,7 @@ class ApiRepository {
   }
 
   static Future<bool> unmark({
-    @required int targetId,
+    int targetId,
     String targetType = "Doc",
   }) async {
     var res = await api.delete("/mine/marks", data: {
@@ -551,12 +550,12 @@ class ApiRepository {
 
   static Future<ActionSeri> doAction({
     // like, watch, follow, watch-comments, watch-topics, mark, read, reaction
-    @required String actionType,
-    @required int targetId,
+    String actionType,
+    int targetId,
     // Doc, Book, Artboard, ArtboardGroup,
     // ArtboardComment, Comment, Topic, User,
     // Resource, DocVersion, Quan, Note
-    @required String targetType,
+    String targetType,
     bool del = false,
   }) async {
     var data = {
@@ -983,7 +982,7 @@ class ApiRepository {
     // 0902 => 色情淫秽
     // 0903 => 反社会、暴力
     // 0904 => 其它(毒品、借贷、枪支等),
-    @required String reason,
+    String reason,
     int targetId,
     String targetType = 'Doc',
     String url,

@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/base.dart';
 import 'package:yuyan_app/config/net/token.dart';
@@ -40,32 +39,57 @@ class ApiResponse {
 
 class ApiInterceptor extends InterceptorsWrapper {
   @override
-  Future<Response> onResponse(Response response) async {
-    var resp = ApiResponse.fromJson(response.data);
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    final resp = ApiResponse.fromJson(response.data);
     if (resp.isError()) {
       throw ApiError(
         response: resp,
         dio: DioError(
-          request: response.request,
+          requestOptions: response.requestOptions,
           response: response,
+          type: DioErrorType.response,
         ),
       );
     }
     response.data = resp;
-    return response;
+    handler.next(response);
   }
 
   @override
-  Future onError(DioError err) async {
-    var resp = ApiResponse.fromJson(err.response?.data);
+  void onError(DioError err, ErrorInterceptorHandler handler) {
+    final resp = ApiResponse.fromJson(err.response?.data);
     if (resp.isError()) {
-      return ApiError(
-        response: resp,
-        dio: err,
-      );
+      // TODO: fix error
     }
-    return err;
+    handler.next(err);
   }
+  // @override
+  // Future<Response> onResponse(Response response) async {
+  //   var resp = ApiResponse.fromJson(response.data);
+  //   if (resp.isError()) {
+  //     throw ApiError(
+  //       response: resp,
+  //       dio: DioError(
+  //         request: response.request,
+  //         response: response,
+  //       ),
+  //     );
+  //   }
+  //   response.data = resp;
+  //   return response;
+  // }
+
+  // @override
+  // Future onError(DioError err) async {
+  //   var resp = ApiResponse.fromJson(err.response?.data);
+  //   if (resp.isError()) {
+  //     return ApiError(
+  //       response: resp,
+  //       dio: err,
+  //     );
+  //   }
+  //   return err;
+  // }
 }
 
 class ApiError implements Exception {
@@ -73,7 +97,7 @@ class ApiError implements Exception {
   DioError dio;
 
   ApiError({
-    @required this.response,
+    this.response,
     this.dio,
   });
 
@@ -81,7 +105,7 @@ class ApiError implements Exception {
   String toString() {
     var desc = response.errorDescription();
     if (dio != null) {
-      return '${dio.request.method} ${dio.request.path} => $desc';
+      return '${dio.requestOptions.method} ${dio.requestOptions.path} => $desc';
     }
     return desc;
   }

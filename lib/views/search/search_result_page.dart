@@ -7,7 +7,6 @@ import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/model/user/user.dart';
-import 'package:yuyan_app/model/user/user_lite_seri.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/views/home_tabs/discover/widget/book_tile_widget.dart';
 import 'package:yuyan_app/views/home_tabs/discover/widget/doc_tile_widget.dart';

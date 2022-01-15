@@ -5,9 +5,8 @@ import 'package:yuyan_app/util/styles/app_ui.dart';
 class LakeInlineLinkWidget extends StatelessWidget {
   const LakeInlineLinkWidget({
     Key key,
-    @required this.link,
+    this.link,
   }) : super(key: key);
-
   final CardLinkDetailSeri link;
 
   @override

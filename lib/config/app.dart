@@ -12,7 +12,7 @@ class App {
   static TokenProvider tokenProvider = TokenProvider();
   static CurrSpaceProvider currentSpaceProvider = CurrSpaceProvider();
   static MyUserProvider userProvider = MyUserProvider();
-  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
   static PackageInfo version;
 

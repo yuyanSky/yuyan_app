@@ -5,7 +5,7 @@ description: 语燕，一款第三方语雀移动客户端
 version: 1.2+0
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.10.0 <3.0.0"
 
 publish_to: none
 
@@ -80,7 +80,7 @@ dependencies:
   liquid_swipe: ^2.1.0
   # flutter_swiper: ^1.1.6
   # 用来替代 flutter_swiper
-  card_swiper : ^2.0.1
+  flutter_swiper_null_safety: ^1.0.2
   # 网络请求
   dio: ^4.0.4
   pretty_json: ^2.0.0
@@ -117,6 +117,7 @@ dependencies:
   # 列表动画
   flutter_staggered_animations: ^1.0.0
   # 话题标签颜色
+  pigment: ^1.0.4
   # smart_color: ^0.2.2
   # 消息红点
   badges: ^2.0.2

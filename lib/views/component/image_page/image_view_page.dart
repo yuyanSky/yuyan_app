@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
@@ -89,8 +87,8 @@ class ImageViewerPage extends StatefulWidget {
 
   const ImageViewerPage({
     Key key,
-    @required this.imageUrls,
-    @required this.initUrl,
+    this.imageUrls,
+    this.initUrl,
   })  : assert(imageUrls != null),
         assert(initUrl != null),
         super(key: key);
@@ -100,7 +98,7 @@ class ImageViewerPage extends StatefulWidget {
 }
 
 class _ImageViewerPageState extends State<ImageViewerPage> {
-  PageController _controller;
+  ExtendedPageController _controller;
 
   var _index = 0.obs;
   var imgLength = 1;
@@ -113,7 +111,8 @@ class _ImageViewerPageState extends State<ImageViewerPage> {
       _index.value = index;
       imgLength = widget.imageUrls.length;
     }
-    _controller = PageController(initialPage: index);
+    // _controller = PageController(initialPage: index);
+    _controller = ExtendedPageController(initialPage: index);
   }
 
   @override

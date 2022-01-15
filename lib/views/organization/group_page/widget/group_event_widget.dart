@@ -9,7 +9,7 @@ class GroupEventWidget extends StatefulWidget {
 
   GroupEventWidget({
     Key key,
-    @required this.blockId,
+    this.blockId,
   }) : super(key: key);
 
   @override

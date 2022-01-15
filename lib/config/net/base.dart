@@ -36,7 +36,7 @@ class PrintInterceptor extends InterceptorsWrapper {
     if (resp == null)
       return 'PrintInterceptor => getResponseDebug => parameter resp is null';
     //debug purpose
-    var debug = '\nin response to ==> ' + getRequestDebug(resp.request);
+    var debug = '\nin response to ==> ' + getRequestDebug(resp.requestOptions);
     debug += '\nresponse--> ${resp.statusCode} ${resp.statusMessage}';
     var respLength = '${resp.data}'.length;
     if (respLength > 500) {
@@ -60,7 +60,8 @@ class PrintInterceptor extends InterceptorsWrapper {
       }
     }
     if (resp.isRedirect != null && resp.isRedirect) {
-      debug += '\n\tredirects-->\n${resp.redirects.map((e) => e.location).toString()}\n';
+      debug +=
+          '\n\tredirects-->\n${resp.redirects.map((e) => e.location).toString()}\n';
     }
     return debug;
   }
@@ -73,25 +74,43 @@ class PrintInterceptor extends InterceptorsWrapper {
   }
 
   @override
-  Future onRequest(RequestOptions options) async {
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     debugPrint(getRequestDebug(options));
-    //设置超时 10s
-    options.connectTimeout = 1000 * 10;
-    options.receiveTimeout = 1000 * 10;
-    //这里可以添加额外的header信息
-    return options;
+    handler.next(options);
   }
 
   @override
-  Future onError(DioError err) async {
+  void onError(DioError err, ErrorInterceptorHandler handler) {
     debugPrint(getErrorDebug(err));
-    return err;
+    handler.next(err);
   }
 
   @override
-  Future onResponse(Response response) async {
-    //debug
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
     debugPrint(getResponseDebug(response));
-    return response;
+    handler.next(response);
   }
+
+  // @override
+  // Future onRequest(RequestOptions options) async {
+  //   debugPrint(getRequestDebug(options));
+  //   //设置超时 10s
+  //   options.connectTimeout = 1000 * 10;
+  //   options.receiveTimeout = 1000 * 10;
+  //   //这里可以添加额外的header信息
+  //   return options;
+  // }
+
+  // @override
+  // Future onError(DioError err) async {
+  //   debugPrint(getErrorDebug(err));
+  //   return err;
+  // }
+
+  // @override
+  // Future onResponse(Response response) async {
+  //   //debug
+  //   debugPrint(getResponseDebug(response));
+  //   return response;
+  // }
 }

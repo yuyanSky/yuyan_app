@@ -71,13 +71,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-  card_swiper:
-    dependency: "direct main"
-    description:
-      name: card_swiper
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
   characters:
     dependency: transitive
     description:
@@ -430,6 +423,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.21.0+1"
+  flutter_swiper_null_safety:
+    dependency: "direct main"
+    description:
+      name: flutter_swiper_null_safety
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -804,6 +804,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.13.0"
+  pigment:
+    dependency: "direct main"
+    description:
+      name: pigment
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4"
   platform:
     dependency: transitive
     description:

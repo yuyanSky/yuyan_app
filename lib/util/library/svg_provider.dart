@@ -7,7 +7,6 @@ import 'dart:ui' as ui show Image, Picture;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 
 /// Fetches an HTTP resource from the specified [url] using the specified [headers].
 Future<Uint8List> _httpGet(String url, {Map<String, String> headers}) async {
@@ -189,10 +188,10 @@ class SvgStringProvider extends ImageProvider<SvgImageKey> {
 @immutable
 class SvgImageKey {
   const SvgImageKey({
-    @required this.data,
-    @required this.pixelWidth,
-    @required this.pixelHeight,
-    @required this.scale,
+    this.data,
+    this.pixelWidth,
+    this.pixelHeight,
+    this.scale,
     this.color,
   })  : assert(data != null),
         assert(pixelWidth != null),

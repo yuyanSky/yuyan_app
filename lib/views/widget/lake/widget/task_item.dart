@@ -5,7 +5,7 @@ class LakeTaskItemWidget extends StatelessWidget {
 
   const LakeTaskItemWidget({
     Key key,
-    @required this.value,
+    this.value,
   }) : super(key: key);
 
   @override

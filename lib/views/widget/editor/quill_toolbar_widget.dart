@@ -11,7 +11,6 @@ import 'package:flutter_quill/models/documents/nodes/embed.dart';
 import 'package:flutter_quill/widgets/controller.dart';
 import 'package:flutter_quill/widgets/toolbar.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/util/util.dart';
 
