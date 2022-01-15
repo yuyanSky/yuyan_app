@@ -9,8 +9,8 @@ environment:
 
 publish_to: none
 
-dependency_overrides:
-  photo_view: ^0.13.0
+# dependency_overrides:
+  # photo_view: ^0.13.0
 
 dependencies:
   flutter:
@@ -20,12 +20,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   ## flutter图标相关
   # cupertino_icons: ^1.0.0
-  font_awesome_flutter: ^8.7.0
+  font_awesome_flutter: ^9.2.0
 
   # 富文本编辑器
-  notus: 1.0.0-dev.4.0
-  flutter_quill: ^2.0.5
-  delta_markdown: ^0.3.0
+  notus: ^1.0.0-rc.2
+  flutter_quill: ^3.2.0
+  delta_markdown: ^0.4.0
   # delta_markdown:
   # git:
   # url: https://github.com/dreamer2q/delta_markdown.git
@@ -38,33 +38,33 @@ dependencies:
   #      path: packages/notus
 
   # 底部导航栏
-  curved_navigation_bar: ^0.4.0-nullsafety.0
+  curved_navigation_bar: ^1.0.1
   # 解决 sliverList 单 scrollController 滚动问题
-  extended_nested_scroll_view: 3.0.0
+  extended_nested_scroll_view: ^5.0.0
   # HTML渲染部分，主要用于渲染语雀文档
   ## 文档瞄photo_view点
-  scroll_to_index: 1.0.6
+  scroll_to_index: ^2.1.1
   ## html渲染
   flutter_html: # ^1.3.0
     git:
       ref: 47e3931596dc4bb1d5f6e6a38d829e91e54d9abb
       url: https://github.com/vrtdev/flutter_html.git
   ## 代码高亮支持
-  flutter_highlight: 0.6.0
+  flutter_highlight: ^0.7.0
   ## clipboard复制代码
-  clipboard: 0.1.2+8
+  clipboard: ^0.1.3
   ## 组件显示，支持缩放
   photo_view: ^0.13.0
   ## 图片缓存
-  cached_network_image: ^3.1.0
+  cached_network_image: ^3.2.0
   ## 图片查看，编辑
-  extended_image: 3.0.0
+  extended_image: ^6.0.1
   ## 视频播放
-  chewie: ^1.0.0
+  chewie: ^1.2.2
   ## svg渲染
-  flutter_svg: ^0.21.0-nullsafety.0
+  flutter_svg: ^0.21.0+1
   ## like动画按钮
-  like_button: 2.0.2
+  like_button: ^2.0.4
   # Webview相关
   flutter_webview_plugin: ^0.4.0
   #  flutter_inappwebview: 4.0.0+4
@@ -75,69 +75,71 @@ dependencies:
   flutter_simple_treeview:
     git: https://github.com/yuyanSky/flutter_simple_treeview.git
   ## 多返回值
-  tuple: 2.0.0
+  tuple: ^2.0.0
   # goodlook guide 液体
-  liquid_swipe: ^1.5.0
-  flutter_swiper: 1.1.6
+  liquid_swipe: ^2.1.0
+  # flutter_swiper: ^1.1.6
+  # 用来替代 flutter_swiper
+  card_swiper : ^2.0.1
   # 网络请求
-  dio: 4.0.0-beta7
-  pretty_json: 1.1.0
+  dio: ^4.0.4
+  pretty_json: ^2.0.0
   # 弱提示
   # fluttertoast: ^3.1.3
   fluttertoast: ^8.0.8
   # bot_toast: 3.0.5
   bot_toast: ^4.0.1
   # launcher
-  url_launcher: ^6.0.2
+  url_launcher: ^6.0.18
   # 有序列表
-  romanice: 1.0.0+1
+  romanice: ^2.0.0
   # 下拉刷新
   pull_to_refresh: ^2.0.0
   # 写入文件
-  path_provider: ^2.0.1
+  path_provider: ^2.0.8
   # 状态管理
   # scoped_model: ^1.0.1
-  get: ^4.2.5
+  get: ^4.6.1
   # 数据分析
-  firebase_core: ^1.10.0 # This dependency was added during initial configuration.
-  firebase_analytics: ^8.3.4 # add dependency for Google Analytics for Firebase
+  firebase_core: ^1.11.0 # This dependency was added during initial configuration.
+  firebase_analytics: ^9.0.5 # add dependency for Google Analytics for Firebase
   # 缓存
-  shared_preferences: ^2.0.5
+  shared_preferences: ^2.0.12
   get_storage: ^2.0.3
   # 分享
-  share_extend: ^1.1.9
+  share_extend: ^2.0.0
   # 权限
   permission_handler: ^8.3.0
   # flare动画
-  flare_flutter: ^3.0.0
+  flare_flutter: ^3.0.2
   # 裁剪 我的页面顶部背景
-  flutter_custom_clippers: ^1.1.0
+  flutter_custom_clippers: ^2.0.0
   # 列表动画
-  flutter_staggered_animations: 1.0.0
+  flutter_staggered_animations: ^1.0.0
   # 话题标签颜色
-  smart_color: ^0.2.2
+  # smart_color: ^0.2.2
   # 消息红点
-  badges: ^1.1.0
+  badges: ^2.0.2
   # 评论 下滑出的抽屉
-  sliding_up_panel: ^1.0.1
+  sliding_up_panel: ^2.0.0+1
   #  bottom_sheet: 0.0.1-dev.8
-  modal_bottom_sheet: 2.0.0
+  modal_bottom_sheet: ^2.0.0
   # 更新apk https://github.com/xuexiangjys/XUpdate
-  flutter_xupdate: ^1.0.2
+  flutter_xupdate: ^2.0.2
   # 获取版本号
-  package_info: ^0.4.3+2
+  package_info: ^2.0.2
   # 滑动tab
   # shifting_tabbar: ^0.3.1
   shifting_tabbar: ^1.0.2
   # 图片选择器
-  image_picker: ^0.8.2 # lake to markdown
+  image_picker: ^0.8.4+4 # lake to markdown
   # html2md: ^1.0.1
   # markdown 渲染器
   # flutter_markdown: ^0.6.1
   # 骨架图
   shimmer: ^2.0.0
   ## 字符串格式
-  recase: 3.0.1
+  recase: ^4.0.0
 
 dev_dependencies:
   flutter_test:
