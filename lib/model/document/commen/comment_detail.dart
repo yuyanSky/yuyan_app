@@ -1,25 +1,25 @@
 import '../../user/user.dart';
 
 class CommentDetailSeri {
-  int id;
-  int userId;
-  UserSeri user;
-  int parentId;
-  String format;
-  String body;
-  String bodyAsl;
-  int likesCount;
-  int mood;
-  String createdAt;
-  String updatedAt;
-  int status;
+  int? id;
+  int? userId;
+  UserSeri? user;
+  int? parentId;
+  String? format;
+  String? body;
+  String? bodyAsl;
+  int? likesCount;
+  int? mood;
+  String? createdAt;
+  String? updatedAt;
+  int? status;
   dynamic toUserId;
   dynamic type;
   dynamic selectionId;
   dynamic selectionType;
   dynamic sourceType;
   dynamic sourceId;
-  String serializer;
+  String? serializer;
 
   CommentDetailSeri({
     this.id,
@@ -70,7 +70,7 @@ class CommentDetailSeri {
     map["id"] = id;
     map["user_id"] = userId;
     if (user != null) {
-      map["user"] = user.toJson();
+      map["user"] = user!.toJson();
     }
     map["parent_id"] = parentId;
     map["format"] = format;

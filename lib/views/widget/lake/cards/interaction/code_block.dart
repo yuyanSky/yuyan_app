@@ -14,20 +14,20 @@ class CodeBlockWidget extends StatelessWidget {
   /// It is recommended to give it a value for performance
   ///
   /// [All available languages](https://github.com/pd4d10/highlight/tree/master/highlight/lib/languages)
-  final String language;
+  final String? language;
 
   /// Highlight theme
   ///
   /// [All available themes](https://github.com/pd4d10/highlight/blob/master/flutter_highlight/lib/themes)
-  final Map<String, TextStyle> theme;
+  final Map<String, TextStyle>? theme;
 
   /// Padding
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
 
   /// Text styles
   ///
   /// Specify text styles such as font family and font size
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
 
   CodeBlockWidget(
     String input, {
@@ -40,11 +40,11 @@ class CodeBlockWidget extends StatelessWidget {
 
   InlineSpan _parseTree(Node node) {
     return TextSpan(
-      style: theme[node.className]?.copyWith(
+      style: theme![node.className!]?.copyWith(
         fontSize: 12,
       ),
       text: node.value,
-      children: node.children?.map((e) => _parseTree(e))?.toList(),
+      children: node.children?.map((e) => _parseTree(e)).toList(),
     );
   }
 
@@ -66,7 +66,7 @@ class CodeBlockWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var _textStyle = TextStyle(
       fontFamily: _defaultFontFamily,
-      color: theme[_rootKey]?.color ?? _defaultFontColor,
+      color: theme![_rootKey]?.color ?? _defaultFontColor,
     );
     if (textStyle != null) {
       _textStyle = _textStyle.merge(textStyle);
@@ -130,7 +130,7 @@ class CodeBlockWidget extends StatelessWidget {
                       TextSpan(
                         style: _textStyle,
                         children: _convert(
-                            highlight.parse(source, language: language).nodes),
+                            highlight.parse(source, language: language).nodes!),
                       ),
                     ),
                   ),

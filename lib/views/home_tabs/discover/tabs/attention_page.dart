@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/controller/home/attend_controller.dart';
+import 'package:yuyan_app/model/user/events/event_seri.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/views/component/nothing_page.dart';
 import 'package:yuyan_app/views/widget/event/affair.dart';
@@ -20,7 +21,7 @@ class AttentionPage extends StatelessWidget {
             onLoading: c.onLoadMoreCallback,
             child: c.builder(
               (state) {
-                var data = state.data;
+                List<EventSeri> data = state!.data!;
                 return ListView.builder(
                   key: PageStorageKey('attention'),
                   itemCount: data.length,
@@ -40,4 +41,3 @@ class AttentionPage extends StatelessWidget {
     );
   }
 }
-

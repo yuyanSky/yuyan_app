@@ -1,8 +1,8 @@
 import 'package:yuyan_app/model/document/note/note.dart';
 
 class NoteStatusSeri {
-  NoteSeri mirror;
-  NoteSeri latestNote;
+  NoteSeri? mirror;
+  NoteSeri? latestNote;
 
   NoteStatusSeri.fromJson(json) {
     if (json != null) {

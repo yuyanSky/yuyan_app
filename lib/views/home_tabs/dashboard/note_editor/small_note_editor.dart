@@ -36,7 +36,7 @@ class _SmallNoteEditorState extends State<SmallNoteEditor> {
           return Scaffold(
             appBar: AppBar(
               title: Text('小记'),
-              actions: [_publish(c.value.mirror.id)],
+              actions: [_publish(c.value!.mirror!.id)],
             ),
             body: Column(
               children: [
@@ -48,7 +48,7 @@ class _SmallNoteEditorState extends State<SmallNoteEditor> {
                     var res = await ApiRepository.postAttachFile(
                       path: file.path,
                       attachableType: 'Doclet',
-                      attachableId: controller.value.mirror.docletId,
+                      attachableId: controller.value!.mirror!.docletId,
                     );
                     // Get.lazyPut(() => ImageUploadController(file.path, attachId),
                     //     tag: '${file.path}');
@@ -79,7 +79,7 @@ class _SmallNoteEditorState extends State<SmallNoteEditor> {
     );
   }
 
-  Widget _publish(int mirrorId) {
+  Widget _publish(int? mirrorId) {
     return GetBuilder<PostNoteController>(
       init: PostNoteController(mirrorId),
       builder: (pub) {

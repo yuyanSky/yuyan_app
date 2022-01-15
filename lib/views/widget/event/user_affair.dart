@@ -15,7 +15,7 @@ class UserAffairTileWidget extends StatelessWidget {
 
   UserAffairTileWidget(
     this.item, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -24,10 +24,10 @@ class UserAffairTileWidget extends StatelessWidget {
       case 'Doc':
         return _ActionTile(
           user: item.actor,
-          action: item.type.transEvent(),
+          action: item.type!.transEvent(),
           actionTime: item.updatedAt,
           child: _DocTileNoUser(
-            item: item.targets.first.serialize<DocSeri>(),
+            item: item.targets!.first.serialize<DocSeri>(),
           ),
         );
       default:
@@ -43,13 +43,13 @@ class UserAffairTileWidget extends StatelessWidget {
 }
 
 class _ActionTile extends StatelessWidget {
-  final Widget child;
-  final UserSeri user;
-  final String action;
-  final String actionTime;
+  final Widget? child;
+  final UserSeri? user;
+  final String? action;
+  final String? actionTime;
 
   const _ActionTile({
-    Key key,
+    Key? key,
     this.child,
     this.user,
     this.action,
@@ -63,7 +63,7 @@ class _ActionTile extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 4, left: 12, right: 8),
           child: UserActionTileWidget(
-            user: user.toUserLiteSeri(),
+            user: user!.toUserLiteSeri(),
             subTitle: action,
             actionTime: actionTime,
           ),
@@ -77,21 +77,21 @@ class _ActionTile extends StatelessWidget {
 }
 
 class _DocTileNoUser extends StatelessWidget {
-  final DocSeri item;
+  final DocSeri? item;
 
   const _DocTileNoUser({
-    Key key,
+    Key? key,
     this.item,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return buildDoc(item);
+    return buildDoc(item!);
   }
 
   buildDoc(DocSeri data) {
     bool hasCover = data.cover != null;
-    Widget coverWidget;
+    late Widget coverWidget;
     if (hasCover) {
       coverWidget = ClipRRect(
         borderRadius: BorderRadius.circular(8),
@@ -101,7 +101,7 @@ class _DocTileNoUser extends StatelessWidget {
             maxHeight: 90,
           ),
           child: CachedNetworkImage(
-            imageUrl: data.cover,
+            imageUrl: data.cover!,
             placeholder: (context, url) => Container(
               color: AppColors.background,
             ), // Colors.white10,
@@ -115,7 +115,7 @@ class _DocTileNoUser extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          data.title,
+          data.title!,
           maxLines: hasCover ? 4 : 1,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.left,
@@ -147,8 +147,8 @@ class _DocTileNoUser extends StatelessWidget {
         MyRoute.docDetail(
           bookId: data.bookId,
           slug: data.slug,
-          book: data.book.slug,
-          login: data.user.login,
+          book: data.book!.slug,
+          login: data.user!.login,
         );
       },
       child: Container(

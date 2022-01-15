@@ -1,6 +1,6 @@
 class SettingSeri {
-  String displayType;
-  String layoutType;
+  String? displayType;
+  String? layoutType;
 
   SettingSeri({this.displayType});
 

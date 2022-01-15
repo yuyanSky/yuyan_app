@@ -3,8 +3,8 @@ import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/model/serializer/serializer.dart';
 
 class ActionResultSeri {
-  int count;
-  ActionSeri actioned;
+  int? count;
+  ActionSeri? actioned;
 
   ActionResultSeri.fromJson(json) {
     count = json['count'];
@@ -22,26 +22,26 @@ class ActionResultSeri {
 }
 
 class ActionSeri {
-  int id;
-  int userId;
-  String title;
-  String url;
-  String createdAt;
-  String updatedAt;
+  int? id;
+  int? userId;
+  String? title;
+  String? url;
+  String? createdAt;
+  String? updatedAt;
 
-  int targetBookId;
-  int targetGroupId;
-  GroupSeri targetGroup;
-  BookSeri targetBook;
+  int? targetBookId;
+  int? targetGroupId;
+  GroupSeri? targetGroup;
+  BookSeri? targetBook;
 
-  String actionType;
-  String actionName;
-  int targetId;
-  String targetType;
-  Serializer target;
+  String? actionType;
+  String? actionName;
+  int? targetId;
+  String? targetType;
+  Serializer? target;
 
   dynamic actionOption;
-  String serializer;
+  String? serializer;
 
   ActionSeri({
     this.id,
@@ -106,10 +106,10 @@ class ActionSeri {
     map["updated_at"] = updatedAt;
     map['target'] = target?.toJson();
     if (targetGroup != null) {
-      map["target_group"] = targetGroup.toJson();
+      map["target_group"] = targetGroup!.toJson();
     }
     if (targetBook != null) {
-      map["target_book"] = targetBook.toJson();
+      map["target_book"] = targetBook!.toJson();
     }
     map["_url"] = url;
     map["_serializer"] = serializer;

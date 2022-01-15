@@ -1,10 +1,10 @@
 class MetaAbilitySeri {
-  bool read;
-  bool update;
-  bool assign;
-  bool block;
-  bool destroy;
-  bool pin;
+  bool? read;
+  bool? update;
+  bool? assign;
+  bool? block;
+  bool? destroy;
+  bool? pin;
 
   MetaAbilitySeri.fromJson(dynamic json) {
     read = json["read"];

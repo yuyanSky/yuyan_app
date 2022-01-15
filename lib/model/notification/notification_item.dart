@@ -3,29 +3,29 @@ import 'package:yuyan_app/model/serializer/serializer.dart';
 
 class NotificationItemSeri {
   dynamic params;
-  int id;
-  int spaceId;
-  int organizationId;
-  String notifyType;
-  int userId;
-  int actorId;
-  String subjectType;
-  String secondSubjectType;
-  String thirdSubjectType;
+  int? id;
+  int? spaceId;
+  int? organizationId;
+  String? notifyType;
+  int? userId;
+  int? actorId;
+  String? subjectType;
+  String? secondSubjectType;
+  String? thirdSubjectType;
 
-  int subjectId;
-  int secondSubjectId;
-  int thirdSubjectId;
+  int? subjectId;
+  int? secondSubjectId;
+  int? thirdSubjectId;
 
-  String readAt;
-  String createdAt;
-  String updatedAt;
+  String? readAt;
+  String? createdAt;
+  String? updatedAt;
 
-  UserSeri actor;
+  UserSeri? actor;
 
-  Serializer subject;
-  Serializer secondSubject;
-  Serializer thirdSubject;
+  Serializer? subject;
+  Serializer? secondSubject;
+  Serializer? thirdSubject;
 
   NotificationItemSeri({
     this.params,
@@ -98,16 +98,16 @@ class NotificationItemSeri {
     map["created_at"] = createdAt;
     map["updated_at"] = updatedAt;
     if (actor != null) {
-      map["actor"] = actor.toJson();
+      map["actor"] = actor!.toJson();
     }
     if (subject != null) {
-      map["subject"] = subject.toJson();
+      map["subject"] = subject!.toJson();
     }
     if (secondSubject != null) {
-      map["second_subject"] = secondSubject.toJson();
+      map["second_subject"] = secondSubject!.toJson();
     }
     if (thirdSubject != null) {
-      map['third_subject'] = thirdSubject.toJson();
+      map['third_subject'] = thirdSubject!.toJson();
     }
     return map;
   }

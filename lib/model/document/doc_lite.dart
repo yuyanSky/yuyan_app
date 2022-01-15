@@ -2,27 +2,27 @@ import '../user/user.dart';
 import 'book.dart';
 
 class DocLiteSeri {
-  int id;
-  String type;
+  int? id;
+  String? type;
   dynamic subType;
-  String title;
-  String slug;
-  String description;
+  String? title;
+  String? slug;
+  String? description;
   dynamic cover;
-  int wordCount;
-  int userId;
-  int bookId;
-  int public;
-  String contentUpdatedAt;
-  String createdAt;
-  String updatedAt;
-  String publishedAt;
-  String firstPublishedAt;
-  int readStatus;
-  int viewStatus;
-  UserSeri user;
-  BookSeri book;
-  String serializer;
+  int? wordCount;
+  int? userId;
+  int? bookId;
+  int? public;
+  String? contentUpdatedAt;
+  String? createdAt;
+  String? updatedAt;
+  String? publishedAt;
+  String? firstPublishedAt;
+  int? readStatus;
+  int? viewStatus;
+  UserSeri? user;
+  BookSeri? book;
+  String? serializer;
 
   DocLiteSeri({
     this.id,
@@ -93,10 +93,10 @@ class DocLiteSeri {
     map["read_status"] = readStatus;
     map["view_status"] = viewStatus;
     if (user != null) {
-      map["user"] = user.toJson();
+      map["user"] = user!.toJson();
     }
     if (book != null) {
-      map["book"] = book.toJson();
+      map["book"] = book!.toJson();
     }
     map["_serializer"] = serializer;
     return map;

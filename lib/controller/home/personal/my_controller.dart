@@ -17,9 +17,9 @@ import 'package:yuyan_app/model/user/user.dart';
 class MyUserProvider extends BaseSaveJson<MineSeri> {
   OrganizationSeri get defaultSpace {
     return OrganizationSeri(
-      name: data.name,
-      logo: data.avatarUrl,
-      login: data.login,
+      name: data!.name,
+      logo: data!.avatarUrl,
+      login: data!.login,
     );
   }
 
@@ -91,7 +91,7 @@ class MyFollowingController
           initialRefresh: true,
         );
 
-  int get userId => App.userProvider.data.id;
+  int? get userId => App.userProvider.data!.id;
 
   @override
   Future fetchData() {
@@ -102,7 +102,7 @@ class MyFollowingController
   Future fetchMore() {
     return ApiRepository.getFollowingList(
       userId: userId,
-      offset: value.length,
+      offset: value!.length,
     );
   }
 }
@@ -124,7 +124,7 @@ class MyFollowerController extends FetchSavableController<MyFollowerProvider> {
           initialRefresh: true,
         );
 
-  int get userId => App.userProvider.data.id;
+  int? get userId => App.userProvider.data!.id;
 
   @override
   Future fetchData() {
@@ -135,7 +135,7 @@ class MyFollowerController extends FetchSavableController<MyFollowerProvider> {
   Future fetchMore() {
     return ApiRepository.getFollowerList(
       userId: userId,
-      offset: value.data.length,
+      offset: value!.data!.length,
     );
   }
 }
@@ -159,7 +159,7 @@ class MyBookController extends FetchSavableController<MyBookProvider> {
 
   @override
   Future fetchData() {
-    return ApiRepository.getBookList(userId: App.userProvider.data.id);
+    return ApiRepository.getBookList(userId: App.userProvider.data!.id);
   }
 }
 
@@ -225,7 +225,7 @@ class MyTopicProvider extends BaseSaveListJson<TopicSeri> {
 }
 
 class MyTopicController extends FetchSavableController<MyTopicProvider> {
-  final String topicState;
+  final String? topicState;
 
   MyTopicController({
     this.topicState,
@@ -257,7 +257,7 @@ class MyNoteController extends FetchSavableController<MyNoteProvider> {
   static MyNoteController get to => Get.find();
 
   void remove(NoteSeri item) {
-    value.remove(item);
+    value!.remove(item);
     update();
   }
 
@@ -269,7 +269,7 @@ class MyNoteController extends FetchSavableController<MyNoteProvider> {
 
   @override
   Future fetchMore() {
-    return ApiRepository.getMyNoteList(offset: value.data.length);
+    return ApiRepository.getMyNoteList(offset: value!.data!.length);
   }
 
   @override
@@ -303,6 +303,6 @@ class MyHistController extends FetchSavableController<MyHistProvider> {
 
   @override
   Future fetchMore() {
-    return ApiRepository.getMineDocs(offset: value.length);
+    return ApiRepository.getMineDocs(offset: value!.length);
   }
 }

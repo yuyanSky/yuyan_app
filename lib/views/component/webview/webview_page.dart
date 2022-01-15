@@ -9,15 +9,15 @@ import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/views/widget/menu_item.dart';
 
 class EmbedWebviewPage extends StatefulWidget {
-  final String url;
+  final String? url;
   final EdgeInsets margin;
   final EdgeInsets padding;
   final bool lockUrl;
-  final Function(String) onUrlChanged;
-  final Widget header;
+  final Function(String)? onUrlChanged;
+  final Widget? header;
 
   const EmbedWebviewPage({
-    Key key,
+    Key? key,
     this.url,
     this.header,
     this.lockUrl = true,
@@ -33,7 +33,7 @@ class EmbedWebviewPage extends StatefulWidget {
 class _EmbedWebviewPageState extends State<EmbedWebviewPage> {
   @override
   Widget build(BuildContext context) {
-    var uri = Uri.tryParse(widget.url);
+    var uri = Uri.tryParse(widget.url!)!;
     var h = uri.queryParameters['height'];
     var height = double.tryParse(h ?? '') ?? Get.width;
     return Container(
@@ -47,7 +47,7 @@ class _EmbedWebviewPageState extends State<EmbedWebviewPage> {
       padding: widget.padding,
       child: Column(
         children: [
-          if (widget.header != null) widget.header,
+          if (widget.header != null) widget.header!,
           SizedBox(
             height: height,
             child: InAppWebView(
@@ -73,10 +73,10 @@ class _EmbedWebviewPageState extends State<EmbedWebviewPage> {
 }
 
 class WebviewPage extends StatefulWidget {
-  final String url;
+  final String? url;
 
   const WebviewPage({
-    Key key,
+    Key? key,
     this.url,
   }) : super(key: key);
 
@@ -101,16 +101,16 @@ class _WebviewPageState extends State<WebviewPage> {
     ),
   );
 
-  InAppWebViewController _controller;
+  InAppWebViewController? _controller;
 
-  PullToRefreshController _pullController;
+  PullToRefreshController? _pullController;
   bool _forcePopup = false;
 
   @override
   void initState() {
     super.initState();
-    _url.value = widget.url;
-    _title.value = widget.url;
+    _url.value = widget.url!;
+    _title.value = widget.url!;
     debugPrint('webview: ${widget.url}');
     _pullController = PullToRefreshController(
       onRefresh: () {
@@ -125,8 +125,8 @@ class _WebviewPageState extends State<WebviewPage> {
     return WillPopScope(
       onWillPop: () async {
         if (_controller == null || _forcePopup) return true;
-        if (await _controller.canGoBack()) {
-          _controller.goBack();
+        if (await _controller!.canGoBack()) {
+          _controller!.goBack();
           return false;
         }
         return true;
@@ -164,7 +164,7 @@ class _WebviewPageState extends State<WebviewPage> {
                 ),
                 PopupMenuItem(
                   value: () {
-                    _controller.reload();
+                    _controller!.reload();
                   },
                   child: MenuItemWidget(
                     iconData: Icons.refresh,
@@ -172,7 +172,7 @@ class _WebviewPageState extends State<WebviewPage> {
                   ),
                 ),
               ],
-              onSelected: (_) => _?.call(),
+              onSelected: (dynamic _) => _?.call(),
             ),
           ],
         ),
@@ -181,22 +181,22 @@ class _WebviewPageState extends State<WebviewPage> {
             initialOptions: _initialConfig,
             pullToRefreshController: _pullController,
             initialUrlRequest: URLRequest(
-              url: Uri.parse(widget.url),
+              url: Uri.parse(widget.url!),
             ),
             onTitleChanged: (c, title) {
-              _title.value = title;
+              _title.value = title!;
             },
             onLoadStart: (c, url) {
               _url.value = url.toString();
             },
             onLoadStop: (c, url) {
-              _pullController.endRefreshing();
+              _pullController!.endRefreshing();
             },
             onWebViewCreated: (c) {
               _controller = c;
             },
             shouldOverrideUrlLoading: (_, nav) async {
-              final uri = nav.request.url;
+              final uri = nav.request.url!;
               if (![
                 "http",
                 "https",

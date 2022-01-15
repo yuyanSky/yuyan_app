@@ -3,9 +3,9 @@ import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/user/user.dart';
 
 class DiscoverRecommendJson {
-  List<BookSeri> books;
-  List<DocSeri> docs;
-  List<UserSeri> users;
+  List<BookSeri>? books;
+  List<DocSeri>? docs;
+  List<UserSeri>? users;
 
   DiscoverRecommendJson.fromJson(data) {
     if (data == null) return;
@@ -21,8 +21,8 @@ class DiscoverRecommendJson {
   }
 
   Map<String, dynamic> toJson() => {
-        'books': books?.map((e) => e.toJson())?.toList(),
-        'docs': docs?.map((e) => e.toJson())?.toList(),
-        'users': users?.map((e) => e.toJson())?.toList(),
+        'books': books?.map((e) => e.toJson()).toList(),
+        'docs': docs?.map((e) => e.toJson()).toList(),
+        'users': users?.map((e) => e.toJson()).toList(),
       };
 }

@@ -1,16 +1,16 @@
 import 'package:yuyan_app/model/serializer/serializer.dart';
 
 class SearchHitSeri {
-  int id;
-  String type;
-  String abstract;
-  String bookName;
-  String groupName;
-  String updatedAt;
-  String title;
-  String slug;
-  String url;
-  Serializer record;
+  int? id;
+  String? type;
+  String? abstract;
+  String? bookName;
+  String? groupName;
+  String? updatedAt;
+  String? title;
+  String? slug;
+  String? url;
+  Serializer? record;
 
   SearchHitSeri({
     this.id,
@@ -50,7 +50,7 @@ class SearchHitSeri {
     map["slug"] = slug;
     map["url"] = url;
     if (record != null) {
-      map["_record"] = record.toJson();
+      map["_record"] = record!.toJson();
     }
     return map;
   }

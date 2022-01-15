@@ -13,11 +13,11 @@ import 'package:yuyan_app/views/organization/topic_page/topic_detail_page.dart';
 import 'package:yuyan_app/views/widget/editor/comment_widget.dart';
 
 class DocCommentsWidget extends StatefulWidget {
-  final String tag;
-  final ScrollController scrollController;
+  final String? tag;
+  final ScrollController? scrollController;
 
   DocCommentsWidget({
-    Key key,
+    Key? key,
     this.tag,
     this.scrollController,
   }) : super(key: key);
@@ -30,14 +30,14 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget>
     with AutomaticKeepAliveClientMixin {
   final _editController = TextEditingController();
 
-  void _onReplyTo(DocCommentsController c, CommentDetailSeri data) {
+  void _onReplyTo(DocCommentsController c, CommentDetailSeri? data) {
     var postController = Get.find<CommentPostController>(tag: widget.tag);
     var reply = data != null;
     showMaterialModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (_) => CommentModalSheet(
-        hintText: reply ? '回复：${data.user.name}' : null,
+        hintText: reply ? '回复：${data!.user!.name}' : null,
         onPublish: (mark) async {
           if (mark.trim().isEmpty) {
             Util.toast('说点什么吗？');
@@ -46,7 +46,7 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget>
           var success = false;
           await postController.safeHandler(() async {
             await postController.postComment(
-              parentId: reply ? data.userId : null,
+              parentId: reply ? data!.userId : null,
               comment: mark,
               convert: true,
               success: () {
@@ -67,14 +67,14 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget>
   }
 
   void _onDeleteComment(DocCommentsController c, CommentDetailSeri data) {
-    if (data.userId == App.userProvider.data.id) {
+    if (data.userId == App.userProvider.data!.id) {
       Util.showConfirmDialog(
         context,
         content: '删除这条评论吗?',
         confirmCallback: () {
           Util.futureWrap(
             ApiRepository.deleteComment(data.id),
-            onData: (data) {
+            onData: (dynamic data) {
               c.onRefresh();
               Util.toast('删除成功');
             },
@@ -102,7 +102,7 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget>
                 physics: ClampingScrollPhysics(),
                 controller: widget.scrollController,
                 child: Column(
-                  children: c.comments.mapWidget(
+                  children: c.comments!.mapWidget(
                     (data) => CommentDetailItemWidget(
                       current: data,
                       comments: c.comments,
@@ -125,13 +125,13 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget>
                     bottom: 4,
                   ),
                   child: Text(
-                    "评论 ${c.comments.length}",
+                    "评论 ${c.comments!.length}",
                     style: AppStyles.textStyleBp,
                   ),
                 ),
                 Expanded(
                   child: commentWidget.onlyIf(
-                    !GetUtils.isNullOrBlank(c.comments),
+                    !GetUtils.isNullOrBlank(c.comments)!,
                     animation: false,
                     elseif: () => Text(
                       '还没有人评论呢！\n'
@@ -197,7 +197,7 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget>
                       Util.toast('发布成功');
                       c.onRefresh();
                       _editController.text = '';
-                      Get.focusScope.unfocus();
+                      Get.focusScope!.unfocus();
                     },
                     error: () {
                       Util.toast('失败了，发生什么了呢？');
@@ -226,12 +226,12 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget>
 
 class ReplyBottomSheetWidget extends StatelessWidget {
   final String hintText;
-  final int replyTo;
-  final CommentPostController postController;
-  final TextEditingController editingController;
+  final int? replyTo;
+  final CommentPostController? postController;
+  final TextEditingController? editingController;
 
   const ReplyBottomSheetWidget({
-    Key key,
+    Key? key,
     this.replyTo,
     this.hintText = '评论千万条，友善第一条',
     this.postController,
@@ -278,20 +278,20 @@ class ReplyBottomSheetWidget extends StatelessWidget {
         }
         return TextButton(
           onPressed: () {
-            if (editingController.text.trim() == '') {
+            if (editingController!.text.trim() == '') {
               Util.toast('😶 你要说什么呢？');
               return;
             }
             c.postComment(
               parentId: replyTo,
-              comment: editingController.text,
+              comment: editingController!.text,
               success: () {
-                editingController.text = '';
-                if (Get.isBottomSheetOpen) {
+                editingController!.text = '';
+                if (Get.isBottomSheetOpen!) {
                   Get.back();
                 }
-                if (Get.focusScope.hasFocus) {
-                  Get.focusScope.unfocus();
+                if (Get.focusScope!.hasFocus) {
+                  Get.focusScope!.unfocus();
                 }
                 Util.toast('🎉 成功');
               },
@@ -315,14 +315,14 @@ class ReplyBottomSheetWidget extends StatelessWidget {
 }
 
 class CommentTextField extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String hintText;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final int maxLines;
   final bool autoFocus;
 
   CommentTextField({
-    Key key,
+    Key? key,
     this.hintText = "说点什么吧⋯⋯",
     this.controller,
     this.focusNode,

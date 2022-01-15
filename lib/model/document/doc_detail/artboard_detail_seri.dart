@@ -1,26 +1,26 @@
 class ArtboardDetailSeri {
-  int id;
-  int spaceId;
-  int artboardGroupId;
-  int bookId;
+  int? id;
+  int? spaceId;
+  int? artboardGroupId;
+  int? bookId;
   dynamic assetId;
   dynamic assetVersionId;
-  int userId;
-  String md5;
-  String uuid;
-  int sort;
-  String image;
+  int? userId;
+  String? md5;
+  String? uuid;
+  int? sort;
+  String? image;
   dynamic smallImage;
   dynamic labelMapUrl;
-  String name;
-  int width;
-  int height;
-  int commentsCount;
-  int likesCount;
-  String createdAt;
-  String updatedAt;
+  String? name;
+  int? width;
+  int? height;
+  int? commentsCount;
+  int? likesCount;
+  String? createdAt;
+  String? updatedAt;
   dynamic contentUpdatedAt;
-  int readStatus;
+  int? readStatus;
   dynamic deletedAt;
 
   ArtboardDetailSeri({

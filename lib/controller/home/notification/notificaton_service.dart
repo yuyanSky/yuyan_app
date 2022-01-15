@@ -9,9 +9,9 @@ import 'package:yuyan_app/model/notification/notification_item.dart';
 import 'package:yuyan_app/views/home_tabs/notification/widget/one_notification.dart';
 
 class NotificationService extends GetxService {
-  Timer timer;
-  NotificationSeri data;
-  int lastId = 0;
+  late Timer timer;
+  late NotificationSeri data;
+  int? lastId = 0;
 
   showNotification(NotificationItemSeri item) {
     //Notify
@@ -40,8 +40,8 @@ class NotificationService extends GetxService {
         type: 'unread',
         limit: 1,
       );
-      if (data.normalCount > 0) {
-        var latest = data.notifications.first;
+      if (data.normalCount! > 0) {
+        var latest = data.notifications!.first;
         if (lastId == 0) {
           lastId = latest.id;
         }

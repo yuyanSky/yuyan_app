@@ -1,16 +1,16 @@
 class MilestoneSeri {
-  int id;
-  int iid;
-  int groupId;
-  String title;
+  int? id;
+  int? iid;
+  int? groupId;
+  String? title;
   dynamic dueOn;
-  int userId;
-  int status;
-  int topicsCount;
-  int closedTopicsCount;
-  String createdAt;
-  String updatedAt;
-  String serializer;
+  int? userId;
+  int? status;
+  int? topicsCount;
+  int? closedTopicsCount;
+  String? createdAt;
+  String? updatedAt;
+  String? serializer;
 
   MilestoneSeri({
     this.id,

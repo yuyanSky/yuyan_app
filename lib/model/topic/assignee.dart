@@ -1,22 +1,22 @@
 class AssigneeSeri {
-  int id;
-  String type;
-  String login;
-  String name;
-  String description;
-  String avatar;
-  String avatarUrl;
-  int followersCount;
-  int followingCount;
-  int status;
-  int public;
+  int? id;
+  String? type;
+  String? login;
+  String? name;
+  String? description;
+  String? avatar;
+  String? avatarUrl;
+  int? followersCount;
+  int? followingCount;
+  int? status;
+  int? public;
   dynamic scene;
-  String createdAt;
-  String updatedAt;
-  bool isPaid;
-  int memberLevel;
+  String? createdAt;
+  String? updatedAt;
+  bool? isPaid;
+  int? memberLevel;
   dynamic profile;
-  String serializer;
+  String? serializer;
 
   AssigneeSeri({
     this.id,

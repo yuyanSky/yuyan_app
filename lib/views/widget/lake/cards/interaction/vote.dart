@@ -7,27 +7,27 @@ import 'package:yuyan_app/util/util.dart';
 import '../../widget/label_widget.dart';
 
 class VoteCardWidget extends StatelessWidget {
-  final Map json;
-  final int docId;
+  final Map? json;
+  final int? docId;
 
   const VoteCardWidget({
-    Key key,
+    Key? key,
     this.json,
     this.docId,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var singleVote = (json['type'] == 'single');
-    var voteId = json['voteId'];
-    var deadline = json['deadline'] as String;
+    var singleVote = (json!['type'] == 'single');
+    var voteId = json!['voteId'];
+    var deadline = json!['deadline'] as String?;
     Get.put(
       VoteController(
         docId: docId,
         voteId: voteId,
         deadline: deadline,
-        items: (json['items'] as List)
-            .map<String>((e) => e['id'] as String)
+        items: (json!['items'] as List)
+            .map<String?>((e) => e['id'] as String?)
             .toList(),
       ),
       tag: voteId,
@@ -42,21 +42,21 @@ class VoteCardWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _voteTitle(singleVote, json['title']),
+          _voteTitle(singleVote, json!['title']),
           GetBuilder<VoteController>(
             tag: voteId,
             builder: (c) => c.stateBuilder(
               onIdle: () {
-                var data = c.value;
-                var voteInfo = <String, VoteItemSeri>{};
+                var data = c.value!;
+                var voteInfo = <String?, VoteItemSeri>{};
                 var voteMembers = Set<String>();
                 var voteLength = 0;
-                data.items.forEach((item) {
+                data.items!.forEach((item) {
                   voteInfo[item.id] = item;
-                  voteMembers.addAll(item.members);
+                  voteMembers.addAll(item.members!);
                 });
-                voteLength = data.voted.length;
-                List children = (json['items'] as List).map((item) {
+                voteLength = data.voted!.length;
+                List children = (json!['items'] as List).map((item) {
                   var count = voteInfo[item['id']]?.count ?? 0;
                   var ratio = count / voteLength;
                   return Container(
@@ -67,11 +67,11 @@ class VoteCardWidget extends StatelessWidget {
                     child: ListTile(
                       title: _voteTile(item['value'], count, ratio),
                       subtitle: _voteIndicator(ratio),
-                      selected: data.voted.contains(item['id']),
+                      selected: data.voted!.contains(item['id']),
                     ),
                   );
                 }).toList();
-                var over = DateTime.now().difference(deadline.toDateTime()) >
+                var over = DateTime.now().difference(deadline!.toDateTime()!) >
                     const Duration(seconds: 1);
                 children.add(Container(
                   child: ListTile(
@@ -91,7 +91,7 @@ class VoteCardWidget extends StatelessWidget {
                 ));
                 return ListTileTheme(
                   selectedColor: Colors.blue,
-                  child: Column(children: children),
+                  child: Column(children: children as List<Widget>),
                 );
               },
             ),
@@ -101,7 +101,7 @@ class VoteCardWidget extends StatelessWidget {
     );
   }
 
-  _voteTitle(bool singleVote, String title) {
+  _voteTitle(bool singleVote, String? title) {
     return Row(
       children: [
         SizedBox(width: 12),
@@ -134,7 +134,7 @@ class VoteCardWidget extends StatelessWidget {
     );
   }
 
-  _voteTile(String title, int count, double ratio) {
+  _voteTile(String? title, int count, double ratio) {
     return Row(
       children: [
         Flexible(

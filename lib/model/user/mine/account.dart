@@ -1,10 +1,10 @@
 class UserAccountSeri {
-  int id;
-  String name;
-  String username;
-  String mobile;
-  String email;
-  String serializer;
+  int? id;
+  String? name;
+  String? username;
+  String? mobile;
+  String? email;
+  String? serializer;
 
   UserAccountSeri({
       this.id, 

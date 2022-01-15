@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
+import 'package:yuyan_app/config/net/api.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
@@ -8,25 +11,26 @@ import 'package:yuyan_app/model/topic/topic_detail_seri.dart';
 import 'package:yuyan_app/util/util.dart';
 
 class TopicDetailController extends FetchValueController<TopicDetailSeri> {
-  final int iid;
-  final int groupId;
+  final int? iid;
+  final int? groupId;
 
   TopicDetailController(this.iid, this.groupId);
 
-  MetaAbilitySeri abilities;
+  MetaAbilitySeri? abilities;
 
   @override
   Future<TopicDetailSeri> fetch() async {
     final res =
-        await ApiRepository.getTopicDetailRes(iid: iid, groupId: groupId);
-    abilities = MetaAbilitySeri.fromJson(res.meta['abilities']);
+        await (ApiRepository.getTopicDetailRes(iid: iid, groupId: groupId)
+            as FutureOr<ApiResponse>);
+    abilities = MetaAbilitySeri.fromJson(res.meta!['abilities']);
     return TopicDetailSeri.fromJson(res.data);
   }
 }
 
 class TopicCommentsController
     extends FetchListValueController<CommentDetailSeri> {
-  final int commentId;
+  final int? commentId;
 
   TopicCommentsController(this.commentId);
 
@@ -55,7 +59,7 @@ class CommentDeleteController extends FetchValueController<CommentDetailSeri> {
 }
 
 class CommentPostController extends FetchValueController<CommentDetailSeri> {
-  final int commentId;
+  final int? commentId;
   final String commentType;
 
   CommentPostController(
@@ -66,14 +70,14 @@ class CommentPostController extends FetchValueController<CommentDetailSeri> {
           initialState: ViewState.idle,
         );
 
-  String _comment;
-  int _parentId;
+  String? _comment;
+  int? _parentId;
 
   postComment({
-    String comment,
-    int parentId,
-    VoidCallback success,
-    VoidCallback error,
+    String? comment,
+    int? parentId,
+    VoidCallback? success,
+    VoidCallback? error,
     bool convert = false,
   }) async {
     _comment = comment;
@@ -93,7 +97,7 @@ class CommentPostController extends FetchValueController<CommentDetailSeri> {
 
   @override
   onError() {
-    Util.toast('出错了：${error.content}');
+    Util.toast('出错了：${error!.content}');
   }
 
   @override

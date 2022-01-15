@@ -1,10 +1,10 @@
 class TagSeri {
-  int id;
-  String title;
-  int docId;
-  int userId;
-  int bookId;
-  String serializer;
+  int? id;
+  String? title;
+  int? docId;
+  int? userId;
+  int? bookId;
+  String? serializer;
 
   TagSeri({
     this.id,

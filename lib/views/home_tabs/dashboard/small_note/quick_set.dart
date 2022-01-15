@@ -7,7 +7,7 @@ import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class QuickSetPage extends StatelessWidget {
-  const QuickSetPage({Key key}) : super(key: key);
+  const QuickSetPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class QuickSetPage extends StatelessWidget {
         child: GetBuilder<QuickLinkController>(
           builder: (c) => c.builder(
             (state) {
-              var data = state.data;
+              List<QuickLinkSeri> data = state!.data!;
               return ListView.builder(
                 itemCount: data.length,
                 itemBuilder: (_, index) {
@@ -50,10 +50,10 @@ class QuickSetPage extends StatelessWidget {
 }
 
 class _QuickSetItemWidget extends StatelessWidget {
-  final QuickLinkSeri data;
+  final QuickLinkSeri? data;
 
   _QuickSetItemWidget({
-    Key key,
+    Key? key,
     this.data,
   }) : super(key: key);
 
@@ -65,12 +65,12 @@ class _QuickSetItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String imageUrl = data.icon.toString().contains("http")
-        ? data.icon
-        : iconType[data.type] ?? "assets/images/dashboard/book.png";
+    String? imageUrl = data!.icon.toString().contains("http")
+        ? data!.icon
+        : iconType[data!.type!] ?? "assets/images/dashboard/book.png";
     return GestureDetector(
       onTap: () {
-        Util.handleQuickLinkNav(data);
+        Util.handleQuickLinkNav(data!);
       },
       child: Container(
         height: 70,
@@ -96,7 +96,7 @@ class _QuickSetItemWidget extends StatelessWidget {
               ),
             ),
             Text(
-              data.title,
+              data!.title!,
               style: AppStyles.textStyleB,
             )
           ],

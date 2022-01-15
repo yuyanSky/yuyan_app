@@ -9,7 +9,7 @@ class AttendDataProvider extends BaseSaveListJson<EventSeri> {
   String get key => 'attend_events';
 
   @override
-  List<EventSeri> convert(json) {
+  List<EventSeri>? convert(json) {
     if (json == null) return null;
     var data = (json as List).map((e) => EventSeri.fromJson(e)).toList();
     return data;
@@ -25,11 +25,11 @@ class AttendController extends FetchSavableController<AttendDataProvider> {
           initData: AttendDataProvider(),
         );
 
-  int offset = 0;
+  int? offset = 0;
 
   Future _doFetch({bool refresh = false}) async {
     var resp = await ApiRepository.getAttendEvents(refresh ? 0 : offset);
-    offset = resp.item2.meta['offset'];
+    offset = resp.item2.meta!['offset'];
     return resp.item1;
   }
 

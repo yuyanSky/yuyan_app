@@ -5,62 +5,62 @@ import 'account.dart';
 import 'profile.dart';
 
 class MineSeri {
-  String privateToken;
-  String workId;
-  String avatarUrl;
-  bool isActive;
-  bool isInactive;
-  bool isDeactivated;
-  bool isTerminated;
-  bool isBanned;
-  bool isBlocked;
-  bool isMuted;
-  bool isExtcontact;
-  String email;
-  String mobile;
-  bool isPaid;
-  bool hasPaidBefore;
-  int id;
-  int spaceId;
-  String type;
-  String login;
-  String name;
-  String description;
-  String avatar;
+  String? privateToken;
+  String? workId;
+  String? avatarUrl;
+  bool? isActive;
+  bool? isInactive;
+  bool? isDeactivated;
+  bool? isTerminated;
+  bool? isBanned;
+  bool? isBlocked;
+  bool? isMuted;
+  bool? isExtcontact;
+  String? email;
+  String? mobile;
+  bool? isPaid;
+  bool? hasPaidBefore;
+  int? id;
+  int? spaceId;
+  String? type;
+  String? login;
+  String? name;
+  String? description;
+  String? avatar;
   dynamic ownerId;
-  int topicsCount;
-  int publicTopicsCount;
-  int membersCount;
-  int booksCount;
-  int publicBooksCount;
-  int followersCount;
-  int followingCount;
-  int accountId;
-  int role;
-  int status;
-  int public;
-  bool wantsEmail;
-  bool wantsMarketingEmail;
-  int topicUpdatedAtMs;
+  int? topicsCount;
+  int? publicTopicsCount;
+  int? membersCount;
+  int? booksCount;
+  int? publicBooksCount;
+  int? followersCount;
+  int? followingCount;
+  int? accountId;
+  int? role;
+  int? status;
+  int? public;
+  bool? wantsEmail;
+  bool? wantsMarketingEmail;
+  int? topicUpdatedAtMs;
   dynamic deletedSlug;
-  String language;
-  int organizationId;
+  String? language;
+  int? organizationId;
   dynamic empType;
   dynamic groupDepartmentUpdatedAt;
-  int memberLevel;
-  String expiredAt;
+  int? memberLevel;
+  String? expiredAt;
   dynamic scene;
   dynamic source;
   dynamic maxMember;
-  String createdAt;
-  String updatedAt;
-  int grainsSum;
+  String? createdAt;
+  String? updatedAt;
+  int? grainsSum;
   dynamic punishExpiredAt;
   dynamic deletedAt;
-  String serializer;
-  StatisticsSeri statistics;
-  UserAccountSeri account;
-  UserProfileSeri profile;
+  String? serializer;
+  StatisticsSeri? statistics;
+  UserAccountSeri? account;
+  UserProfileSeri? profile;
 
   MineSeri({
     this.privateToken,
@@ -242,13 +242,13 @@ class MineSeri {
     map["deleted_at"] = deletedAt;
     map["_serializer"] = serializer;
     if (statistics != null) {
-      map["statistics"] = statistics.toJson();
+      map["statistics"] = statistics!.toJson();
     }
     if (account != null) {
-      map["account"] = account.toJson();
+      map["account"] = account!.toJson();
     }
     if (profile != null) {
-      map["profile"] = profile.toJson();
+      map["profile"] = profile!.toJson();
     }
     return map;
   }

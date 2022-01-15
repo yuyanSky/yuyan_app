@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csslib/parser.dart' as cssparser;
@@ -46,33 +45,33 @@ import 'widget/task_item.dart';
 
 extension ListEx<T extends num> on List<T> {
   T sum() {
-    return this.reduce((a, b) => a + b);
+    return this.reduce((a, b) => a + b as T);
   }
 }
 
 extension IterEx<T extends num> on Iterable<T> {
   T sum() {
     if (this.length == 0) return 0.0 as T;
-    return this.reduce((a, b) => a + b);
+    return this.reduce((a, b) => a + b as T);
   }
 }
 
 class HtmlUtil {
-  static Map<String, List<css.Expression>> parseInlineStyle(
-      String inlineStyle) {
+  static Map<String?, List<css.Expression>>? parseInlineStyle(
+      String? inlineStyle) {
     final sheet = cssparser.parse("*{$inlineStyle}");
     final declarations = cssutil.DeclarationVisitor().getDeclarations(sheet);
     return declarations;
   }
 
-  static double parseDouble(value) {
+  static double? parseDouble(value) {
     return double.tryParse('$value');
   }
 
-  static double calculateTextHeight({double fontSize}) {
+  static double calculateTextHeight({double? fontSize}) {
     TextPainter painter = TextPainter(
       ///AUTO：华为手机如果不指定locale的时候，该方法算出来的文字高度是比系统计算偏小的。
-      locale: Localizations.localeOf(Get.context),
+      locale: Localizations.localeOf(Get.context!),
       maxLines: 1,
       textDirection: TextDirection.ltr,
       text: TextSpan(
@@ -88,11 +87,11 @@ class HtmlUtil {
     return painter.height;
   }
 
-  static double getInlineStyleValue(String inlineStyle, String property,
-      [double fallback]) {
+  static double? getInlineStyleValue(String? inlineStyle, String property,
+      [double? fallback]) {
     if (inlineStyle == null) return fallback;
-    var style = HtmlUtil.parseInlineStyle(inlineStyle);
-    var width = style[property].first as css.LengthTerm; // css.LengthTerm;
+    var style = HtmlUtil.parseInlineStyle(inlineStyle)!;
+    var width = style[property]!.first as css.LengthTerm; // css.LengthTerm;
     return HtmlUtil.parseDouble(width.value) ?? fallback;
   }
 
@@ -117,9 +116,10 @@ class HtmlUtil {
     return 'null';
   }
 
-  static applyInlineStyle(String inlineStyle, Style style) {
-    assert(style != null, 'passed an null value to style');
-    var parsed = parseInlineStyle(inlineStyle);
+  static applyInlineStyle(String? inlineStyle, Style style) {
+    // assert(style != null, 'passed an null value to style');
+
+    var parsed = parseInlineStyle(inlineStyle)!;
     parsed.forEach((key, value) {
       switch (key) {
         case 'background-color':
@@ -140,12 +140,12 @@ class HtmlUtil {
 }
 
 class LakeRenderWidget extends StatefulWidget {
-  final String data;
+  final String? data;
   final bool shrinkWrap;
-  final int docId; //docId used for vote card
+  final int? docId; //docId used for vote card
 
   LakeRenderWidget({
-    Key key,
+    Key? key,
     this.docId,
     this.data = '<h1>Empty Page</h1>',
     this.shrinkWrap = false,
@@ -157,7 +157,7 @@ class LakeRenderWidget extends StatefulWidget {
 
 class _LakeRenderWidgetState extends State<LakeRenderWidget> {
   AutoScrollController _autoController = AutoScrollController();
-  String data;
+  String? data;
 
   initState() {
     super.initState();
@@ -172,7 +172,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
       // }
       if (attr['class'] != null) {
         //handle fontsize
-        var font = attr['class'].replaceFirst('lake-fontsize-', '');
+        var font = attr['class']!.replaceFirst('lake-fontsize-', '');
         var size = int.tryParse(font) ?? 12;
         if (size == 1515) size = 15; //shit, 语雀JB玩意
         if (size > 128) size = 128;
@@ -444,9 +444,9 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         _.buildContext.widget;
         return GestureDetector(
           onTap: () {
-            var href = attr['href'];
+            var href = attr['href']!;
             if (href.startsWith('http')) {
-              MyRoute.webview(attr['href']);
+              MyRoute.webview(attr['href']!);
             } else if (href.startsWith('#')) {
               debugPrint('${href.substring(1)}');
               _autoController.scrollToIndex(href.substring(1).hashCode);
@@ -485,13 +485,13 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
             child: child,
           );
         }
-        var isOrderItem = elem.parent.localName == 'ol';
-        var intent = elem.parent.attributes['data-lake-indent'] ?? '0';
+        var isOrderItem = elem!.parent!.localName == 'ol';
+        var intent = elem.parent!.attributes['data-lake-indent'] ?? '0';
         var index = int.tryParse(intent) ?? 0;
-        if (isOrderItem ?? false) {
-          var start = elem.parent.attributes['start'] ?? '1';
+        if (isOrderItem) {
+          var start = elem.parent!.attributes['start'] ?? '1';
           int orderIndex = int.tryParse(start) ?? 1;
-          orderIndex += elem.parent.nodes.indexOf(elem);
+          orderIndex += elem.parent!.nodes.indexOf(elem);
           var olMark = '${HtmlUtil.orderIndicator(orderIndex, index)}. ';
           return Stack(
             children: [
@@ -554,7 +554,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
       },
       'span': (_, child) {
         var attr = _.tree.attributes;
-        var elem = _.tree.element;
+        var elem = _.tree.element!;
         if (elem.nodes.length > 0 && elem.nodes.first is dom.Element) {
           var firstElem = elem.nodes.first as dom.Element;
           if (firstElem.localName == 'br') {
@@ -573,7 +573,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         return null;
       },
       'p': (_, child) {
-        var elem = _.tree.element;
+        var elem = _.tree.element!;
         if (elem.nodes.length > 0) {
           var firstElem = elem.nodes.first;
           if (firstElem is dom.Element) {
@@ -595,7 +595,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
       'blockquote': (_, child) {
         Widget body;
         final classes = _.tree.elementClasses;
-        final alertCard = classes?.contains('lake-alert') ?? false;
+        final alertCard = classes.contains('lake-alert');
         final alertStyle = {
           'lake-alert-info': Colors.blue,
           'lake-alert-warning': Colors.yellow,
@@ -609,10 +609,10 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
               border: Border.all(
-                color: alertStyle[key],
+                color: alertStyle[key]!,
                 width: 1,
               ),
-              color: alertStyle[key].withOpacity(0.2),
+              color: alertStyle[key]!.withOpacity(0.2),
             ),
             child: child,
           );
@@ -645,7 +645,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         var width =
             HtmlUtil.getInlineStyleValue(inlineStyle, 'width', Get.width);
         _.style.width = width;
-        var query = _.tree.element.querySelector("table");
+        var query = _.tree.element!.querySelector("table");
         if (query != null) {
           return Container(
             padding: const EdgeInsets.all(24),
@@ -660,7 +660,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Container(
-            width: width + 20,
+            width: width! + 20,
             alignment: Alignment.center,
             constraints: BoxConstraints(
               maxWidth: width + 16,
@@ -677,7 +677,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
       physics: widget.shrinkWrap ? NeverScrollableScrollPhysics() : null,
       child: Html(
         shrinkWrap: widget.shrinkWrap,
-        data: data,
+        data: data!,
         style: _htmlStyle,
         customRender: _customRender,
       ),

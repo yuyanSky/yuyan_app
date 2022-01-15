@@ -23,8 +23,8 @@ import 'styles/app_ui.dart';
 /// from [R] to [T]
 Future<T> futureResolver<T, R>(
   Future<R> future, {
-  T Function(R data) onData,
-  T Function(dynamic err) onError,
+  T Function(R data)? onData,
+  T Function(dynamic err)? onError,
 }) async {
   try {
     var data = await future;
@@ -42,9 +42,9 @@ Future<T> futureResolver<T, R>(
 /// when error occurs. Useful for small gossip widget
 /// without a [GetxController]
 Widget futureBuilder<T>(
-  Future<T> future, {
-  Widget Function(T data) onData,
-  Widget Function(ViewError err) onError,
+  Future<T>? future, {
+  Widget Function(T? data)? onData,
+  Widget Function(ViewError err)? onError,
   Widget onLoading = const CupertinoActivityIndicator(),
 }) {
   return FutureBuilder(
@@ -63,7 +63,7 @@ Widget futureBuilder<T>(
         return onError(viewErr);
       }
       if (snapshot.hasData) {
-        return onData(snapshot.data);
+        return onData!(snapshot.data as T);
       }
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -75,7 +75,7 @@ Widget futureBuilder<T>(
 
 class Util {
   static showImage(
-    String imageUrl,
+    String? imageUrl,
   ) {
     Get.dialog(
       SingleImageViewer(
@@ -87,19 +87,19 @@ class Util {
 
   static showConfirmDialog(
     BuildContext context, {
-    String content,
-    Function confirmCallback,
+    String? content,
+    Function? confirmCallback,
   }) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: Text("提示"),
-          content: Text(content),
+          content: Text(content!),
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                confirmCallback();
+                confirmCallback!();
                 Navigator.of(context).pop();
               },
               child: Text("确认"),
@@ -117,21 +117,21 @@ class Util {
   }
 
   static String get baseUrl {
-    var login = App.currentSpaceProvider.data.login;
+    var login = App.currentSpaceProvider.data!.login;
     return 'https://$login.yuque.com';
   }
 
   static List<Widget> listBuilder<T>({
-    List<T> data,
-    Widget Function(T) map,
+    required List<T> data,
+    Widget Function(T)? map,
   }) {
     return List.generate(
       data.length,
-      (index) => map(data[index]),
+      (index) => map!(data[index]),
     ).toList();
   }
 
-  static Future refreshController<T>({String tag}) async {
+  static Future refreshController<T>({String? tag}) async {
     try {
       var controller = Get.find<T>(tag: tag) as dynamic;
       try {
@@ -150,15 +150,15 @@ class Util {
     return h;
   }
 
-  static Future<String> editorImageUploadCallback(File file) async {
+  static Future<String?> editorImageUploadCallback(File file) async {
     var res = await ApiRepository.postAttachFile(path: file.path);
     return res.url;
   }
 
   static Future futureWrap<T>(
     Future<T> future, {
-    Function(T data) onData,
-    Function(dynamic err) onError,
+    Function(T data)? onData,
+    Function(dynamic err)? onError,
   }) async {
     try {
       var data = await future;
@@ -172,8 +172,8 @@ class Util {
 
   static Future safeHandler<T>(
     Future<T> future, {
-    Function(T data) onData,
-    Function(ViewError err) onError,
+    Function(T data)? onData,
+    Function(ViewError err)? onError,
   }) async {
     try {
       var data = await future;
@@ -184,7 +184,7 @@ class Util {
       if (onError == null) {
         return errToast(e);
       }
-      return Future.value(onError?.call(e));
+      return Future.value(onError..call(e));
     }
   }
 
@@ -254,7 +254,7 @@ class Util {
   static launchURL(String url) {
     futureWrap(
       canLaunch(url),
-      onData: (value) {
+      onData: (dynamic value) {
         if (value) {
           launch(url);
         } else {
@@ -279,7 +279,7 @@ class Util {
         // MyRoute.user(user: null);
         break;
       default:
-        MyRoute.webview(link.url);
+        MyRoute.webview(link.url!);
     }
   }
 
@@ -308,9 +308,6 @@ class Util {
     final String suffix =
         "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_120%2Ch_120%2Fformat%2Cpng";
     // 如果不包含某些关键词 则使用压缩模式
-    if (imgUrl == null) {
-      return null;
-    }
     if (imgUrl.contains("dingtalk") ||
         imgUrl.contains("aliyuncs") ||
         imgUrl.contains("alipay") ||
@@ -347,21 +344,21 @@ class Util {
     return String.fromCharCodes(input.runes.toList().sublist(start, end));
   }
 
-  static Widget animationTypeBuild({int type = 1, Widget child}) {
+  static Widget animationTypeBuild({int type = 1, Widget? child}) {
     switch (type) {
       case 1:
-        return FadeInAnimation(child: child);
+        return FadeInAnimation(child: child!);
       case 2:
-        return SlideAnimation(child: child);
+        return SlideAnimation(child: child!);
       case 3:
-        return ScaleAnimation(child: child);
+        return ScaleAnimation(child: child!);
       default:
-        return FlipAnimation(child: child);
+        return FlipAnimation(child: child!);
     }
   }
 
   // 使用参考：https://juejin.cn/post/6844903822028963847
-  static showWindow({String title, Widget child}) {
+  static showWindow({String? title, required Widget child}) {
     Get.dialog(
       SimpleDialog(
         contentPadding: EdgeInsets.only(left: 10, right: 10, bottom: 12),
@@ -422,7 +419,7 @@ extension StringEx on String {
     return Util.stringClip(this, max, ellipsis: ellipsis);
   }
 
-  DateTime toDateTime() {
+  DateTime? toDateTime() {
     return DateTime.tryParse(this);
   }
 
@@ -444,7 +441,7 @@ extension ListEx<T> on List<T> {
     Widget divider = const Divider(height: 0.5),
     Widget onEmpty = const SizedBox.shrink(),
   }) {
-    if (GetUtils.isNullOrBlank(this)) {
+    if (GetUtils.isNullOrBlank(this)!) {
       return [onEmpty];
     }
     if (!divide) {
@@ -460,12 +457,12 @@ extension ListEx<T> on List<T> {
   }
 }
 
-extension ObjectEx on Object {
+extension ObjectEx on Object? {
   /// [when] is a convenient method for conditional build
   /// [other] is a [VoidCallback], in order to void unnecessary build
   when(
     dynamic value, {
-    Function other,
+    Function? other,
   }) {
     switch (value.runtimeType) {
       case bool:
@@ -475,28 +472,28 @@ extension ObjectEx on Object {
       case List:
       case Map:
         return onlyIf(
-          GetUtils.isNullOrBlank(value),
+          GetUtils.isNullOrBlank(value)!,
           elseif: other,
         );
     }
-    return other();
+    return other!();
   }
 
-  onlyIf(bool condition, {Function elseif}) {
-    return condition ? this : elseif();
+  onlyIf(bool condition, {Function? elseif}) {
+    return condition ? this : elseif!();
   }
 }
 
 Widget _defaultWidget() => const SizedBox.shrink();
 
-extension WidgetEx on Widget {
+extension WidgetEx on Widget? {
   onlyIf(
     bool only, {
     bool animation = true,
-    Widget Function() elseif = _defaultWidget,
+    Widget? Function() elseif = _defaultWidget,
     Duration duration = const Duration(milliseconds: 225),
   }) {
-    Widget child = (only ? this : elseif());
+    Widget? child = (only ? this : elseif());
     if (animation) {
       return AnimatedSwitcher(
         duration: duration,
@@ -518,12 +515,12 @@ extension WidgetEx on Widget {
 
 extension NumEx<T extends num> on List<T> {
   T sum() {
-    return this.reduce((a, b) => a + b);
+    return this.reduce((a, b) => a + b as T);
   }
 }
 
-extension IterEx<T extends num> on Iterable<T> {
+extension IterEx<T extends num?> on Iterable<T> {
   T sum() {
-    return this.reduce((a, b) => a + b);
+    return this.reduce((a, b) => (a! + b!) as T);
   }
 }

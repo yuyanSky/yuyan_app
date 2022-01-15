@@ -6,10 +6,10 @@ import 'package:yuyan_app/controller/organization/card/card_controller.dart';
 import 'package:yuyan_app/model/document/card/card_video_seri.dart';
 
 class LakeVideoPlayWidget extends StatefulWidget {
-  final CardVideoSeri item;
+  final CardVideoSeri? item;
 
   const LakeVideoPlayWidget({
-    Key key,
+    Key? key,
     this.item,
   }) : super(key: key);
 
@@ -18,13 +18,13 @@ class LakeVideoPlayWidget extends StatefulWidget {
 }
 
 class _LakeVideoPlayWidgetState extends State<LakeVideoPlayWidget> {
-  ChewieController controller;
+  ChewieController? controller;
 
   @override
   void initState() {
     super.initState();
 
-    Get.put(CardVideoController(widget.item.videoId));
+    Get.put(CardVideoController(widget.item!.videoId));
   }
 
   @override
@@ -32,8 +32,8 @@ class _LakeVideoPlayWidgetState extends State<LakeVideoPlayWidget> {
     super.dispose();
 
     if (controller != null) {
-      controller.videoPlayerController.dispose();
-      controller.dispose();
+      controller!.videoPlayerController.dispose();
+      controller!.dispose();
     }
   }
 
@@ -42,9 +42,9 @@ class _LakeVideoPlayWidgetState extends State<LakeVideoPlayWidget> {
     return GetBuilder<CardVideoController>(
       builder: (c) => c.stateBuilder(
         onIdle: () {
-          var data = c.value.info;
+          var data = c.value!.info!;
           var player = VideoPlayerController.network(
-            data.video,
+            data.video!,
           );
           if (controller == null) {
             controller = ChewieController(
@@ -56,7 +56,7 @@ class _LakeVideoPlayWidgetState extends State<LakeVideoPlayWidget> {
             height: Get.width * 0.75,
             width: Get.width,
             child: Chewie(
-              controller: controller,
+              controller: controller!,
             ),
           );
         },

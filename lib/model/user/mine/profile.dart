@@ -3,17 +3,17 @@ class UserProfileSeri {
   dynamic notificationSettings;
   dynamic events;
   dynamic versionSettings;
-  int id;
-  int spaceId;
-  int userId;
-  String location;
-  String jobTitle;
+  int? id;
+  int? spaceId;
+  int? userId;
+  String? location;
+  String? jobTitle;
   dynamic department;
-  int lastEventId;
+  int? lastEventId;
   dynamic firstQuicklinkAt;
-  String appSettings;
-  String createdAt;
-  String updatedAt;
+  String? appSettings;
+  String? createdAt;
+  String? updatedAt;
 
   UserProfileSeri({
       this.notificationSettings, 

@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LakeSvgPicture extends StatelessWidget {
-  final String url;
-  final int width;
-  final int height;
+  final String? url;
+  final int? width;
+  final int? height;
 
   const LakeSvgPicture({
-    Key key,
+    Key? key,
     this.url,
     this.width,
     this.height,
@@ -17,7 +17,7 @@ class LakeSvgPicture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var future = Dio().get(url);
+    var future = Dio().get(url!);
     return FutureBuilder(
       future: future,
       builder: (_, snap) {
@@ -31,7 +31,7 @@ class LakeSvgPicture extends StatelessWidget {
           );
         }
         if (snap.hasData) {
-          var data = snap.data.current as String;
+          var data = (snap.data as dynamic).current as String;
           data = data.replaceAll('currentColor', 'black');
           return SvgPicture.string(
             data,

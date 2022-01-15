@@ -1,10 +1,10 @@
 import 'orgs.dart';
 
 class MetaSeri {
-  Map raw;
-  String ip;
-  String ua;
-  List<MetaOrg> orgs;
+  Map? raw;
+  String? ip;
+  String? ua;
+  List<MetaOrg>? orgs;
 
   MetaSeri({this.ip, this.ua, this.orgs});
 
@@ -16,11 +16,11 @@ class MetaSeri {
       if (json["orgs"] != null) {
         orgs = [];
         json["orgs"].forEach((v) {
-          orgs.add(MetaOrg.fromJson(v));
+          orgs!.add(MetaOrg.fromJson(v));
         });
       }
     }
   }
 
-  Map<String, dynamic> toJson() => raw;
+  Map<String, dynamic>? toJson() => raw as Map<String, dynamic>?;
 }

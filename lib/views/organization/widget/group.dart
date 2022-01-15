@@ -11,17 +11,17 @@ class GroupTileWidgetFlat extends StatelessWidget {
     "Normal": "assets/images/dashboard/link.png",
     "Design": "assets/images/dashboard/design.png"
   };
-  final GroupSeri group;
+  final GroupSeri? group;
 
   GroupTileWidgetFlat({
-    Key key,
+    Key? key,
     this.group,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String imageUrl = group.avatarUrl ??
-        iconType[group.type] ??
+    String imageUrl = group!.avatarUrl ??
+        iconType[group!.type!] ??
         "assets/images/explore/book.png";
     var child = Container(
       height: 70,
@@ -29,7 +29,7 @@ class GroupTileWidgetFlat extends StatelessWidget {
         children: [
           SizedBox(width: 8),
           Hero(
-            tag: '${group.id}',
+            tag: '${group!.id}',
             child: UserAvatarWidget(
               avatar: imageUrl,
               height: 48,
@@ -42,15 +42,15 @@ class GroupTileWidgetFlat extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  group.name,
+                  group!.name!,
                   style: AppStyles.textStyleB,
                 ),
                 SizedBox(height: 2),
                 Text(
-                  group.description,
+                  group!.description!,
                   overflow: TextOverflow.ellipsis,
                   style: AppStyles.textStyleC,
-                ).onlyIf(!GetUtils.isNullOrBlank(group.description)),
+                ).onlyIf(!GetUtils.isNullOrBlank(group!.description)!),
               ],
             ),
           ),
@@ -61,7 +61,7 @@ class GroupTileWidgetFlat extends StatelessWidget {
       onTap: () {
         MyRoute.group(
           group: group,
-          tag: '${group.id}',
+          tag: '${group!.id}',
         );
       },
       child: child,
@@ -74,17 +74,17 @@ class GroupTileWidget extends StatelessWidget {
     "Normal": "assets/images/dashboard/link.png",
     "Design": "assets/images/dashboard/design.png"
   };
-  final GroupSeri group;
+  final GroupSeri? group;
 
   GroupTileWidget({
-    Key key,
+    Key? key,
     this.group,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String imageUrl = group.avatarUrl ??
-        iconType[group.type] ??
+    String imageUrl = group!.avatarUrl ??
+        iconType[group!.type!] ??
         "assets/images/explore/book.png";
     var child = Container(
       height: 70,
@@ -105,7 +105,7 @@ class GroupTileWidget extends StatelessWidget {
         children: [
           SizedBox(width: 16),
           Hero(
-            tag: '${group.id}',
+            tag: '${group!.id}',
             child: UserAvatarWidget(
               avatar: imageUrl,
               height: 50,
@@ -118,13 +118,13 @@ class GroupTileWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  group.name,
+                  group!.name!,
                   style: AppStyles.textStyleB,
                 ),
-                if (group.description != null)
+                if (group!.description != null)
                   Container(
                     child: Text(
-                      group.description.clip(15, ellipsis: true),
+                      group!.description!.clip(15, ellipsis: true),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppStyles.textStyleC,
@@ -140,7 +140,7 @@ class GroupTileWidget extends StatelessWidget {
       onTap: () {
         MyRoute.group(
           group: group,
-          tag: '${group.id}',
+          tag: '${group!.id}',
         );
       },
       child: child,

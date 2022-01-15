@@ -1,7 +1,7 @@
 class CollabSeri {
-  String host;
-  String id;
-  String token;
+  String? host;
+  String? id;
+  String? token;
 
   CollabSeri({this.host, this.id, this.token});
 

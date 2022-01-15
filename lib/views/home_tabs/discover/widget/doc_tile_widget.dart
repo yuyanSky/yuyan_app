@@ -9,23 +9,23 @@ import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class DocTileWidget extends StatelessWidget {
-  final DocSeri item;
+  final DocSeri? item;
 
   const DocTileWidget({
-    Key key,
+    Key? key,
     this.item,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return buildDoc(item);
+    return buildDoc(item!);
   }
 
   buildDoc(DocSeri data) {
     bool hasCover = data.cover != null;
-    UserSeri user = data.user ?? data.book.user;
-    Widget coverWidget;
-    Widget descWidget;
+    UserSeri user = data.user ?? data.book!.user!;
+    late Widget coverWidget;
+    late Widget descWidget;
     if (hasCover) {
       coverWidget = ClipRRect(
         borderRadius: BorderRadius.circular(8),
@@ -33,7 +33,7 @@ class DocTileWidget extends StatelessWidget {
           width: 148,
           height: 90,
           child: CachedNetworkImage(
-            imageUrl: data.cover,
+            imageUrl: data.cover!,
             placeholder: (context, url) => Container(
               color: AppColors.background,
             ), // Colors.white10,
@@ -56,7 +56,7 @@ class DocTileWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          data.title,
+          data.title!,
           maxLines: hasCover ? 4 : 1,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.left,
@@ -79,7 +79,7 @@ class DocTileWidget extends StatelessWidget {
               SizedBox(width: 7),
               Container(
                 child: Text(
-                  user.name.clip(6, ellipsis: true),
+                  user.name!.clip(6, ellipsis: true),
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: AppStyles.textStyleCC,
@@ -96,7 +96,7 @@ class DocTileWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                "${data.likesCount * 7}",
+                "${data.likesCount! * 7}",
                 textAlign: TextAlign.left,
                 style: AppStyles.textStyleCC,
               )
@@ -122,7 +122,7 @@ class DocTileWidget extends StatelessWidget {
         MyRoute.docDetail(
           bookId: data.bookId,
           slug: data.slug,
-          book: data.book.slug,
+          book: data.book!.slug,
           login: user.login,
         );
       },

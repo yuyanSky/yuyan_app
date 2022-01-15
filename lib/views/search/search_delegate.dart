@@ -16,7 +16,7 @@ class SearchBarDelegate extends SearchDelegate {
       IconButton(
         icon: Icon(Icons.clear),
         onPressed: () {
-          if (query.length > 0 && query != null) {
+          if (query.length > 0) {
             query = "";
           } else {
             close(context, "");
@@ -54,13 +54,13 @@ class SearchBarDelegate extends SearchDelegate {
     return _buildSuggestions();
   }
 
-  goSearch([int index = 0]) {
+  goSearch(BuildContext context, [int index = 0]) {
     if (query.isEmpty) {
       var tipList = ["🔍 丶❔", "找点什么呢", "先打字再 🔍 ❗"];
       Util.toast(tipList.rand());
     } else {
       pageIndex.value = index;
-      showResults(null);
+      showResults(context);
     }
   }
 
@@ -102,7 +102,7 @@ class SearchBarDelegate extends SearchDelegate {
           ),
           trailing: Icon(trailing[i]),
           focusColor: Colors.amber,
-          onTap: () => goSearch(i),
+          onTap: () => goSearch(_, i),
         );
       },
     );

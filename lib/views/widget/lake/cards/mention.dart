@@ -8,11 +8,11 @@ import 'package:yuyan_app/views/organization/group_page/group_page.dart';
 import 'package:yuyan_app/views/organization/user_page/user_page.dart';
 
 class GroupById extends StatelessWidget {
-  final int groupId;
+  final int? groupId;
   final int index;
 
   const GroupById({
-    Key key,
+    Key? key,
     this.groupId,
     this.index = 0,
   }) : super(key: key);
@@ -33,7 +33,7 @@ class GroupById extends StatelessWidget {
         onIdle: () => GroupPage(
           initialIndex: index,
           group: GroupSeri.fromJson(
-            c.value.toJson(),
+            c.value!.toJson(),
           ),
         ),
       ),
@@ -42,10 +42,10 @@ class GroupById extends StatelessWidget {
 }
 
 class UserByLoginPage extends StatelessWidget {
-  final String login;
+  final String? login;
 
   const UserByLoginPage({
-    Key key,
+    Key? key,
     this.login,
   }) : super(key: key);
 
@@ -62,7 +62,7 @@ class UserByLoginPage extends StatelessWidget {
           onIdle: () {
             Future.delayed(Duration(milliseconds: 10), () {
               Get.off(
-                UserPage(user: c.value.toUserLite()),
+                UserPage(user: c.value!.toUserLite()),
                 transition: Transition.noTransition,
               );
             });
@@ -75,14 +75,14 @@ class UserByLoginPage extends StatelessWidget {
 }
 
 class LakeMentionWidget extends StatelessWidget {
-  final String name;
-  final String login;
+  final String? name;
+  final String? login;
   final bool showLogin;
   final String before;
   final double fontSize;
 
   const LakeMentionWidget({
-    Key key,
+    Key? key,
     this.name,
     this.login,
     this.fontSize = 12,

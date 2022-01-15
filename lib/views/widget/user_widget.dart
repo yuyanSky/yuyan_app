@@ -39,10 +39,10 @@ class UserMemberIconWidget extends StatelessWidget {
 }
 
 class UserTileWidget extends StatelessWidget {
-  final UserLiteSeri user;
+  final UserLiteSeri? user;
 
   const UserTileWidget({
-    Key key,
+    Key? key,
     this.user,
   }) : super(key: key);
 
@@ -69,7 +69,7 @@ class UserTileWidget extends StatelessWidget {
           Hero(
             tag: heroTag,
             child: UserAvatarWidget(
-              avatar: user.avatarUrl,
+              avatar: user!.avatarUrl,
               height: 50,
             ),
           ),
@@ -82,15 +82,15 @@ class UserTileWidget extends StatelessWidget {
               children: <Widget>[
                 Container(
                   child: Text(
-                    user.name.clip(10, ellipsis: true),
+                    user!.name!.clip(10, ellipsis: true),
                     style: AppStyles.textStyleB,
                   ),
                 ),
                 SizedBox(height: 2),
-                if (user.description != null)
+                if (user!.description != null)
                   Container(
                     child: Text(
-                      user.description.clip(15, ellipsis: true),
+                      user!.description!.clip(15, ellipsis: true),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppStyles.textStyleC,
@@ -105,7 +105,7 @@ class UserTileWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         MyRoute.user(
-          user: user,
+          user: user!,
           heroTag: heroTag,
         );
       },
@@ -115,12 +115,12 @@ class UserTileWidget extends StatelessWidget {
 }
 
 class UserFollowTileWidget extends StatelessWidget {
-  final UserSeri user;
-  final bool isFollow;
+  final UserSeri? user;
+  final bool? isFollow;
   final bool hideButton;
 
   const UserFollowTileWidget({
-    Key key,
+    Key? key,
     this.user,
     this.isFollow,
     this.hideButton = true,
@@ -132,7 +132,7 @@ class UserFollowTileWidget extends StatelessWidget {
     // String tag = Util.genHeroTag();
     return GestureDetector(
       onTap: () {
-        MyRoute.user(user: user.toUserLiteSeri());
+        MyRoute.user(user: user!.toUserLiteSeri());
       },
       child: Container(
         height: 70,
@@ -152,7 +152,7 @@ class UserFollowTileWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(width: 20),
-            UserAvatarWidget(avatar: user.avatarUrl, height: 50),
+            UserAvatarWidget(avatar: user!.avatarUrl, height: 50),
             Container(
               width: MediaQuery.of(context).size.width * 0.4,
               margin: EdgeInsets.only(left: 20),
@@ -162,15 +162,15 @@ class UserFollowTileWidget extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     child: Text(
-                      user.name.clip(10, ellipsis: true),
+                      user!.name!.clip(10, ellipsis: true),
                       style: AppStyles.textStyleB,
                     ),
                   ),
                   SizedBox(height: 2),
-                  if (user.description != null)
+                  if (user!.description != null)
                     Container(
                       child: Text(
-                        user.description.clip(15, ellipsis: true),
+                        user!.description!.clip(15, ellipsis: true),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppStyles.textStyleC,
@@ -193,13 +193,13 @@ class UserFollowTileWidget extends StatelessWidget {
 }
 
 class UserActionTileWidget extends StatelessWidget {
-  final UserLiteSeri user;
-  final String title;
-  final String subTitle;
-  final String actionTime;
+  final UserLiteSeri? user;
+  final String? title;
+  final String? subTitle;
+  final String? actionTime;
 
   UserActionTileWidget({
-    Key key,
+    Key? key,
     this.user,
     this.title,
     this.subTitle,
@@ -212,7 +212,7 @@ class UserActionTileWidget extends StatelessWidget {
     var child = Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Hero(tag: tag, child: UserAvatarWidget(avatar: user.avatarUrl)),
+        Hero(tag: tag, child: UserAvatarWidget(avatar: user!.avatarUrl)),
         Expanded(
           flex: 1,
           child: Container(
@@ -223,7 +223,7 @@ class UserActionTileWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${title ?? user.name}",
+                  "${title ?? user!.name}",
                   textAlign: TextAlign.center,
                   style: AppStyles.textStyleBB,
                   overflow: TextOverflow.ellipsis,
@@ -231,7 +231,7 @@ class UserActionTileWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 2),
                 Text(
-                  "${subTitle ?? user.description}",
+                  "${subTitle ?? user!.description}",
                   textAlign: TextAlign.center,
                   style: AppStyles.textStyleCC,
                 )
@@ -239,7 +239,7 @@ class UserActionTileWidget extends StatelessWidget {
             ),
           ),
         ),
-        if (!GetUtils.isNullOrBlank(actionTime))
+        if (!GetUtils.isNullOrBlank(actionTime)!)
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -258,7 +258,7 @@ class UserActionTileWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         MyRoute.user(
-          user: user,
+          user: user!,
           heroTag: tag,
         );
       },
@@ -268,11 +268,11 @@ class UserActionTileWidget extends StatelessWidget {
 }
 
 class UserAvatarWidget extends StatelessWidget {
-  final String avatar;
+  final String? avatar;
   final double height;
 
   UserAvatarWidget({
-    Key key,
+    Key? key,
     this.avatar,
     this.height = 34,
   }) : super(key: key);

@@ -5,12 +5,12 @@ import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/toc/toc_seri.dart';
 
 class BookTocTreeWidget extends StatelessWidget {
-  final BookSeri book;
-  final List<TocSeri> data;
+  final BookSeri? book;
+  final List<TocSeri>? data;
   final _controller = TreeController(allNodesExpanded: false);
 
   BookTocTreeWidget({
-    Key key,
+    Key? key,
     this.book,
     this.data,
   }) : super(key: key);
@@ -21,7 +21,7 @@ class BookTocTreeWidget extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: TreeView(
         indent: 28,
-        nodes: _buildNodes(data),
+        nodes: _buildNodes(data!)!,
         treeController: _controller,
       ),
     );
@@ -38,14 +38,14 @@ class BookTocTreeWidget extends StatelessWidget {
           case 'TITLE':
             break;
           case 'LINK':
-            MyRoute.webview(node.url, yuque: false);
+            MyRoute.webview(node.url!, yuque: false);
             return;
           case 'DOC':
             MyRoute.docDetailWebview(
-              bookId: book.id,
+              bookId: book!.id,
               slug: node.url,
-              login: book.user.login,
-              book: book.slug,
+              login: book!.user!.login,
+              book: book!.slug,
             );
             return;
         }
@@ -54,8 +54,8 @@ class BookTocTreeWidget extends StatelessWidget {
     );
   }
 
-  List<TreeNode> _buildNodes(List<TocSeri> data) {
-    Map<String, TocSeri> map = {};
+  List<TreeNode>? _buildNodes(List<TocSeri> data) {
+    Map<String?, TocSeri> map = {};
     data.forEach((toc) {
       map[toc.uuid] = toc;
     });
@@ -65,7 +65,7 @@ class BookTocTreeWidget extends StatelessWidget {
   }
 
   _parse(
-    Map<String, TocSeri> map,
+    Map<String?, TocSeri> map,
     TreeNode parent,
     TocSeri child,
   ) {
@@ -74,7 +74,7 @@ class BookTocTreeWidget extends StatelessWidget {
       content: _buildNode(child),
       children: [],
     );
-    parent.children.add(node); //将自己添加进入父节点
+    parent.children!.add(node); //将自己添加进入父节点
     var nc = map[child.childUuid];
     if (nc != null) {
       //现在这个节点充当父节点
@@ -88,7 +88,7 @@ class BookTocTreeWidget extends StatelessWidget {
         content: _buildNode(sib),
         children: [],
       );
-      parent.children.add(sibNode);
+      parent.children!.add(sibNode);
       var nc = map[sib.childUuid];
       if (nc != null) {
         _parse(map, sibNode, nc);

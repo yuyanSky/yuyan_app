@@ -6,17 +6,17 @@ import 'package:yuyan_app/model/meta/meta.dart';
 
 class ApiResponse {
   dynamic data;
-  int status;
-  String message;
+  int? status;
+  String? message;
 
-  Map meta;
-  MetaSeri metaSeri;
+  Map? meta;
+  MetaSeri? metaSeri;
 
-  Map _raw;
+  Map? _raw;
 
-  Map get raw => _raw;
+  Map? get raw => _raw;
 
-  ApiResponse.fromJson(Map json) {
+  ApiResponse.fromJson(Map? json) {
     if (json == null) return;
     _raw = json;
     data = json['data'];
@@ -93,8 +93,8 @@ class ApiInterceptor extends InterceptorsWrapper {
 }
 
 class ApiError implements Exception {
-  ApiResponse response;
-  DioError dio;
+  ApiResponse? response;
+  DioError? dio;
 
   ApiError({
     this.response,
@@ -103,9 +103,9 @@ class ApiError implements Exception {
 
   @override
   String toString() {
-    var desc = response.errorDescription();
+    var desc = response!.errorDescription();
     if (dio != null) {
-      return '${dio.requestOptions.method} ${dio.requestOptions.path} => $desc';
+      return '${dio!.requestOptions.method} ${dio!.requestOptions.path} => $desc';
     }
     return desc;
   }

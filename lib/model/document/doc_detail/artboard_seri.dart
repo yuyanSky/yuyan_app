@@ -1,16 +1,16 @@
 import 'package:yuyan_app/model/document/doc_detail/artboard_detail_seri.dart';
 
 class ArtboardSeri {
-  int id;
-  String name;
-  int sort;
-  String artboardType;
+  int? id;
+  String? name;
+  int? sort;
+  String? artboardType;
   Null pinnedAt;
-  String createdAt;
-  String updatedAt;
-  String contentUpdatedAt;
-  List<ArtboardDetailSeri> artboards;
-  String sSerializer;
+  String? createdAt;
+  String? updatedAt;
+  String? contentUpdatedAt;
+  List<ArtboardDetailSeri>? artboards;
+  String? sSerializer;
 
   ArtboardSeri({
     this.id,
@@ -37,7 +37,7 @@ class ArtboardSeri {
     if (json['artboards'] != null) {
       artboards = <ArtboardDetailSeri>[];
       json['artboards'].forEach((v) {
-        artboards.add(ArtboardDetailSeri.fromJson(v));
+        artboards!.add(ArtboardDetailSeri.fromJson(v));
       });
     }
     sSerializer = json['_serializer'];
@@ -54,7 +54,7 @@ class ArtboardSeri {
     data['updated_at'] = this.updatedAt;
     data['content_updated_at'] = this.contentUpdatedAt;
     if (this.artboards != null) {
-      data['artboards'] = this.artboards.map((v) => v.toJson()).toList();
+      data['artboards'] = this.artboards!.map((v) => v.toJson()).toList();
     }
     data['_serializer'] = this.sSerializer;
     return data;

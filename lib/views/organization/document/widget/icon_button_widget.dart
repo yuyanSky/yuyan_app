@@ -8,11 +8,11 @@ import 'package:yuyan_app/util/util.dart';
 typedef FlagTapCallback = Future<bool> Function(bool);
 
 class StarAnimButtonWidget extends StatelessWidget {
-  final Future<bool> initValue;
-  final FlagTapCallback onTap;
+  final Future<bool>? initValue;
+  final FlagTapCallback? onTap;
 
   const StarAnimButtonWidget({
-    Key key,
+    Key? key,
     this.initValue,
     this.onTap,
   }) : super(key: key);
@@ -46,11 +46,11 @@ class StarAnimButtonWidget extends StatelessWidget {
 }
 
 class LikeAnimButtonWidget extends StatelessWidget {
-  final Future<bool> initValue;
-  final FlagTapCallback onTap;
+  final Future<bool>? initValue;
+  final FlagTapCallback? onTap;
 
   const LikeAnimButtonWidget({
-    Key key,
+    Key? key,
     this.initValue,
     this.onTap,
   }) : super(key: key);
@@ -81,14 +81,14 @@ class LikeAnimButtonWidget extends StatelessWidget {
 }
 
 class _AnimationIconWidget extends StatefulWidget {
-  final Future<bool> futureFlag;
-  final Widget flagWidget;
-  final Widget defaultWidget;
-  final FlagTapCallback onChanged;
+  final Future<bool>? futureFlag;
+  final Widget? flagWidget;
+  final Widget? defaultWidget;
+  final FlagTapCallback? onChanged;
   final Duration duration;
 
   _AnimationIconWidget({
-    Key key,
+    Key? key,
     this.futureFlag,
     this.duration = const Duration(milliseconds: 100),
     this.flagWidget,
@@ -108,7 +108,7 @@ class __AnimationIconWidgetState extends State<_AnimationIconWidget> {
     return GestureDetector(
       onTap: () async {
         if (widget.onChanged != null) {
-          var res = await widget.onChanged(!state.value);
+          var res = await widget.onChanged!(!state.value);
           if (res) {
             state.value = !state.value;
           }
@@ -116,7 +116,7 @@ class __AnimationIconWidgetState extends State<_AnimationIconWidget> {
       },
       child: futureBuilder(
         widget.futureFlag,
-        onData: (value) {
+        onData: (dynamic value) {
           state = RxBool(value ?? false);
           return Obx(
             () => widget.defaultWidget.onlyIf(

@@ -2,10 +2,10 @@ import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
 
-class CryptoController extends FetchValueController<String> {
-  final String cryptText;
+class CryptoController extends FetchValueController<String?> {
+  final String? cryptText;
 
-  String pwd;
+  String? pwd;
 
   CryptoController(this.cryptText)
       : super(
@@ -14,7 +14,7 @@ class CryptoController extends FetchValueController<String> {
         );
 
   @override
-  Future<String> fetch() {
+  Future<String?>? fetch() {
     if (cryptText != null) {
       return ApiRepository.decryptText(text: cryptText, pwd: pwd);
     }
@@ -22,6 +22,6 @@ class CryptoController extends FetchValueController<String> {
   }
 
   String get errMessage {
-    return error.content ?? error.title;
+    return error!.content;
   }
 }

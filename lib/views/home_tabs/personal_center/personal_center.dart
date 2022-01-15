@@ -14,7 +14,7 @@ import 'package:yuyan_app/views/widget/setting_item.dart';
 import 'widget/user_info_card_widget.dart';
 
 class PersonalCenterTab extends StatefulWidget {
-  PersonalCenterTab({Key key}) : super(key: key);
+  PersonalCenterTab({Key? key}) : super(key: key);
 
   @override
   _PersonalCenterTabState createState() => _PersonalCenterTabState();
@@ -41,7 +41,7 @@ class _PersonalCenterTabState extends State<PersonalCenterTab> {
                     padding: const EdgeInsets.only(top: 56),
                     child: GetBuilder<MyUserController>(
                       builder: (c) => c.builder(
-                        (state) => MyInfoCardWidget(info: state.data),
+                        (state) => MyInfoCardWidget(info: state!.data),
                       ),
                     ),
                   ),

@@ -22,11 +22,11 @@ import 'widget/home_widget.dart';
 
 class GroupPage extends StatefulWidget {
   final int initialIndex;
-  final GroupSeri group;
-  final String heroTag;
+  final GroupSeri? group;
+  final String? heroTag;
 
   const GroupPage({
-    Key key,
+    Key? key,
     this.group,
     this.heroTag,
     this.initialIndex = 0,
@@ -45,8 +45,8 @@ class _GroupPageState extends State<GroupPage>
     "成员",
   ];
 
-  TabController _tabController;
-  String tag;
+  TabController? _tabController;
+  String? tag;
 
   @override
   void initState() {
@@ -58,7 +58,7 @@ class _GroupPageState extends State<GroupPage>
       vsync: this,
     );
 
-    var groupId = widget.group.id;
+    var groupId = widget.group!.id;
     tag = '$groupId';
     Get.put(GroupHomeController(groupId), tag: tag);
     Get.put(GroupStackController(groupId), tag: tag);
@@ -82,7 +82,7 @@ class _GroupPageState extends State<GroupPage>
         headerSliverBuilder: (_, inner) => [
           SliverAppBar(
             leading: BackButton(),
-            title: Text('${group.name}'),
+            title: Text('${group!.name}'),
             // centerTitle: false,
             pinned: true,
             // floating: false,
@@ -101,7 +101,7 @@ class _GroupPageState extends State<GroupPage>
                   onLoading: SizedBox.shrink(),
                   onError: (_) => SizedBox.shrink(),
                   onIdle: () => IconButton(
-                    icon: c.value ? Icon(Icons.star) : Icon(Icons.star_border),
+                    icon: c.value! ? Icon(Icons.star) : Icon(Icons.star_border),
                     onPressed: c.toggle,
                   ),
                 ),
@@ -110,7 +110,7 @@ class _GroupPageState extends State<GroupPage>
                 itemBuilder: (_) => [
                   PopupMenuItem(
                     value: () {
-                      Util.goUrl('/go/group/${widget.group.id}');
+                      Util.goUrl('/go/group/${widget.group!.id}');
                     },
                     child: MenuItemWidget(
                       iconData: Icons.open_in_browser,
@@ -119,7 +119,8 @@ class _GroupPageState extends State<GroupPage>
                   ),
                   PopupMenuItem(
                     value: () {
-                      Get.to(() => GroupTopicAllPage(groupId: widget.group.id));
+                      Get.to(
+                          () => GroupTopicAllPage(groupId: widget.group!.id));
                     },
                     child: MenuItemWidget(
                       iconData: Icons.topic,
@@ -127,7 +128,7 @@ class _GroupPageState extends State<GroupPage>
                     ),
                   ),
                 ],
-                onSelected: (_) => _?.call(),
+                onSelected: (_) => _.call(),
               ),
             ],
             flexibleSpace: FlexibleSpaceBar(
@@ -160,9 +161,9 @@ class _GroupPageState extends State<GroupPage>
         builder: (c) => c.stateBuilder(
           onEmpty: ViewEmptyWidget(tip: "首页空空"),
           onIdle: () => GroupHomeWidget(
-            groupId: widget.group.id,
+            groupId: widget.group!.id,
             items: c.value,
-            meta: c.meta,
+            meta: c.meta!,
           ),
         ),
       ),
@@ -171,9 +172,9 @@ class _GroupPageState extends State<GroupPage>
         key: Key('group_page_tab_1'),
         tag: tag,
         builder: (c) => ListView.builder(
-          itemCount: c.value.length,
+          itemCount: c.value!.length,
           itemBuilder: (_, i) => BookRowItemWidget(
-            book: c.value[i],
+            book: c.value![i],
           ),
         ),
       ),
@@ -183,7 +184,7 @@ class _GroupPageState extends State<GroupPage>
         autoRemove: false,
         builder: (c) => c.stateBuilder(
           onError: (err) {
-            if (err.type != ViewErrorType.api) return null;
+            if (err!.type != ViewErrorType.api) return null;
             return Container(
               alignment: Alignment.center,
               child: Text('讨论区未开启'),
@@ -195,7 +196,7 @@ class _GroupPageState extends State<GroupPage>
               icon: Icon(Icons.add_rounded),
               onPressed: () {
                 var c = Get.find<GroupTopicController>(tag: tag);
-                Get.to(TopicAddPage(groupId: c.groupId))
+                Get.to(TopicAddPage(groupId: c.groupId))!
                     .then((_) => c.onRefresh());
               },
               child: Text('创建话题'),
@@ -205,7 +206,8 @@ class _GroupPageState extends State<GroupPage>
             button: Icon(Icons.add),
             onPressed: () => Get.to(
               TopicAddPage(groupId: c.groupId),
-            ).then((_) => c.onRefresh()),
+            )!
+                .then((_) => c.onRefresh()),
             child: Scrollbar(
               child: SmartRefresher(
                 controller: c.refreshController,
@@ -213,9 +215,9 @@ class _GroupPageState extends State<GroupPage>
                 onRefresh: c.refreshCallback,
                 enablePullUp: true,
                 child: ListView.builder(
-                  itemCount: c.value.length,
+                  itemCount: c.value!.length,
                   itemBuilder: (_, i) => TopicTileWidget(
-                    topic: c.value[i],
+                    topic: c.value![i],
                     showLabel: true,
                   ),
                 ),
@@ -229,9 +231,9 @@ class _GroupPageState extends State<GroupPage>
         key: Key('group_page_tab_3'),
         tag: tag,
         builder: (c) => ListView.builder(
-          itemCount: c.value.length,
+          itemCount: c.value!.length,
           itemBuilder: (_, i) => UserFollowTileWidget(
-            user: c.value[i].user,
+            user: c.value![i].user,
             hideButton: false,
           ),
         ),

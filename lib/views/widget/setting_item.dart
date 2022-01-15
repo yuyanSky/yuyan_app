@@ -4,13 +4,13 @@ import 'package:get/get.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
 
 class SettingItemWidget extends StatelessWidget {
-  final String title;
-  final String imgAsset;
-  final String namedRoute;
-  final bool badge;
+  final String? title;
+  final String? imgAsset;
+  final String? namedRoute;
+  final bool? badge;
 
   const SettingItemWidget({
-    Key key,
+    Key? key,
     this.title,
     this.imgAsset,
     this.namedRoute,
@@ -45,7 +45,7 @@ class SettingItemWidget extends StatelessWidget {
         child: Icon(Icons.chevron_right),
       ),
       onTap: () {
-        if (namedRoute != null) Get.toNamed(namedRoute);
+        if (namedRoute != null) Get.toNamed(namedRoute!);
       },
     );
   }

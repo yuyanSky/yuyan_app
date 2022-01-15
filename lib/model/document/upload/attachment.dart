@@ -1,18 +1,18 @@
 class AttachmentSeri {
-  int id;
-  String filekey;
-  String filename;
-  String ext;
-  String mode;
-  int filesize;
-  String filemd5;
-  int symlink;
-  String attachableType;
-  int attachableId;
-  int userId;
-  int spaceId;
-  String updatedAt;
-  String createdAt;
+  int? id;
+  String? filekey;
+  String? filename;
+  String? ext;
+  String? mode;
+  int? filesize;
+  String? filemd5;
+  int? symlink;
+  String? attachableType;
+  int? attachableId;
+  int? userId;
+  int? spaceId;
+  String? updatedAt;
+  String? createdAt;
 
   AttachmentSeri({
     this.id,

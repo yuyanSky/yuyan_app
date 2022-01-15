@@ -6,11 +6,11 @@ import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/views/widget/editor/quill_toolbar_widget.dart';
 
 class CommentModalSheet extends StatefulWidget {
-  final Future<bool> Function(String mark) onPublish;
-  final String hintText;
+  final Future<bool> Function(String mark)? onPublish;
+  final String? hintText;
 
   CommentModalSheet({
-    Key key,
+    Key? key,
     this.onPublish,
     this.hintText,
   }) : super(key: key);

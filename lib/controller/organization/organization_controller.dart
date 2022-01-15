@@ -25,10 +25,10 @@ class UserSpaceController extends FetchListValueController<OrganizationSeri> {
 
 class CurrSpaceProvider extends BaseSaveJson<OrganizationSeri> {
   bool get isDefault {
-    if (data == null || data.login == null) {
+    if (data == null || data!.login == null) {
       return true;
     }
-    return App.userProvider.data.login == data.login;
+    return App.userProvider.data!.login == data!.login;
   }
 
   _refreshController<T>() {
@@ -50,7 +50,7 @@ class CurrSpaceProvider extends BaseSaveJson<OrganizationSeri> {
     }
   }
 
-  changeSpace(OrganizationSeri newSpace) {
+  changeSpace(OrganizationSeri? newSpace) {
     data = newSpace;
     // 等待空间数据更变
     Future.delayed(Duration(milliseconds: 100), () {

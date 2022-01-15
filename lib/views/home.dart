@@ -35,7 +35,7 @@ class Home extends StatefulWidget {
   final int pageIndex;
 
   Home({
-    Key key,
+    Key? key,
     this.pageIndex = 0,
   }) : super(key: key);
 
@@ -46,7 +46,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<Widget> pageList = [];
   DateTime _prevBackTime = DateTime.now();
-  RxInt tabIndex;
+  late RxInt tabIndex;
 
   @override
   void initState() {
@@ -63,9 +63,9 @@ class _HomeState extends State<Home> {
     ];
   }
 
-  Color iconColor(bool selected) {
+  Color? iconColor(bool selected) {
     var theme = ThemeController.to;
-    Color theColor = selected ? theme.primarySwatchColor : Colors.black87;
+    Color? theColor = selected ? theme.primarySwatchColor : Colors.black87;
     return theColor;
   }
 

@@ -1,22 +1,22 @@
 import 'package:yuyan_app/model/user/user.dart';
 
 class ResourceSeri {
-  int id;
-  int bookId;
-  int filesize;
-  String filename;
-  String ext;
-  String type;
-  String targetType;
-  int targetId;
-  int parentId;
-  int userId;
-  String createdAt;
-  String updatedAt;
-  String versionCreatedAt;
-  String filekey;
-  UserSeri user;
-  String serializer;
+  int? id;
+  int? bookId;
+  int? filesize;
+  String? filename;
+  String? ext;
+  String? type;
+  String? targetType;
+  int? targetId;
+  int? parentId;
+  int? userId;
+  String? createdAt;
+  String? updatedAt;
+  String? versionCreatedAt;
+  String? filekey;
+  UserSeri? user;
+  String? serializer;
 
   ResourceSeri({
     this.id,

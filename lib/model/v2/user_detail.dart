@@ -1,22 +1,22 @@
 import 'package:yuyan_app/model/user/user_lite_seri.dart';
 
 class UserDetailSeri {
-  int id;
-  String type;
-  int spaceId;
-  int accountId;
-  String login;
-  String name;
-  String avatarUrl;
-  int booksCount;
-  int publicBooksCount;
-  int followersCount;
-  int followingCount;
-  int public;
-  String description;
-  String createdAt;
-  String updatedAt;
-  String serializer;
+  int? id;
+  String? type;
+  int? spaceId;
+  int? accountId;
+  String? login;
+  String? name;
+  String? avatarUrl;
+  int? booksCount;
+  int? publicBooksCount;
+  int? followersCount;
+  int? followingCount;
+  int? public;
+  String? description;
+  String? createdAt;
+  String? updatedAt;
+  String? serializer;
 
   UserDetailSeri({
     this.id,

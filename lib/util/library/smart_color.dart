@@ -51,7 +51,7 @@ class SmartColor {
   ///将字符串转换为颜色
   ///使用Pigment插件
   static _getColor(String color) {
-    Color rgbaColor = _getRGBAColorFromString(color);
+    Color? rgbaColor = _getRGBAColorFromString(color);
     if (rgbaColor != null) {
       return rgbaColor;
     }
@@ -59,7 +59,7 @@ class SmartColor {
   }
 
   /// RGBA字符串转换为颜色
-  static Color _getRGBAColorFromString(String string) {
+  static Color? _getRGBAColorFromString(String string) {
     string = string.replaceAll(" ", ""); // pseudo-trimming
     if (string.startsWith("rgba(") && string.endsWith(")")) {
       // Correct
@@ -136,16 +136,16 @@ class SmartColor {
 class AntDesignColor extends ColorSwatch<int> {
   const AntDesignColor(int primary, Map<int, Color> swatch)
       : super(primary, swatch);
-  Color get shade1 => this[1];
-  Color get shade2 => this[2];
-  Color get shade3 => this[3];
-  Color get shade4 => this[4];
-  Color get shade5 => this[5];
-  Color get shade6 => this[6];
-  Color get shade7 => this[7];
-  Color get shade8 => this[8];
-  Color get shade9 => this[9];
-  Color get shade10 => this[10];
+  Color? get shade1 => this[1];
+  Color? get shade2 => this[2];
+  Color? get shade3 => this[3];
+  Color? get shade4 => this[4];
+  Color? get shade5 => this[5];
+  Color? get shade6 => this[6];
+  Color? get shade7 => this[7];
+  Color? get shade8 => this[8];
+  Color? get shade9 => this[9];
+  Color? get shade10 => this[10];
 }
 
 ///getHue 获取色相渐变

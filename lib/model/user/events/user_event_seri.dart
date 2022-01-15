@@ -3,20 +3,20 @@ import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/model/serializer/serializer.dart';
 
 class UserEventSeri {
-  int id;
-  String createdAt;
-  int userId;
-  int actorId;
-  String targetType;
-  int bookId;
-  String type;
-  int targetCount;
-  String updatedAt;
-  UserSeri actor;
+  int? id;
+  String? createdAt;
+  int? userId;
+  int? actorId;
+  String? targetType;
+  int? bookId;
+  String? type;
+  int? targetCount;
+  String? updatedAt;
+  UserSeri? actor;
   dynamic user;
-  BookSeri book;
-  List<Serializer> targets;
-  String serializer;
+  BookSeri? book;
+  List<Serializer>? targets;
+  String? serializer;
 
   UserEventSeri({
     this.id,
@@ -55,7 +55,7 @@ class UserEventSeri {
     if (json["targets"] != null) {
       targets = [];
       json["targets"].forEach((v) {
-        targets.add(Serializer.fromJson(v));
+        targets!.add(Serializer.fromJson(v));
       });
     }
     serializer = json["_serializer"];
@@ -73,14 +73,14 @@ class UserEventSeri {
     map["target_count"] = targetCount;
     map["updated_at"] = updatedAt;
     if (actor != null) {
-      map["actor"] = actor.toJson();
+      map["actor"] = actor!.toJson();
     }
     map["user"] = user;
     if (book != null) {
-      map["book"] = book.toJson();
+      map["book"] = book!.toJson();
     }
     if (targets != null) {
-      map["targets"] = targets.map((v) => v.toJson()).toList();
+      map["targets"] = targets!.map((v) => v.toJson()).toList();
     }
     map["_serializer"] = serializer;
     return map;

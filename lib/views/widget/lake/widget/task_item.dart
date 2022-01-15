@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class LakeTaskItemWidget extends StatelessWidget {
-  final bool value;
+  final bool? value;
 
   const LakeTaskItemWidget({
-    Key key,
+    Key? key,
     this.value,
   }) : super(key: key);
 

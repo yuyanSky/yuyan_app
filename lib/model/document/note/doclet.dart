@@ -1,25 +1,25 @@
 class DocletSeri {
-  int id;
-  int draftVersion;
-  int status;
-  String contentUpdatedAt;
-  int lastEditorId;
-  String category;
-  String format;
-  String type;
-  String targetType;
-  int targetId;
-  String body;
-  String bodyDraft;
-  String bodyAsl;
-  String bodyDraftAsl;
-  String createdAt;
-  String updatedAt;
+  int? id;
+  int? draftVersion;
+  int? status;
+  String? contentUpdatedAt;
+  int? lastEditorId;
+  String? category;
+  String? format;
+  String? type;
+  String? targetType;
+  int? targetId;
+  String? body;
+  String? bodyDraft;
+  String? bodyAsl;
+  String? bodyDraftAsl;
+  String? createdAt;
+  String? updatedAt;
   dynamic publishedAt;
   dynamic meta;
   dynamic editorMeta;
   dynamic editorMetaDraft;
-  String serializer;
+  String? serializer;
 
   DocletSeri({
     this.id,

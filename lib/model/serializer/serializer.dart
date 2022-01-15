@@ -20,9 +20,9 @@ import 'package:yuyan_app/model/user/user_lite_seri.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 
 class Serializer {
-  String _serializer;
+  String? _serializer;
 
-  String get serializer => _serializer;
+  String? get serializer => _serializer;
 
   bool ofType(String type) {
     if (_serializer == null) return false;
@@ -33,7 +33,7 @@ class Serializer {
 
   dynamic get raw => _data;
 
-  Serializer({String serializer, json})
+  Serializer({String? serializer, json})
       : _serializer = serializer,
         _data = json;
 
@@ -76,7 +76,7 @@ class Serializer {
     };
   }
 
-  T serialize<T>([String serializer]) {
+  T? serialize<T>([String? serializer]) {
     if (_data == null) {
       return null;
     }
@@ -91,12 +91,12 @@ class Serializer {
       seri = 'web.' + ReCase(seri).snakeCase;
     }
     var func = _doSerializer()[seri];
-    return func?.call() as T;
+    return func?.call() as T?;
   }
 
-  List<T> list<T>([String serializer]) {
-    var func = _doSerializer()[serializer ?? _serializer];
-    var lst = func?.call<T>() as List<T>;
+  List<T>? list<T>([String? serializer]) {
+    var func = _doSerializer()[serializer ?? _serializer!];
+    var lst = func?.call<T>() as List<T>?;
     return lst;
   }
 

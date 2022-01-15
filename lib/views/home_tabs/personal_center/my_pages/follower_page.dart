@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/viewstate/view_page.dart';
 import 'package:yuyan_app/controller/home/personal/my_controller.dart';
+import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/views/widget/animation.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 import 'package:yuyan_app/views/component/nothing_page.dart';
@@ -10,7 +11,7 @@ class MyFollowerPage extends FetchRefreshListViewPage<MyFollowerController> {
 
   @override
   Widget buildChild() {
-    var data = controller.value.data;
+    List<UserSeri> data = controller.value!.data!;
     return ListView.builder(
       itemCount: data.length,
       itemBuilder: (_, i) {

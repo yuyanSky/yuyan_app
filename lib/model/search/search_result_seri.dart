@@ -1,10 +1,10 @@
 import 'hits_seri.dart';
 
 class SearchResultSeri {
-  String type;
-  List<SearchHitSeri> hits;
-  int totalHits;
-  int numHits;
+  String? type;
+  List<SearchHitSeri>? hits;
+  int? totalHits;
+  int? numHits;
 
   SearchResultSeri({
     this.type,
@@ -18,7 +18,7 @@ class SearchResultSeri {
     if (json["hits"] != null) {
       hits = [];
       json["hits"].forEach((v) {
-        hits.add(SearchHitSeri.fromJson(v));
+        hits!.add(SearchHitSeri.fromJson(v));
       });
     }
     totalHits = json["totalHits"];
@@ -29,7 +29,7 @@ class SearchResultSeri {
     var map = <String, dynamic>{};
     map["type"] = type;
     if (hits != null) {
-      map["hits"] = hits.map((v) => v.toJson()).toList();
+      map["hits"] = hits!.map((v) => v.toJson()).toList();
     }
     map["totalHits"] = totalHits;
     map["numHits"] = numHits;

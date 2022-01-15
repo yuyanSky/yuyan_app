@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class MenuItemWidget extends StatelessWidget {
-  final IconData iconData;
-  final String title;
+  final IconData? iconData;
+  final String? title;
 
   const MenuItemWidget({
-    Key key,
+    Key? key,
     this.title,
     this.iconData,
   }) : super(key: key);
@@ -22,7 +22,7 @@ class MenuItemWidget extends StatelessWidget {
           // ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(title),
+            child: Text(title!),
           ),
         ],
       ),

@@ -1,9 +1,9 @@
 class OrganizationLiteSeri {
-  String name;
-  String logo;
-  String login;
-  String host;
-  String serializer;
+  String? name;
+  String? logo;
+  String? login;
+  String? host;
+  String? serializer;
 
   OrganizationLiteSeri({
     this.name,

@@ -1,12 +1,12 @@
 class CardVideoSeri {
-  String status;
-  String name;
-  int size;
-  int percent;
-  String taskId;
-  bool margin;
-  String id;
-  String videoId;
+  String? status;
+  String? name;
+  int? size;
+  int? percent;
+  String? taskId;
+  bool? margin;
+  String? id;
+  String? videoId;
 
   CardVideoSeri({
     this.status,

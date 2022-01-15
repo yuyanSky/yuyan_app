@@ -6,6 +6,7 @@ import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/viewstate/view_page.dart';
 import 'package:yuyan_app/controller/organization/card/action_controller.dart';
 import 'package:yuyan_app/controller/organization/user/user_controller.dart';
+import 'package:yuyan_app/model/user/events/event_seri.dart';
 import 'package:yuyan_app/model/user/user_lite_seri.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/organization/widget/book_row_widget.dart';
@@ -19,14 +20,13 @@ import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class UserPage extends StatefulWidget {
   final UserLiteSeri user;
-  final String heroTag;
+  final String? heroTag;
 
   UserPage({
-    Key key,
-    this.user,
+    Key? key,
+    required this.user,
     this.heroTag,
-  })  : assert(user != null),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   _UserPageState createState() => _UserPageState();
@@ -34,13 +34,13 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  TabController? _tabController;
 
   @override
   void initState() {
     super.initState();
 
-    int userId = widget.user.id;
+    int? userId = widget.user.id;
     var tag = '$userId';
     Get.put(UserBookController(userId), tag: tag);
     Get.put(UserGroupController(userId), tag: tag);
@@ -109,7 +109,7 @@ class _UserPageState extends State<UserPage>
                   ),
                 ),
               ).onlyIf(
-                widget.user.login != App.userProvider.data.login,
+                widget.user.login != App.userProvider.data!.login,
               ),
               PopupMenuButton<VoidCallback>(
                 itemBuilder: (_) => [
@@ -132,7 +132,7 @@ class _UserPageState extends State<UserPage>
                   //   ),
                   // ),
                 ],
-                onSelected: (_) => _?.call(),
+                onSelected: (_) => _.call(),
               ),
             ],
             flexibleSpace: FlexibleSpaceBar(
@@ -160,9 +160,9 @@ class _UserPageState extends State<UserPage>
               key: Key('user_page_tab_1'),
               tag: controllerTag,
               builder: (c) => ListView.builder(
-                itemCount: c.value.length,
+                itemCount: c.value!.length,
                 itemBuilder: (_, i) => BookRowItemWidget(
-                  book: c.value[i],
+                  book: c.value![i],
                 ),
               ),
             ),
@@ -170,9 +170,9 @@ class _UserPageState extends State<UserPage>
               key: Key('user_page_tab_2'),
               tag: controllerTag,
               builder: (c) => ListView.builder(
-                itemCount: c.value.length,
+                itemCount: c.value!.length,
                 itemBuilder: (_, i) => GroupTileWidget(
-                  group: c.value[i],
+                  group: c.value![i],
                 ),
               ),
             ),
@@ -180,9 +180,9 @@ class _UserPageState extends State<UserPage>
               key: Key('user_page_tab_3'),
               tag: controllerTag,
               builder: (c) => ListView.builder(
-                itemCount: c.value.length,
+                itemCount: c.value!.length,
                 itemBuilder: (_, i) => UserFollowTileWidget(
-                  user: c.value[i],
+                  user: c.value![i],
                   hideButton: false,
                 ),
               ),
@@ -191,9 +191,9 @@ class _UserPageState extends State<UserPage>
               key: Key('user_page_tab_4'),
               tag: controllerTag,
               builder: (c) => ListView.builder(
-                itemCount: c.value.length,
+                itemCount: c.value!.length,
                 itemBuilder: (_, i) => UserFollowTileWidget(
-                  user: c.value[i],
+                  user: c.value![i],
                   hideButton: false,
                 ),
               ),
@@ -206,12 +206,12 @@ class _UserPageState extends State<UserPage>
 }
 
 class _UserHomeWidget extends StatelessWidget {
-  final int userId;
+  final int? userId;
 
   String get tag => '$userId';
 
   _UserHomeWidget({
-    Key key,
+    Key? key,
     this.userId,
   }) : super(key: key);
 
@@ -250,7 +250,7 @@ class _UserHomeWidget extends StatelessWidget {
         onIdle: () => Container(
           padding: const EdgeInsets.only(top: 20),
           child: LakeRenderWidget(
-            data: c.value.bodyAsl ?? '',
+            data: c.value!.bodyAsl ?? '',
           ),
         ),
       ),
@@ -283,7 +283,7 @@ class _UserHomeWidget extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(),
               itemCount: c.offset,
               itemBuilder: (_, i) {
-                var item = c.value[i];
+                EventSeri item = c.value![i];
                 return AffairTileWidget(item);
               },
             ),

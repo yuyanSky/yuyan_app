@@ -4,24 +4,24 @@ import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class UserFlexibleWidget extends StatelessWidget {
-  final UserLiteSeri user;
-  final String tag;
+  final UserLiteSeri? user;
+  final String? tag;
 
   const UserFlexibleWidget({
-    Key key,
+    Key? key,
     this.user,
     this.tag,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var heroTag = tag ?? '${user.id}';
+    var heroTag = tag ?? '${user!.id}';
     var content = Row(
       children: [
         Container(
           width: 170,
           child: Text(
-            "${user.description ?? '这人很懒，签名也没有'}",
+            "${user!.description ?? '这人很懒，签名也没有'}",
             style: AppStyles.groupTextStyle,
             maxLines: 4,
           ),
@@ -30,7 +30,7 @@ class UserFlexibleWidget extends StatelessWidget {
         Hero(
           tag: heroTag,
           child: UserAvatarWidget(
-            avatar: user.avatarUrl,
+            avatar: user!.avatarUrl,
             height: 60,
           ),
         ),

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:delta_markdown/delta_markdown.dart';
@@ -12,7 +13,7 @@ import 'package:yuyan_app/model/document/note/note_status.dart';
 import 'package:yuyan_app/model/document/upload/upload_result_seri.dart';
 
 class PostNoteController extends FetchValueController<NoteSeri> {
-  final int id;
+  final int? id;
 
   PostNoteController(this.id)
       : super(
@@ -26,7 +27,7 @@ class PostNoteController extends FetchValueController<NoteSeri> {
     return state != ViewState.error;
   }
 
-  Delta _data;
+  Delta? _data;
 
   @override
   Future<NoteSeri> fetch() async {
@@ -35,7 +36,8 @@ class PostNoteController extends FetchValueController<NoteSeri> {
     var mk = deltaToMarkdown(str);
     // NotusMarkdownCodec();
     debugPrint('markdown:\n$mk\n');
-    var html = await ApiRepository.convertLake(markdown: mk);
+    var html =
+        await (ApiRepository.convertLake(markdown: mk) as FutureOr<String>);
     return ApiRepository.postNote(html: html, id: id);
   }
 }

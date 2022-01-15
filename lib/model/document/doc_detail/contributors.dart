@@ -1,18 +1,18 @@
 class Contributors {
-  int id;
-  String type;
-  String login;
-  String name;
-  String avatar;
+  int? id;
+  String? type;
+  String? login;
+  String? name;
+  String? avatar;
   dynamic scene;
-  String avatarUrl;
-  int role;
-  bool isPaid;
-  int memberLevel;
-  int followersCount;
-  int followingCount;
-  String description;
-  String serializer;
+  String? avatarUrl;
+  int? role;
+  bool? isPaid;
+  int? memberLevel;
+  int? followersCount;
+  int? followingCount;
+  String? description;
+  String? serializer;
 
   Contributors({
       this.id, 

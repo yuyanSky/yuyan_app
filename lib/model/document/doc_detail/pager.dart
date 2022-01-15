@@ -1,6 +1,6 @@
 class PagerSeri {
-  PageItemSeri prev;
-  PageItemSeri next;
+  PageItemSeri? prev;
+  PageItemSeri? next;
 
   PagerSeri({
     this.prev,
@@ -15,19 +15,19 @@ class PagerSeri {
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
     if (prev != null) {
-      map["prev"] = prev.toJson();
+      map["prev"] = prev!.toJson();
     }
     if (next != null) {
-      map["next"] = next.toJson();
+      map["next"] = next!.toJson();
     }
     return map;
   }
 }
 
 class PageItemSeri {
-  String title;
-  String slug;
-  String serializer;
+  String? title;
+  String? slug;
+  String? serializer;
 
   PageItemSeri({this.title, this.slug, this.serializer});
 

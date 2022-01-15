@@ -1,9 +1,9 @@
 import 'notification_item.dart';
 
 class NotificationSeri {
-  int normalCount;
-  String listType;
-  List<NotificationItemSeri> notifications;
+  int? normalCount;
+  String? listType;
+  List<NotificationItemSeri>? notifications;
 
   NotificationSeri({this.normalCount, this.listType, this.notifications});
 
@@ -13,7 +13,7 @@ class NotificationSeri {
     if (json["notifications"] != null) {
       notifications = [];
       json["notifications"].forEach((v) {
-        notifications.add(NotificationItemSeri.fromJson(v));
+        notifications!.add(NotificationItemSeri.fromJson(v));
       });
     }
   }
@@ -23,7 +23,7 @@ class NotificationSeri {
     map["normalCount"] = normalCount;
     map["list_type"] = listType;
     if (notifications != null) {
-      map["notifications"] = notifications.map((v) => v.toJson()).toList();
+      map["notifications"] = notifications!.map((v) => v.toJson()).toList();
     }
     return map;
   }

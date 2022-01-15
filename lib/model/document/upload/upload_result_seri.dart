@@ -1,20 +1,20 @@
 import 'attachment.dart';
 
 class UploadResultSeri {
-  String filekey;
-  String extname;
-  String mode;
-  String url;
-  String filename;
-  int size;
-  String etag;
-  int symlink;
-  bool isCopy;
-  String filemd5;
-  int attachmentId;
-  String attachableType;
-  int attachableId;
-  AttachmentSeri attachment;
+  String? filekey;
+  String? extname;
+  String? mode;
+  String? url;
+  String? filename;
+  int? size;
+  String? etag;
+  int? symlink;
+  bool? isCopy;
+  String? filemd5;
+  int? attachmentId;
+  String? attachableType;
+  int? attachableId;
+  AttachmentSeri? attachment;
 
   UploadResultSeri({
     this.filekey,
@@ -68,7 +68,7 @@ class UploadResultSeri {
     map["attachable_type"] = attachableType;
     map["attachable_id"] = attachableId;
     if (attachment != null) {
-      map["attachment"] = attachment.toJson();
+      map["attachment"] = attachment!.toJson();
     }
     return map;
   }

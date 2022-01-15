@@ -17,12 +17,12 @@ import 'package:yuyan_app/views/widget/lake/cards/image.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class BookDocPage extends StatelessWidget {
-  final int bookId;
+  final int? bookId;
   final BookSeri book;
 
   BookDocPage({
-    Key key,
-    this.book,
+    Key? key,
+    required this.book,
   })  : bookId = book.id,
         super(key: key);
 
@@ -36,10 +36,10 @@ class BookDocPage extends StatelessWidget {
     );
 
     var title = '文档知识库';
-    var type = book?.type ?? 'Book';
+    var type = book.type ?? 'Book';
     return Scaffold(
       appBar: AppBar(
-        title: Text(book?.name ?? title),
+        title: Text(book.name ?? title),
         actions: [
           IconButton(
             icon: Icon(Icons.more_vert),
@@ -84,8 +84,8 @@ class BookDocPage extends StatelessWidget {
               onRefresh: c.refreshCallback,
               onLoading: c.loadMoreCallback,
               child: ListView.builder(
-                itemCount: c.value.length,
-                itemBuilder: (_, i) => buildArt(c.value[i]),
+                itemCount: c.value!.length,
+                itemBuilder: (_, i) => buildArt(c.value![i]),
               ),
             ),
           ),
@@ -102,7 +102,7 @@ class BookDocPage extends StatelessWidget {
   }
 
   Widget buildArt(ArtboardSeri art) {
-    var arts = art.artboards; //.take(3).toList();
+    var arts = art.artboards!; //.take(3).toList();
     var child = Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6),
@@ -127,13 +127,13 @@ class BookDocPage extends StatelessWidget {
                     ),
                     height: 160,
                     child: CachedNetworkImage(
-                      imageUrl: item.image,
+                      imageUrl: item.image!,
                     ),
                   ),
                 ),
               ),
             ).onlyIf(
-              !GetUtils.isNullOrBlank(arts),
+              !GetUtils.isNullOrBlank(arts)!,
               elseif: () => Container(
                 alignment: Alignment.center,
                 height: 160,
@@ -150,7 +150,7 @@ class BookDocPage extends StatelessWidget {
               style: AppStyles.textStyleB,
             ),
             Text(
-              '更新于：${Util.timeCut(art.updatedAt)} · ${arts.length}张图',
+              '更新于：${Util.timeCut(art.updatedAt!)} · ${arts.length}张图',
               style: AppStyles.textStyleC,
             ),
           ],
@@ -159,7 +159,7 @@ class BookDocPage extends StatelessWidget {
     );
     return GestureDetector(
       onTap: () {
-        var user = book.user.login;
+        var user = book.user!.login;
         var slug = book.slug;
         MyRoute.webview('${Util.baseUrl}/$user/$slug/artboards/${art.id}');
       },
@@ -167,7 +167,7 @@ class BookDocPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDocs(List<DocSeri> data, String type) {
+  Widget _buildDocs(List<DocSeri>? data, String type) {
     if (type == 'Sheet') {
       return SingleChildScrollView(
         child: Container(
@@ -177,7 +177,7 @@ class BookDocPage extends StatelessWidget {
           child: Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: data.mapWidget(
+            children: data!.mapWidget(
               (item) => buildDoc(item, 'Sheet'),
             ),
           ),
@@ -206,7 +206,7 @@ class BookDocPage extends StatelessWidget {
       );
     }
     return ListView.builder(
-      itemCount: data.length,
+      itemCount: data!.length,
       itemBuilder: (_, i) {
         return buildDoc(data[i], 'Book');
       },
@@ -237,12 +237,12 @@ class BookDocPage extends StatelessWidget {
           children: [
             Expanded(
               child: autoText(
-                title: data.title,
+                title: data.title!,
                 desc: data.description ?? data.customDescription,
-                user: data.user,
+                user: data.user!,
               ),
             ),
-            if (!GetUtils.isNullOrBlank(data.cover))
+            if (!GetUtils.isNullOrBlank(data.cover)!)
               Container(
                 margin: EdgeInsets.only(left: 10),
                 child: circularImage(data.cover),
@@ -251,7 +251,7 @@ class BookDocPage extends StatelessWidget {
         ),
       );
     } else if (style == 'Sheet') {
-      var editor = data.user;
+      var editor = data.user!;
       child = Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(6),
@@ -282,7 +282,7 @@ class BookDocPage extends StatelessWidget {
                 Icon(Icons.more_vert),
               ]),
               Text(
-                '${editor.name} · ${Util.timeCut(data.updatedAt)}',
+                '${editor.name} · ${Util.timeCut(data.updatedAt!)}',
                 style: AppStyles.textStyleC,
               ),
             ],
@@ -296,7 +296,7 @@ class BookDocPage extends StatelessWidget {
         MyRoute.docDetailWebview(
           bookId: data.bookId,
           slug: data.slug,
-          login: book.user.login,
+          login: book.user!.login,
           book: book.slug,
         );
       },
@@ -305,9 +305,9 @@ class BookDocPage extends StatelessWidget {
   }
 
   Widget autoText({
-    String title,
-    String desc,
-    UserSeri user,
+    required String title,
+    String? desc,
+    required UserSeri user,
     int maxLines = 2,
   }) {
     desc ??= "";
@@ -336,7 +336,7 @@ class BookDocPage extends StatelessWidget {
             ),
             SizedBox(width: 5),
             Text(
-              user.name,
+              user.name!,
               style: AppStyles.textStyleC,
             ),
           ],
@@ -346,7 +346,7 @@ class BookDocPage extends StatelessWidget {
   }
 
   Widget circularImage(
-    String imgUrl, {
+    String? imgUrl, {
     double height = 91,
     double width = 147,
     double circular = 8,
@@ -374,10 +374,10 @@ class BookDocPage extends StatelessWidget {
 }
 
 class BookDocsHeader extends StatelessWidget {
-  final BookSeri book;
+  final BookSeri? book;
 
   BookDocsHeader({
-    Key key,
+    Key? key,
     this.book,
   }) : super(key: key);
 
@@ -393,12 +393,12 @@ class BookDocsHeader extends StatelessWidget {
         children: [
           //Title
           Text(
-            book.name,
+            book!.name!,
             style: AppStyles.textStyleA,
           ),
           //desc
           Text(
-            book.description,
+            book!.description!,
             style: AppStyles.textStyleC,
           ),
           SizedBox(height: 4),
@@ -406,7 +406,7 @@ class BookDocsHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               GetBuilder<BookMarkController>(
-                init: BookMarkController(book.id),
+                init: BookMarkController(book!.id),
                 builder: (c) {
                   final button = OutlinedButton.icon(
                     onPressed: c.toggle,
@@ -421,7 +421,7 @@ class BookDocsHeader extends StatelessWidget {
               ),
               SizedBox(width: 8),
               GetBuilder<BookWatchController>(
-                init: BookWatchController(book.id),
+                init: BookWatchController(book!.id),
                 builder: (c) {
                   final favor = Text('关注');
                   return OutlinedButton(

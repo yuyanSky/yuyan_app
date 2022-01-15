@@ -1,8 +1,8 @@
 class MetaOrg {
-  int id;
-  String login;
-  String name;
-  String host;
+  int? id;
+  String? login;
+  String? name;
+  String? host;
 
   MetaOrg({
       this.id, 

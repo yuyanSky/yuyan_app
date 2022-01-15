@@ -6,10 +6,10 @@ import 'package:yuyan_app/controller/organization/card/crypto_controller.dart';
 import '../../widget/card_wrap_widget.dart';
 
 class LakeLockTextWidget extends StatelessWidget {
-  final Map json;
+  final Map? json;
 
   LakeLockTextWidget({
-    Key key,
+    Key? key,
     this.json,
   }) : super(key: key);
 
@@ -20,15 +20,15 @@ class LakeLockTextWidget extends StatelessWidget {
     //TODO(@dreamer2q): 完成功能
 
     return GetBuilder<CryptoController>(
-      tag: json['id'],
-      init: CryptoController(json['cryptoData']),
+      tag: json!['id'],
+      init: CryptoController(json!['cryptoData']),
       builder: (c) {
-        var locked = json['locked'];
+        var locked = json!['locked'];
         if (!locked || c.value != null) {
           return LakeCardWrapWidget(
             type: '文本加密',
             child: SelectableText(
-              c.value ?? json['originData'],
+              c.value ?? json!['originData'],
             ),
           );
         }

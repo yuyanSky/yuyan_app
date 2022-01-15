@@ -8,7 +8,7 @@ import 'package:yuyan_app/model/notification/notification_item.dart';
 import 'package:yuyan_app/util/util.dart';
 
 abstract class NotificationProvider
-    extends BaseSaveListJson<NotificationItemSeri> {
+    extends BaseSaveListJson<NotificationItemSeri?> {
   @override
   List<NotificationItemSeri> convert(json) {
     return (json as List).map((e) => NotificationItemSeri.fromJson(e)).toList();
@@ -42,12 +42,12 @@ class NotificationAllController
     listType: '',
   );
 
-  NotificationSeri unread;
-  NotificationSeri readed;
-  NotificationSeri system;
+  late NotificationSeri unread;
+  late NotificationSeri readed;
+  NotificationSeri? system;
 
   bool get hasUnread {
-    return unread.normalCount > 0;
+    return unread.normalCount! > 0;
   }
 
   void readAll() async {
@@ -56,8 +56,8 @@ class NotificationAllController
     });
     var i = 0;
     while (hasUnread) {
-      value.data[i++].readAt = DateTime.now().toIso8601String();
-      unread.normalCount--;
+      value!.data![i++]!.readAt = DateTime.now().toIso8601String();
+      unread.normalCount = unread.normalCount! - 1;
       update();
       await Future.delayed(Duration(milliseconds: 80));
     }
@@ -65,7 +65,7 @@ class NotificationAllController
 
   void delAll() async {
     Util.showConfirmDialog(
-      Get.context,
+      Get.context!,
       content: '删除全部消息',
       confirmCallback: () {
         safeHandler(() async {
@@ -83,14 +83,14 @@ class NotificationAllController
     // system = await ApiRepository.getNotificationList(type: 'system');
 
     return [
-      ...unread.notifications,
-      ...readed.notifications,
+      ...unread.notifications!,
+      ...readed.notifications!,
       // ...system.notifications,
     ];
   }
 
   @override
-  Future fetchMore() {
+  Future? fetchMore() {
     return super.fetchMore();
   }
 }

@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/controller/organization/group/group_controller.dart';
+import 'package:yuyan_app/model/topic/topic.dart';
 
 import 'topic_add_page.dart';
 import 'topic_item_widget.dart';
 
 class GroupTopicAllPage extends StatelessWidget {
-  final int groupId;
+  final int? groupId;
 
   GroupTopicAllPage({
-    Key key,
+    Key? key,
     this.groupId,
   }) : super(key: key);
 
@@ -30,7 +31,7 @@ class GroupTopicAllPage extends StatelessWidget {
             key: PageStorageKey('$state'),
             itemCount: c.offset,
             itemBuilder: (_, i) {
-              var item = c.value[i];
+              TopicSeri item = c.value![i];
               return TopicRowItemWidget(data: item);
             },
           ),

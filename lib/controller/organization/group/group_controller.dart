@@ -10,7 +10,7 @@ import 'package:yuyan_app/model/user/events/user_event_seri.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 
 class GroupInfoController extends FetchValueController<UserSeri> {
-  final int groupId;
+  final int? groupId;
 
   GroupInfoController(this.groupId);
 
@@ -21,7 +21,7 @@ class GroupInfoController extends FetchValueController<UserSeri> {
 }
 
 class GroupViewBlockController extends FetchListValueController<UserEventSeri> {
-  final int blockId;
+  final int? blockId;
 
   GroupViewBlockController(this.blockId);
 
@@ -33,8 +33,8 @@ class GroupViewBlockController extends FetchListValueController<UserEventSeri> {
       blockId: blockId,
       offset: refresh ? 0 : offset,
     );
-    offset = resp.item2.meta['offset'] ?? 0;
-    hasMore = resp.item2.meta['hasMore'] ?? false;
+    offset = resp.item2.meta!['offset'] ?? 0;
+    hasMore = resp.item2.meta!['hasMore'] ?? false;
     return resp.item1;
   }
 
@@ -46,11 +46,11 @@ class GroupViewBlockController extends FetchListValueController<UserEventSeri> {
 }
 
 class GroupHomeController extends FetchListValueController<GroupViewBlockSeri> {
-  final int groupId;
+  final int? groupId;
 
   GroupHomeController(this.groupId);
 
-  Map meta;
+  Map? meta;
 
   @override
   Future<List<GroupViewBlockSeri>> fetch() async {
@@ -61,7 +61,7 @@ class GroupHomeController extends FetchListValueController<GroupViewBlockSeri> {
 }
 
 class GroupStackController extends FetchListValueController<BookStackSeri> {
-  final int groupId;
+  final int? groupId;
 
   GroupStackController(this.groupId);
 
@@ -72,7 +72,7 @@ class GroupStackController extends FetchListValueController<BookStackSeri> {
 }
 
 class GroupBookController extends FetchListValueController<BookSeri> {
-  final int groupId;
+  final int? groupId;
 
   GroupBookController(this.groupId);
 
@@ -83,7 +83,7 @@ class GroupBookController extends FetchListValueController<BookSeri> {
 }
 
 class GroupMemberController extends FetchListValueController<GroupUserSeri> {
-  final int groupId;
+  final int? groupId;
 
   GroupMemberController(this.groupId);
 
@@ -94,7 +94,7 @@ class GroupMemberController extends FetchListValueController<GroupUserSeri> {
 }
 
 class GroupTopicController extends FetchListValueController<TopicSeri> {
-  final int groupId;
+  final int? groupId;
   final String topicState;
 
   GroupTopicController(this.groupId, [this.topicState = 'open']);

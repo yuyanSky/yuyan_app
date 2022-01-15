@@ -5,14 +5,14 @@ import 'package:yuyan_app/util/styles/app_ui.dart';
 
 // ignore: must_be_immutable
 class LakeCardWrapWidget extends StatelessWidget {
-  final String type;
-  final Widget child;
-  final Map params;
+  final String? type;
+  final Widget? child;
+  final Map? params;
   final Color backgroundColor;
-  final EdgeInsets margin;
+  final EdgeInsets? margin;
 
   LakeCardWrapWidget({
-    Key key,
+    Key? key,
     this.type,
     this.child,
     this.params,
@@ -20,19 +20,19 @@ class LakeCardWrapWidget extends StatelessWidget {
     this.backgroundColor = Colors.white,
   }) : super(key: key);
 
-  int width;
-  int height;
-  Widget body;
+  int? width;
+  int? height;
+  Widget? body;
 
   @override
   Widget build(BuildContext context) {
     if (params != null) {
-      width = params['width'];
-      height = params['height'];
-      if (width != null && height != null && width < 100 && height < 100) {
+      width = params!['width'];
+      height = params!['height'];
+      if (width != null && height != null && width! < 100 && height! < 100) {
         return SizedBox(
-          width: width.toDouble(),
-          height: height.toDouble(),
+          width: width!.toDouble(),
+          height: height!.toDouble(),
           child: child,
         );
       }

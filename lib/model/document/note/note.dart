@@ -1,27 +1,27 @@
 import 'package:yuyan_app/model/document/note/doclet.dart';
 
 class NoteSeri {
-  int id;
-  int docletId;
-  int userId;
-  String description;
-  String contentUpdatedAt;
-  String firstPublishedAt;
-  String updatedAt;
-  String createdAt;
+  int? id;
+  int? docletId;
+  int? userId;
+  String? description;
+  String? contentUpdatedAt;
+  String? firstPublishedAt;
+  String? updatedAt;
+  String? createdAt;
   dynamic saveFrom;
-  int public;
+  int? public;
   dynamic slug;
-  int commentsCount;
-  int likesCount;
-  bool hasImage;
-  bool hasTodo;
-  bool hasBookmark;
-  bool hasAttachment;
-  bool isPublic;
-  String serializer;
+  int? commentsCount;
+  int? likesCount;
+  bool? hasImage;
+  bool? hasTodo;
+  bool? hasBookmark;
+  bool? hasAttachment;
+  bool? isPublic;
+  String? serializer;
 
-  DocletSeri doclet;
+  DocletSeri? doclet;
 
   NoteSeri({
     this.id,
@@ -94,7 +94,7 @@ class NoteSeri {
     map["is_public"] = isPublic;
     map["_serializer"] = serializer;
     if (doclet != null) {
-      map['doclet'] = doclet.toJson();
+      map['doclet'] = doclet!.toJson();
     }
     return map;
   }

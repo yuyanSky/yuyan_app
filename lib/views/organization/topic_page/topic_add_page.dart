@@ -5,10 +5,10 @@ import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/editor/quill_editor_widget.dart';
 
 class TopicAddPage extends StatefulWidget {
-  final int groupId;
+  final int? groupId;
 
   const TopicAddPage({
-    Key key,
+    Key? key,
     this.groupId,
   }) : super(key: key);
 
@@ -22,8 +22,8 @@ class _TopicAddPageState extends State<TopicAddPage> {
 
   _addTopicCallback() async {
     var onErr = (err) => Util.toast('失败： $err');
-    if (GetUtils.isNullOrBlank(_titleController.text) ||
-        GetUtils.isNullOrBlank(_editorController.plainTextEditingValue.text)) {
+    if (GetUtils.isNullOrBlank(_titleController.text)! ||
+        GetUtils.isNullOrBlank(_editorController.plainTextEditingValue.text)!) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Get.theme.primaryColor,
         content: Text('内容不能为空'),
@@ -36,14 +36,14 @@ class _TopicAddPageState extends State<TopicAddPage> {
     }
     Util.futureWrap(
       _editorController.toLakeHtml(),
-      onData: (lake) {
+      onData: (dynamic lake) {
         Util.futureWrap(
           ApiRepository.addTopic(
             title: _titleController.text,
             body: lake,
             groupId: widget.groupId,
           ),
-          onData: (detail) {
+          onData: (dynamic detail) {
             Util.toast('提交成功！');
             Get.back();
           },

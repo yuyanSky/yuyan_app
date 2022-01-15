@@ -6,16 +6,16 @@ import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/component/webview/webview_page.dart';
 
 class LakeLocalDocWidget extends StatelessWidget {
-  final Map json;
+  final Map? json;
 
   const LakeLocalDocWidget({
-    Key key,
+    Key? key,
     this.json,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var src = json['src'] as String;
+    var src = json!['src'] as String;
     src = src.replaceFirst('attachments', 'office');
     src += "?view=doc_embed";
     var header = SizedBox(
@@ -23,9 +23,9 @@ class LakeLocalDocWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          AppIcon.iconType(json['ext'], size: 20),
+          AppIcon.iconType(json!['ext'], size: 20),
           Text(
-            '${json['name']}'.clip(18, ellipsis: true),
+            '${json!['name']}'.clip(18, ellipsis: true),
             style: TextStyle(
               color: Colors.blue,
               fontSize: 14,
@@ -40,7 +40,7 @@ class LakeLocalDocWidget extends StatelessWidget {
         ],
       ),
     );
-    if (json['collapsed'] ?? false) {
+    if (json!['collapsed'] ?? false) {
       return Container(
         width: Get.width,
         margin: EdgeInsets.all(8),

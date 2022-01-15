@@ -1,12 +1,12 @@
 import 'detail.dart';
 
 class LakeCardSeri {
-  String src;
-  String url;
-  String mode;
-  bool margin;
-  String id;
-  CardDetailSeri detail;
+  String? src;
+  String? url;
+  String? mode;
+  bool? margin;
+  String? id;
+  CardDetailSeri? detail;
 
   LakeCardSeri({
     this.src,
@@ -34,7 +34,7 @@ class LakeCardSeri {
     map["margin"] = margin;
     map["id"] = id;
     if (detail != null) {
-      map["detail"] = detail.toJson();
+      map["detail"] = detail!.toJson();
     }
     return map;
   }

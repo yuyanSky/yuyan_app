@@ -55,8 +55,8 @@ class _SettingPageState extends State<SettingPage> {
                 App.analytics.logEvent(
                   name: 'logout',
                   parameters: {
-                    'login': App.userProvider.data.login,
-                    'name': App.userProvider.data.name,
+                    'login': App.userProvider.data!.login,
+                    'name': App.userProvider.data!.name,
                   },
                 );
 

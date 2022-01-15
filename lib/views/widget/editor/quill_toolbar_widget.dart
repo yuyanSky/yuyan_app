@@ -15,13 +15,13 @@ import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/util/util.dart';
 
 class CommentToolbarWidget extends StatefulWidget {
-  final QuillController controller;
-  final Future<bool> Function(String mark) onPublish;
-  final FocusNode focusNode;
-  final VoidCallback update;
+  final QuillController? controller;
+  final Future<bool> Function(String mark)? onPublish;
+  final FocusNode? focusNode;
+  final VoidCallback? update;
 
   const CommentToolbarWidget({
-    Key key,
+    Key? key,
     this.controller,
     this.onPublish,
     this.focusNode,
@@ -39,11 +39,11 @@ class _CommentToolbarWidgetState extends State<CommentToolbarWidget>
   final extraView = false.obs;
   final emojiView = false.obs;
 
-  QuillController get controller => widget.controller;
+  QuillController? get controller => widget.controller;
 
   double _keyHeight = 300;
 
-  Future<String> _imageUpload(File file) async {
+  Future<String?> _imageUpload(File file) async {
     var res = await ApiRepository.postAttachFile(
       path: file.path,
     );
@@ -54,13 +54,13 @@ class _CommentToolbarWidgetState extends State<CommentToolbarWidget>
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
   }
 
   @override
   void dispose() {
     super.dispose();
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
   }
 
   _buildBottom() {
@@ -99,20 +99,20 @@ class _CommentToolbarWidgetState extends State<CommentToolbarWidget>
               );
               return GestureDetector(
                 onTap: () {
-                  final index = controller.selection.baseOffset;
+                  final index = controller!.selection.baseOffset;
                   // controller.document.insert(
                   //   index,
                   //   BlockEmbed.image(item),
                   // );
-                  controller.replaceText(
+                  controller!.replaceText(
                     index,
                     0,
                     BlockEmbed.image(item),
                     null,
                   );
-                  controller.updateSelection(
+                  controller!.updateSelection(
                     TextSelection.collapsed(
-                      offset: controller.selection.baseOffset + 1,
+                      offset: controller!.selection.baseOffset + 1,
                     ),
                     ChangeSource.REMOTE,
                   );
@@ -145,9 +145,9 @@ class _CommentToolbarWidgetState extends State<CommentToolbarWidget>
           onPressed: () {
             extraView.value = !extraView.value;
             if (extraView.value) {
-              widget.focusNode.unfocus();
+              widget.focusNode!.unfocus();
             } else {
-              widget.focusNode.requestFocus();
+              widget.focusNode!.requestFocus();
             }
           },
         ),
@@ -155,19 +155,19 @@ class _CommentToolbarWidgetState extends State<CommentToolbarWidget>
         ToggleStyleButton(
           attribute: Attribute.bold,
           icon: Icons.format_bold,
-          controller: controller,
+          controller: controller!,
         ),
         SizedBox(width: 0.6),
         ToggleStyleButton(
           attribute: Attribute.italic,
           icon: Icons.format_italic,
-          controller: controller,
+          controller: controller!,
         ),
         SizedBox(width: 0.6),
         ToggleStyleButton(
           attribute: Attribute.underline,
           icon: Icons.format_underline,
-          controller: controller,
+          controller: controller!,
         ),
         SizedBox(width: 0.6),
         // ImageButton(
@@ -190,31 +190,31 @@ class _CommentToolbarWidgetState extends State<CommentToolbarWidget>
         ),
         ToggleStyleButton(
           attribute: Attribute.ol,
-          controller: controller,
+          controller: controller!,
           icon: Icons.format_list_numbered,
         ),
         SizedBox(width: 0.6),
         ToggleStyleButton(
           attribute: Attribute.ul,
-          controller: controller,
+          controller: controller!,
           icon: Icons.format_list_bulleted,
         ),
         SizedBox(width: 0.6),
         ToggleCheckListButton(
           attribute: Attribute.unchecked,
-          controller: controller,
+          controller: controller!,
           icon: Icons.check_box,
         ),
         SizedBox(width: 0.6),
         ToggleStyleButton(
           attribute: Attribute.codeBlock,
-          controller: controller,
+          controller: controller!,
           icon: Icons.code,
         ),
         SizedBox(width: 0.6),
         ToggleStyleButton(
           attribute: Attribute.blockQuote,
-          controller: controller,
+          controller: controller!,
           icon: Icons.format_quote,
         ),
         VerticalDivider(
@@ -223,7 +223,7 @@ class _CommentToolbarWidgetState extends State<CommentToolbarWidget>
           color: Colors.grey.shade400,
         ),
         LinkStyleButton(
-          controller: controller,
+          controller: controller!,
         ),
       ],
     );
@@ -232,10 +232,10 @@ class _CommentToolbarWidgetState extends State<CommentToolbarWidget>
   _doPublish() async {
     try {
       publishing.value = true;
-      var delta = controller.document.toDelta();
+      var delta = controller!.document.toDelta();
       var deltaStr = jsonEncode(delta.toJson());
       var markdown = deltaToMarkdown(deltaStr);
-      var result = await widget.onPublish.call(markdown);
+      var result = await widget.onPublish!.call(markdown);
       publishing.value = false;
       if (result) Get.back();
     } catch (e) {
@@ -251,7 +251,7 @@ class _CommentToolbarWidgetState extends State<CommentToolbarWidget>
           children: [
             Expanded(
               child: QuillToolbar.basic(
-                controller: controller,
+                controller: controller!,
                 multiRowsDisplay: false,
                 onImagePickCallback: _imageUpload,
               ),

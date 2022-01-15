@@ -2,24 +2,24 @@ import '../user.dart';
 import 'group.dart';
 
 class GroupUserSeri {
-  String joinedAt;
-  int epv30;
-  int id;
-  int spaceId;
-  int groupId;
-  int userId;
-  int role;
-  int status;
+  String? joinedAt;
+  int? epv30;
+  int? id;
+  int? spaceId;
+  int? groupId;
+  int? userId;
+  int? role;
+  int? status;
   dynamic deletedAt;
   dynamic pinnedAt;
   dynamic departmentName;
   dynamic groupDepartmentId;
-  String name;
-  int creatorId;
-  String createdAt;
-  String updatedAt;
-  UserSeri user;
-  GroupSeri group;
+  String? name;
+  int? creatorId;
+  String? createdAt;
+  String? updatedAt;
+  UserSeri? user;
+  GroupSeri? group;
 
   GroupUserSeri({
     this.joinedAt,
@@ -82,10 +82,10 @@ class GroupUserSeri {
     map["created_at"] = createdAt;
     map["updated_at"] = updatedAt;
     if (user != null) {
-      map["user"] = user.toJson();
+      map["user"] = user!.toJson();
     }
     if (group != null) {
-      map["group"] = group.toJson();
+      map["group"] = group!.toJson();
     }
     return map;
   }

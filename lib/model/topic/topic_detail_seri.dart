@@ -6,33 +6,33 @@ import 'package:yuyan_app/model/user/user.dart';
 import 'collab.dart';
 
 class TopicDetailSeri {
-  int id;
-  int iid;
-  String title;
-  int userId;
-  int assigneeId;
-  int groupId;
-  int milestoneId;
-  MilestoneSeri milestone;
-  String format;
+  int? id;
+  int? iid;
+  String? title;
+  int? userId;
+  int? assigneeId;
+  int? groupId;
+  int? milestoneId;
+  MilestoneSeri? milestone;
+  String? format;
   dynamic body;
-  String bodyAsl;
-  String bodyHtml;
-  int commentsCount;
-  int labelsCount;
-  int public;
-  CollabSeri collab;
-  String pinnedAt;
-  String deletedAt;
-  String closedAt;
-  String createdAt;
-  String updatedAt;
-  String blockedAt;
-  UserSeri user;
-  UserSeri assignee;
-  GroupSeri group;
-  List<LabelSeri> labels;
-  String serializer;
+  String? bodyAsl;
+  String? bodyHtml;
+  int? commentsCount;
+  int? labelsCount;
+  int? public;
+  CollabSeri? collab;
+  String? pinnedAt;
+  String? deletedAt;
+  String? closedAt;
+  String? createdAt;
+  String? updatedAt;
+  String? blockedAt;
+  UserSeri? user;
+  UserSeri? assignee;
+  GroupSeri? group;
+  List<LabelSeri>? labels;
+  String? serializer;
 
   TopicDetailSeri({
     this.id,
@@ -99,7 +99,7 @@ class TopicDetailSeri {
     if (json["labels"] != null) {
       labels = [];
       json["labels"].forEach((v) {
-        labels.add(LabelSeri.fromJson(v));
+        labels!.add(LabelSeri.fromJson(v));
       });
     }
     serializer = json["_serializer"];
@@ -123,7 +123,7 @@ class TopicDetailSeri {
     map["labels_count"] = labelsCount;
     map["public"] = public;
     if (collab != null) {
-      map["collab"] = collab.toJson();
+      map["collab"] = collab!.toJson();
     }
     map["pinned_at"] = pinnedAt;
     map["deleted_at"] = deletedAt;
@@ -131,14 +131,14 @@ class TopicDetailSeri {
     map["created_at"] = createdAt;
     map["updated_at"] = updatedAt;
     if (user != null) {
-      map["user"] = user.toJson();
+      map["user"] = user!.toJson();
     }
     map["assignee"] = assignee;
     if (group != null) {
-      map["group"] = group.toJson();
+      map["group"] = group!.toJson();
     }
     if (labels != null) {
-      map["labels"] = labels.map((v) => v.toJson()).toList();
+      map["labels"] = labels!.map((v) => v.toJson()).toList();
     }
     map["_serializer"] = serializer;
     return map;

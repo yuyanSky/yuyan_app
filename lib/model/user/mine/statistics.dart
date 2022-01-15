@@ -1,8 +1,8 @@
 class StatisticsSeri {
-  String bizdate;
-  int docCount;
-  int likeCount;
-  String serializer;
+  String? bizdate;
+  int? docCount;
+  int? likeCount;
+  String? serializer;
 
   StatisticsSeri({
       this.bizdate, 

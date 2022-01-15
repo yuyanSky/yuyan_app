@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/viewstate/view_page.dart';
 import 'package:yuyan_app/controller/home/personal/my_controller.dart';
+import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/views/component/nothing_page.dart';
 import 'package:yuyan_app/views/organization/widget/book_row_widget.dart';
 
@@ -20,7 +21,7 @@ class MyBooksPage extends FetchRefreshListViewPage<MyBookController> {
 
   @override
   Widget buildChild() {
-    var data = controller.value.data;
+    List<BookSeri> data = controller.value!.data!;
     return ListView.builder(
       itemCount: data.length,
       itemBuilder: (_, i) {

@@ -6,25 +6,25 @@ import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/views/component/webview/webview_page.dart';
 
 class LakeYuqueCardWidget extends StatelessWidget {
-  final LakeCardSeri card;
+  final LakeCardSeri? card;
 
   const LakeYuqueCardWidget({
-    Key key,
+    Key? key,
     this.card,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    switch (card.mode) {
+    switch (card!.mode) {
       case 'embed':
         return EmbedWebviewPage(
-          url: card.url,
+          url: card!.url,
           onUrlChanged: (url) {
             MyRoute.webview(url);
           },
         );
     }
-    var detail = card.detail;
+    var detail = card!.detail!;
     return Container(
       margin: const EdgeInsets.all(8),
       width: Get.width,
@@ -38,15 +38,15 @@ class LakeYuqueCardWidget extends StatelessWidget {
         child: ListTile(
           isThreeLine: true,
           leading: AppIcon.iconType(detail.targetType, size: 40),
-          title: Text(detail.title, maxLines: 2),
+          title: Text(detail.title!, maxLines: 2),
           subtitle: Text(
-            detail.desc,
+            detail.desc!,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ),
           onTap: () {
             //TODO(@dreamer2q): parse url, then open doc
-            MyRoute.webview(detail.url);
+            MyRoute.webview(detail.url!);
           },
         ),
       ),
@@ -56,11 +56,11 @@ class LakeYuqueCardWidget extends StatelessWidget {
 
 class YuquePremiumPurchase extends StatelessWidget {
   YuquePremiumPurchase({
-    Key key,
+    Key? key,
     this.json,
   }) : super(key: key);
 
-  final Map json;
+  final Map? json;
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +105,7 @@ class YuquePremiumPurchase extends StatelessWidget {
                 },
               );
             },
-            child: Text('${json['price']} 元付费阅读全文'),
+            child: Text('${json!['price']} 元付费阅读全文'),
           ),
         ),
       ],

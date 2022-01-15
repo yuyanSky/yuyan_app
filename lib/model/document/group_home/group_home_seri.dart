@@ -2,17 +2,17 @@ import 'package:yuyan_app/model/document/group_home/setting_seri.dart';
 import 'package:yuyan_app/model/serializer/serializer.dart';
 
 class GroupViewBlockSeri {
-  int id;
-  String type;
-  String title;
-  String icon;
-  String cover;
-  int rank;
-  SettingSeri setting;
-  List<GroupViewBlockSeri> placements;
-  List<GroupViewBlockSeri> blocks;
-  Serializer data;
-  String serializer;
+  int? id;
+  String? type;
+  String? title;
+  String? icon;
+  String? cover;
+  int? rank;
+  SettingSeri? setting;
+  List<GroupViewBlockSeri>? placements;
+  List<GroupViewBlockSeri>? blocks;
+  Serializer? data;
+  String? serializer;
 
   GroupViewBlockSeri({
     this.id,
@@ -41,7 +41,7 @@ class GroupViewBlockSeri {
     if (json["placements"] != null) {
       placements = [];
       json["placements"].forEach((v) {
-        placements.add(GroupViewBlockSeri.fromJson(v));
+        placements!.add(GroupViewBlockSeri.fromJson(v));
       });
     }
     if (json["blocks"] != null) {
@@ -64,16 +64,16 @@ class GroupViewBlockSeri {
     map["cover"] = cover;
     map["rank"] = rank;
     if (setting != null) {
-      map['setting'] = setting.toJson();
+      map['setting'] = setting!.toJson();
     }
     if (placements != null) {
-      map["placements"] = placements.map((v) => v.toJson()).toList();
+      map["placements"] = placements!.map((v) => v.toJson()).toList();
     }
     if (blocks != null) {
-      map["blocks"] = blocks.map((e) => e.toJson()).toList();
+      map["blocks"] = blocks!.map((e) => e.toJson()).toList();
     }
     if (data != null) {
-      map['data'] = data.toJson();
+      map['data'] = data!.toJson();
     }
     map["_serializer"] = serializer;
     return map;

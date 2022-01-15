@@ -5,7 +5,7 @@ import 'package:yuyan_app/model/document/doc_detail/artboard_seri.dart';
 import 'package:yuyan_app/model/document/toc/toc_seri.dart';
 
 class BookTocController extends FetchListValueController<TocSeri> {
-  final int bookId;
+  final int? bookId;
 
   BookTocController(this.bookId);
 
@@ -16,7 +16,7 @@ class BookTocController extends FetchListValueController<TocSeri> {
 }
 
 class BookDocsController extends FetchListValueController<DocSeri> {
-  final int bookId;
+  final int? bookId;
 
   BookDocsController(this.bookId);
 
@@ -27,7 +27,7 @@ class BookDocsController extends FetchListValueController<DocSeri> {
 }
 
 class BookArtController extends FetchListValueController<ArtboardSeri> {
-  final int bookId;
+  final int? bookId;
 
   BookArtController(this.bookId);
 

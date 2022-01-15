@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:yuyan_app/config/net/api.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/model/document/doc_detail/resource/resource_seri.dart';
@@ -10,10 +13,10 @@ class ResourceController extends FetchListValueController<ResourceSeri> {
 
   @override
   Future<List<ResourceSeri>> fetch() async {
-    var asp = await ApiRepository.getResources(
+    var asp = await (ApiRepository.getResources(
       bookId: bookId,
       parentId: parentId,
-    );
+    ) as FutureOr<ApiResponse>);
     var list = (asp.data as List).map((e) => ResourceSeri.fromJson(e)).toList();
     return list;
   }
@@ -30,10 +33,10 @@ class ResourceParentController extends FetchListValueController<ResourceSeri> {
 
   @override
   Future<List<ResourceSeri>> fetch() async {
-    var asp = await ApiRepository.getResourceParents(
+    var asp = await (ApiRepository.getResourceParents(
       resourceId: resourceId,
       level: level,
-    );
+    ) as FutureOr<ApiResponse>);
     var data = (asp.data as List).map((e) => ResourceSeri.fromJson(e));
     return data.toList();
   }

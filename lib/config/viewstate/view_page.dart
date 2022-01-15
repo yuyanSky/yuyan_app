@@ -1,5 +1,3 @@
-import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart'
-    as extended;
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -10,13 +8,13 @@ import 'package:yuyan_app/config/viewstate/view_state.dart';
 class FetchRefreshListViewBuilder<T extends FetchListValueController>
     extends StatelessWidget {
   // final bool nested;
-  final String tag;
-  final Widget Function(T) builder;
-  final Widget onLoading;
-  final Widget onEmpty;
-  final Widget Function(ViewError error) onError;
+  final String? tag;
+  final Widget Function(T)? builder;
+  final Widget? onLoading;
+  final Widget? onEmpty;
+  final Widget Function(ViewError? error)? onError;
 
-  final Key key;
+  final Key? key;
 
   FetchRefreshListViewBuilder({
     // Key key,
@@ -61,7 +59,7 @@ class FetchRefreshListViewBuilder<T extends FetchListValueController>
                 onRefresh: c.refreshCallback,
                 onLoading: c.loadMoreCallback,
                 enablePullUp: true,
-                child: builder(c),
+                child: builder!(c),
               ),
             );
           },
@@ -76,8 +74,8 @@ class FetchRefreshListViewBuilder<T extends FetchListValueController>
 
 abstract class FetchRefreshListViewPage<T extends FetchSavableController>
     extends GetView<T> {
-  final String title;
-  final Key key;
+  final String? title;
+  final Key? key;
 
   FetchRefreshListViewPage({
     this.key,
@@ -86,14 +84,14 @@ abstract class FetchRefreshListViewPage<T extends FetchSavableController>
 
   Widget buildChild();
 
-  Widget buildEmpty() => null;
+  Widget? buildEmpty() => null;
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
       init: controller,
-      builder: (c) => Scaffold(
-        appBar: AppBar(title: Text(title)),
+      builder: (dynamic c) => Scaffold(
+        appBar: AppBar(title: Text(title!)),
         body: controller.builder(
           (state) => AnimationLimiter(
             child: Scrollbar(

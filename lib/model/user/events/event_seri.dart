@@ -4,29 +4,29 @@ import 'book_event_seri.dart';
 import '../user_lite_seri.dart';
 
 class EventSeri {
-  int id;
-  int spaceId;
-  int userId;
-  int organizationId;
-  String eventType;
-  String subjectType;
-  int subjectId;
-  String secondSubjectType;
-  int secondSubjectId;
-  String thirdSubjectType;
-  int thirdSubjectId;
-  int actorId;
-  int bookId;
-  Map params;
-  String createdAt;
-  String updatedAt;
-  Serializer subject;
-  List<Serializer> subjects;
-  Serializer secondSubject;
-  Serializer thirdSubject;
-  UserLiteSeri actor;
-  BookEventSeri book;
-  String sSerializer;
+  int? id;
+  int? spaceId;
+  int? userId;
+  int? organizationId;
+  String? eventType;
+  String? subjectType;
+  int? subjectId;
+  String? secondSubjectType;
+  int? secondSubjectId;
+  String? thirdSubjectType;
+  int? thirdSubjectId;
+  int? actorId;
+  int? bookId;
+  Map? params;
+  String? createdAt;
+  String? updatedAt;
+  Serializer? subject;
+  List<Serializer?>? subjects;
+  Serializer? secondSubject;
+  Serializer? thirdSubject;
+  UserLiteSeri? actor;
+  BookEventSeri? book;
+  String? sSerializer;
 
   EventSeri({
     this.id,
@@ -53,7 +53,7 @@ class EventSeri {
     this.sSerializer,
   });
 
-  EventSeri.fromJson(Map<String, dynamic> json) {
+  EventSeri.fromJson(Map<String, dynamic>? json) {
     if (json == null) return;
     id = json['id'];
     spaceId = json['space_id'];
@@ -104,7 +104,7 @@ class EventSeri {
     data['updated_at'] = this.updatedAt;
     data['subject'] = this.subject?.toJson();
     data['subjects'] =
-        subjects == null ? null : subjects.map((e) => e.toJson()).toList();
+        subjects == null ? null : subjects!.map((e) => e!.toJson()).toList();
     data['second_subject'] = this.secondSubject?.toJson();
     data['third_subject'] = this.thirdSubject?.toJson();
     data['actor'] = this.actor?.toJson();

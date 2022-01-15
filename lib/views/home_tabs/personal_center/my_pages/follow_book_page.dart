@@ -15,7 +15,7 @@ class MyFollowBookPage
 
   @override
   Widget buildChild() {
-    var data = controller.value.data;
+    List<ActionSeri> data = controller.value!.data!;
     return AnimationListWidget(
       itemCount: data.length,
       itemBuilder: (_, i) {
@@ -26,22 +26,22 @@ class MyFollowBookPage
 }
 
 class MyFollowBookItemWidget extends StatelessWidget {
-  final ActionSeri data;
+  final ActionSeri? data;
 
-  const MyFollowBookItemWidget({Key key, this.data}) : super(key: key);
+  const MyFollowBookItemWidget({Key? key, this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // data.ifFollow = true;
     return GestureDetector(
       onTap: () {
-        switch (data.targetType) {
+        switch (data!.targetType) {
           case 'Book':
-            var book = data.target.serialize<BookSeri>();
+            var book = data!.target!.serialize<BookSeri>()!;
             MyRoute.bookDocs(book);
             break;
           default:
-            Util.goUrl(data.url);
+            Util.goUrl(data!.url!);
         }
       },
       child: Container(
@@ -63,7 +63,7 @@ class MyFollowBookItemWidget extends StatelessWidget {
           children: <Widget>[
             SizedBox(width: 20),
             UserAvatarWidget(
-              avatar: data.targetGroup.avatarUrl,
+              avatar: data!.targetGroup!.avatarUrl,
               height: 50,
             ),
             Container(
@@ -74,7 +74,7 @@ class MyFollowBookItemWidget extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     child: Text(
-                      data.title.clip(10, ellipsis: true),
+                      data!.title!.clip(10, ellipsis: true),
                       style: AppStyles.textStyleB,
                     ),
                   ),
@@ -82,7 +82,7 @@ class MyFollowBookItemWidget extends StatelessWidget {
                   Container(
                     width: 200,
                     child: Text(
-                      "${data.target.serialize<BookSeri>().description}",
+                      "${data!.target!.serialize<BookSeri>()!.description}",
                       style: AppStyles.textStyleC,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,

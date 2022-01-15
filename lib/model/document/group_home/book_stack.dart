@@ -1,16 +1,16 @@
 import '../book.dart';
 
 class BookStackSeri {
-  int id;
-  String createdAt;
-  String updatedAt;
-  int userId;
-  int displayType;
-  String name;
-  int rank;
-  bool isDefault;
-  List<BookSeri> books;
-  String serializer;
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  int? userId;
+  int? displayType;
+  String? name;
+  int? rank;
+  bool? isDefault;
+  List<BookSeri>? books;
+  String? serializer;
 
   BookStackSeri({
     this.id,
@@ -37,7 +37,7 @@ class BookStackSeri {
     if (json["books"] != null) {
       books = [];
       json["books"].forEach((v) {
-        books.add(BookSeri.fromJson(v));
+        books!.add(BookSeri.fromJson(v));
       });
     }
     serializer = json["_serializer"];
@@ -54,7 +54,7 @@ class BookStackSeri {
     map["rank"] = rank;
     map["is_default"] = isDefault;
     if (books != null) {
-      map["books"] = books.map((v) => v.toJson()).toList();
+      map["books"] = books!.map((v) => v.toJson()).toList();
     }
     map["_serializer"] = serializer;
     return map;

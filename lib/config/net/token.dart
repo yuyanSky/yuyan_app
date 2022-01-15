@@ -7,15 +7,15 @@ import 'package:yuyan_app/config/storage_manager.dart';
 
 class TokenJsonSeri {
   // APIv2 X-Auth-Token
-  String accessToken;
+  String? accessToken;
 
   // x-csrf-token
-  String cToken;
+  String? cToken;
   // _yuque_session
-  String session;
+  String? session;
 
   // cookie backup
-  String allCookie;
+  String? allCookie;
 
   TokenJsonSeri.fromJson(Map json) {
     if (json['error'] != null) {
@@ -78,7 +78,7 @@ class TokenJsonSeri {
 
 class TokenProvider extends BaseSaveJson<TokenJsonSeri> {
   bool get isLogin =>
-      !isNullOrEmpty && data.accessToken != null && data.session != null;
+      !isNullOrEmpty! && data!.accessToken != null && data!.session != null;
 
   @override
   String get key => 'token';
@@ -107,7 +107,7 @@ mixin TokenMixin on BaseHttp {
     });
   }
 
-  setToken(TokenJsonSeri token) {
+  setToken(TokenJsonSeri? token) {
     if (token != null) {
       options.headers['X-Auth-Token'] = token.accessToken;
       options.headers['Cookie'] = token.getCookie();
@@ -118,7 +118,7 @@ mixin TokenMixin on BaseHttp {
 
 mixin OrganizationMixin on BaseHttp {
   var spaceProvider = App.currentSpaceProvider;
-  String _defaultBaseUrl;
+  String? _defaultBaseUrl;
 
   init() {
     super.init();
@@ -138,12 +138,12 @@ mixin OrganizationMixin on BaseHttp {
     });
   }
 
-  setOrgSpace(String space) {
+  setOrgSpace(String? space) {
     debugPrint("change namespace: $space");
     if (spaceProvider.isDefault) {
-      options.baseUrl = _defaultBaseUrl;
+      options.baseUrl = _defaultBaseUrl!;
     } else {
-      options.baseUrl = _defaultBaseUrl.replaceFirst("www", space);
+      options.baseUrl = _defaultBaseUrl!.replaceFirst("www", space!);
     }
   }
 }

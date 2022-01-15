@@ -12,7 +12,7 @@ abstract class FetchValueController<T> extends GetxController
     with ControllerStateMixin {
   FetchValueController({
     /// 用于初始化默认数据，不过大部分情况下并没有所谓的默认数据，就让空着吧
-    T initValue,
+    T? initValue,
 
     /// 默认状态为[ViewState.loading]，以防状态好了数据还是[null]的情况。
     ViewState initialState = ViewState.loading,
@@ -26,12 +26,12 @@ abstract class FetchValueController<T> extends GetxController
     }
   }
 
-  T _value;
+  T? _value;
 
-  T get value => _value;
+  T? get value => _value;
 
   /// 更新保存的[value]，并从构建监听的子组件
-  set value(T newValue) {
+  set value(T? newValue) {
     _value = newValue;
     update();
   }
@@ -41,7 +41,7 @@ abstract class FetchValueController<T> extends GetxController
 
   /// 检查获取的数据是否是空数据，用于切换[ViewState.empty]状态
   /// 子类可以重写，用于处理非[List]或者[List]永远非空的情况
-  bool isEmpty(T data) => GetUtils.isNullOrBlank(data);
+  bool? isEmpty(T data) => GetUtils.isNullOrBlank(data);
 
   @protected
   initFetch() => onRefresh(force: true);
@@ -54,8 +54,8 @@ abstract class FetchValueController<T> extends GetxController
         /// 数据不可用时，变成加载状态
         setLoading();
       }
-      var data = await fetch();
-      if (isEmpty(data)) {
+      var data = await fetch()!;
+      if (isEmpty(data)!) {
         /// 如果之前的数据不可用，置为空状态
         /// 否则，说明之前已经存在数据，这次加载数据失败!
         /// 但是并不触发空状态，为了更好的用户体验
@@ -79,7 +79,7 @@ abstract class FetchValueController<T> extends GetxController
   }
 
   /// 获取数据接口
-  Future<T> fetch();
+  Future<T>? fetch();
 
   @override
   onInit() {
@@ -106,7 +106,7 @@ abstract class FetchListValueController<T>
   final RefreshController refreshController;
 
   FetchListValueController({
-    List<T> initValue,
+    List<T>? initValue,
     ViewState initialState = ViewState.loading,
     bool initialFetch = true,
   })  : refreshController = RefreshController(),
@@ -117,7 +117,7 @@ abstract class FetchListValueController<T>
         );
 
   @override
-  bool get valueAvailable => !GetUtils.isNullOrBlank(_value);
+  bool get valueAvailable => !GetUtils.isNullOrBlank(_value)!;
 
   /// 刷新数据，快捷方法，用于[SmartRefresh]组件
   refreshCallback() => onRefresh();
@@ -133,8 +133,8 @@ abstract class FetchListValueController<T>
         setLoading();
       }
       refreshController.resetNoData();
-      var data = await fetch();
-      if (isEmpty(data)) {
+      List<T> data = await fetch()!;
+      if (isEmpty(data)!) {
         if (force || !valueAvailable) {
           setEmpty();
         }
@@ -156,11 +156,11 @@ abstract class FetchListValueController<T>
   /// 引入加载更多的流程，方便分页加载
   onRefreshMore() async {
     try {
-      var data = await fetchMore();
-      if (isEmpty(data)) {
+      var data = await fetchMore()!;
+      if (isEmpty(data)!) {
         refreshController.loadNoData();
       } else {
-        _value.addAll(data);
+        _value!.addAll(data);
         refreshController.loadComplete();
         setIdle();
       }
@@ -171,7 +171,7 @@ abstract class FetchListValueController<T>
   }
 
   /// 如果需要[onRefreshMore]的功能，请重写此方法
-  Future<List<T>> fetchMore() => null;
+  Future<List<T>>? fetchMore() => null;
 
   /// convenient methods
   void add(T newItem) {
@@ -192,12 +192,12 @@ abstract class FetchSavableController<T extends BaseSavableJson>
   final bool _initialRefresh;
   final RefreshController refreshController;
 
-  bool get valueAvailable => !GetUtils.isNullOrBlank(_value?.data);
+  bool get valueAvailable => !GetUtils.isNullOrBlank(_value?.data)!;
 
   FetchSavableController({
     bool initialRefresh = false,
     ViewState state = ViewState.idle,
-    T initData,
+    required T initData,
   })  : refreshController = RefreshController(),
         _initialRefresh = initialRefresh,
         assert(initData != null, 'initData must not be null'),
@@ -222,8 +222,8 @@ abstract class FetchSavableController<T extends BaseSavableJson>
       }
       refreshController.resetNoData();
       var data = await fetchData();
-      value.data = data;
-      if (GetUtils.isNullOrBlank(data)) {
+      value!.data = data;
+      if (GetUtils.isNullOrBlank(data)!) {
         setEmpty();
       } else {
         setIdle();
@@ -246,12 +246,12 @@ abstract class FetchSavableController<T extends BaseSavableJson>
         return;
       }
       var data = await fetchMore();
-      if (GetUtils.isNullOrBlank(data)) {
+      if (GetUtils.isNullOrBlank(data)!) {
         refreshController.loadNoData();
       } else {
-        if (value.data is List) {
-          (value.data as List).addAll(data);
-          value.updateData();
+        if (value!.data is List) {
+          (value!.data as List).addAll(data);
+          value!.updateData();
         }
         setIdle();
         refreshController.loadComplete();
@@ -270,22 +270,22 @@ abstract class FetchSavableController<T extends BaseSavableJson>
   @Deprecated('do not override or call this method'
       'since, this is not designed for `DATA` provider'
       'override [fetchData] instead')
-  Future<T> fetch() => null;
+  Future<T>? fetch() => null;
 
   /// 加载更多数据，适用于接口分页的情况
   /// 额外接口的原因是，适用无需分页的接口
   /// 这里需要自己做好[分页]的管理
-  Future fetchMore() => null;
+  Future? fetchMore() => null;
 
   /// you should override this method instead of fetch
   /// since this method is targeted for `DATA` providers
   Future fetchData();
 
   Widget builder(
-    NotifierBuilder<T> builder, {
-    Widget onLoading,
-    Widget onEmpty,
-    Widget Function(ViewError error) onError,
+    NotifierBuilder<T?> builder, {
+    Widget? onLoading,
+    Widget? onEmpty,
+    Widget Function(ViewError? error)? onError,
   }) {
     switch (state) {
       case ViewState.refreshing:
@@ -301,6 +301,5 @@ abstract class FetchSavableController<T extends BaseSavableJson>
         }
         return ViewErrorWidget(error: error);
     }
-    return SizedBox.shrink();
   }
 }

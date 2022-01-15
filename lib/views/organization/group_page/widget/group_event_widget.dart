@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/controller/organization/group/group_controller.dart';
+import 'package:yuyan_app/model/user/events/user_event_seri.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/event/user_affair.dart';
 
 class GroupEventWidget extends StatefulWidget {
-  final int blockId;
+  final int? blockId;
 
   GroupEventWidget({
-    Key key,
+    Key? key,
     this.blockId,
   }) : super(key: key);
 
@@ -18,7 +19,7 @@ class GroupEventWidget extends StatefulWidget {
 
 class _GroupEventWidgetState extends State<GroupEventWidget>
     with AutomaticKeepAliveClientMixin {
-  String tag;
+  String? tag;
 
   @override
   void initState() {
@@ -41,7 +42,7 @@ class _GroupEventWidgetState extends State<GroupEventWidget>
           child: Text('当前团队暂无动态'),
         ),
         onIdle: () {
-          var data = c.value;
+          List<UserEventSeri> data = c.value!;
           return Column(
             children: [
               ...data.mapWidget(

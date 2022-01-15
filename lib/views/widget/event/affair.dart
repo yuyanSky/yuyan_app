@@ -17,7 +17,7 @@ class AffairTileWidget extends StatelessWidget {
 
   const AffairTileWidget(
     this.item, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -54,14 +54,14 @@ class AffairTileWidget extends StatelessWidget {
 }
 
 class _ToUserWidget extends StatelessWidget {
-  final EventSeri item;
+  final EventSeri? item;
 
-  const _ToUserWidget({Key key, this.item}) : super(key: key);
+  const _ToUserWidget({Key? key, this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (item.subjects == null) {
-      item.subjects = [item.subject];
+    if (item!.subjects == null) {
+      item!.subjects = [item!.subject];
     }
     return Container(
       padding: EdgeInsets.only(top: 14, bottom: 20),
@@ -88,9 +88,9 @@ class _ToUserWidget extends StatelessWidget {
                   height: 44,
                   margin: EdgeInsets.only(right: 3),
                   child: UserActionTileWidget(
-                    user: item.actor,
-                    actionTime: item.updatedAt,
-                    subTitle: item.eventType.transEvent(),
+                    user: item!.actor,
+                    actionTime: item!.updatedAt,
+                    subTitle: item!.eventType!.transEvent(),
                   ),
                 ),
                 Container(
@@ -102,9 +102,9 @@ class _ToUserWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      for (var i in item.subjects)
+                      for (var i in item!.subjects!)
                         _UserFollowWidget(
-                          user: i.serialize<UserLiteSeri>(),
+                          user: i!.serialize<UserLiteSeri>(),
                         ),
                     ],
                   ),
@@ -119,23 +119,23 @@ class _ToUserWidget extends StatelessWidget {
 }
 
 class _ToDocWidget extends StatelessWidget {
-  final EventSeri item;
+  final EventSeri? item;
 
-  const _ToDocWidget({Key key, this.item}) : super(key: key);
+  const _ToDocWidget({Key? key, this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final sub = item.subject?.serialize<DocEventSeri>();
-    final sub2 = item.secondSubject?.serialize<BookEventSeri>();
-    String title;
-    String desc;
-    String time;
+    final sub = item!.subject?.serialize<DocEventSeri>();
+    final sub2 = item!.secondSubject?.serialize<BookEventSeri>();
+    String? title;
+    String? desc;
+    String? time;
     if (sub != null) {
       title = sub.title;
       desc = sub.description ?? sub.customDescription;
       time = sub.updatedAt;
     } else {
-      title = sub2.name;
+      title = sub2!.name;
       desc = sub2.description;
       time = sub2.updatedAt;
     }
@@ -150,7 +150,7 @@ class _ToDocWidget extends StatelessWidget {
         MyRoute.docDetailWebview(
           bookId: sub.bookId,
           slug: sub.slug,
-          login: sub2.user.login,
+          login: sub2!.user!.login,
           book: sub2.slug,
         );
       },
@@ -175,9 +175,9 @@ class _ToDocWidget extends StatelessWidget {
                 height: 44,
                 margin: EdgeInsets.only(right: 3),
                 child: UserActionTileWidget(
-                  user: item.actor,
+                  user: item!.actor,
                   actionTime: time,
-                  subTitle: item.eventType.transEvent(),
+                  subTitle: item!.eventType!.transEvent(),
                 ),
               ),
               Container(
@@ -193,7 +193,7 @@ class _ToDocWidget extends StatelessWidget {
                         style: AppStyles.textStyleB,
                       ),
                     ),
-                    if (!desc.isBlank)
+                    if (!desc.isBlank!)
                       Container(
                         margin: EdgeInsets.only(top: 7),
                         child: Text(
@@ -334,15 +334,15 @@ class _ToDocWidget extends StatelessWidget {
 // }
 
 class _UserFollowWidget extends StatelessWidget {
-  final UserLiteSeri user;
+  final UserLiteSeri? user;
 
-  const _UserFollowWidget({Key key, this.user}) : super(key: key);
+  const _UserFollowWidget({Key? key, this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     String tag = Util.genHeroTag();
     return GestureDetector(
-      onTap: () => MyRoute.user(user: user),
+      onTap: () => MyRoute.user(user: user!),
       child: Container(
         height: 66,
         child: Row(
@@ -365,7 +365,7 @@ class _UserFollowWidget extends StatelessWidget {
                 child: Hero(
                   tag: tag,
                   child: UserAvatarWidget(
-                    avatar: user.avatarUrl,
+                    avatar: user!.avatarUrl,
                     height: 38,
                   ),
                 ),
@@ -378,17 +378,17 @@ class _UserFollowWidget extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(left: 14),
                   child: Text(
-                    "${user.name}",
+                    "${user!.name}",
                     textAlign: TextAlign.center,
                     style: AppStyles.textStyleBB,
                   ),
                 ),
-                if (!GetUtils.isNullOrBlank(user.description))
+                if (!GetUtils.isNullOrBlank(user!.description)!)
                   Container(
                     width: 180,
                     margin: EdgeInsets.only(left: 14, top: 2),
                     child: Text(
-                      "${user.description}",
+                      "${user!.description}",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppStyles.textStyleCC,
@@ -419,7 +419,7 @@ class _UserFollowWidget extends StatelessWidget {
                     child: Container(
                       margin: EdgeInsets.only(left: 3),
                       child: Text(
-                        "${user.followersCount}",
+                        "${user!.followersCount}",
                         textAlign: TextAlign.center,
                         style: AppStyles.textStyleCC,
                       ),
@@ -436,14 +436,14 @@ class _UserFollowWidget extends StatelessWidget {
 }
 
 class _ToBookWidget extends StatelessWidget {
-  final EventSeri item;
+  final EventSeri? item;
 
-  const _ToBookWidget({Key key, this.item}) : super(key: key);
+  const _ToBookWidget({Key? key, this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (item.subjects == null) {
-      item.subjects = [item.subject];
+    if (item!.subjects == null) {
+      item!.subjects = [item!.subject];
       // } else {
       //   debugPrint('test');
     }
@@ -469,9 +469,9 @@ class _ToBookWidget extends StatelessWidget {
               height: 44,
               margin: EdgeInsets.only(right: 3),
               child: UserActionTileWidget(
-                user: item.actor,
-                actionTime: item.updatedAt,
-                subTitle: item.eventType.transEvent(),
+                user: item!.actor,
+                actionTime: item!.updatedAt,
+                subTitle: item!.eventType!.transEvent(),
               ),
             ),
             Container(
@@ -483,8 +483,8 @@ class _ToBookWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  for (var i in item.subjects)
-                    _DocBookWidget(book: i.serialize<BookEventSeri>()),
+                  for (var i in item!.subjects!)
+                    _DocBookWidget(book: i!.serialize<BookEventSeri>()),
                 ],
               ),
             ),
@@ -496,15 +496,15 @@ class _ToBookWidget extends StatelessWidget {
 }
 
 class _DocBookWidget extends StatelessWidget {
-  final BookEventSeri book;
+  final BookEventSeri? book;
 
-  const _DocBookWidget({Key key, this.book}) : super(key: key);
+  const _DocBookWidget({Key? key, this.book}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        MyRoute.bookDocs(book.toBookSeri());
+        MyRoute.bookDocs(book!.toBookSeri());
       },
       child: Container(
         height: 66,
@@ -527,7 +527,7 @@ class _DocBookWidget extends StatelessWidget {
                 ),
                 child: ClipOval(
                   //TODO book_event是否有一个图片字段?
-                  child: !GetUtils.isNullOrBlank(null)
+                  child: !GetUtils.isNullOrBlank(null)!
                       ? FadeInImage.assetNetwork(
                           image: "",
                           placeholder: 'assets/images/explore/book.png',
@@ -545,17 +545,17 @@ class _DocBookWidget extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(left: 14),
                     child: Text(
-                      "${book.name}",
+                      "${book!.name}",
                       textAlign: TextAlign.center,
                       style: AppStyles.textStyleBB,
                     ),
                   ),
-                  if (!GetUtils.isNullOrBlank(book.description))
+                  if (!GetUtils.isNullOrBlank(book!.description)!)
                     Container(
                       width: 180,
                       margin: EdgeInsets.only(left: 14, top: 2),
                       child: Text(
-                        "${book.description}",
+                        "${book!.description}",
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppStyles.textStyleCC,
@@ -586,7 +586,7 @@ class _DocBookWidget extends StatelessWidget {
                     child: Container(
                       margin: EdgeInsets.only(left: 3),
                       child: Text(
-                        "${book.watchesCount}",
+                        "${book!.watchesCount}",
                         textAlign: TextAlign.center,
                         style: AppStyles.textStyleCC,
                       ),

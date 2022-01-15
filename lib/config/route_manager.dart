@@ -62,7 +62,7 @@ class RouteName {
 }
 
 class MyRoute {
-  static topic(int iid, int groupId) {
+  static topic(int? iid, int? groupId) {
     Get.to(
       TopicDetailPage(
         commentId: iid,
@@ -94,10 +94,10 @@ class MyRoute {
   }
 
   static docDetailWebview({
-    int bookId,
-    String slug,
-    String login,
-    String book,
+    int? bookId,
+    String? slug,
+    String? login,
+    String? book,
   }) {
     Get.to(
       DocDetailWebviewPage(
@@ -110,10 +110,10 @@ class MyRoute {
   }
 
   static docDetail({
-    int bookId,
-    String slug,
-    String login,
-    String book,
+    int? bookId,
+    String? slug,
+    String? login,
+    String? book,
   }) {
     Get.to(
       DocDetailPage(
@@ -126,8 +126,8 @@ class MyRoute {
 
   // 打开其他用户的页面
   static user({
-    UserLiteSeri user,
-    String heroTag,
+    required UserLiteSeri user,
+    String? heroTag,
   }) {
     Get.to(
       UserPage(
@@ -138,7 +138,7 @@ class MyRoute {
     );
   }
 
-  static userByLogin(String login) {
+  static userByLogin(String? login) {
     Get.to(
       UserByLoginPage(login: login),
       preventDuplicates: false,
@@ -156,8 +156,8 @@ class MyRoute {
   }
 
   static group({
-    GroupSeri group,
-    String tag,
+    GroupSeri? group,
+    String? tag,
     int pageIndex = 0,
   }) {
     Get.to(
@@ -285,7 +285,7 @@ class SpaceEnsurePage extends StatelessWidget {
 
 class OrgSpaceMiddleware extends GetMiddleware {
   @override
-  RouteSettings redirect(String route) {
+  RouteSettings? redirect(String? route) {
     switch (route) {
       case RouteName.myAbout:
       case RouteName.mySuggest:

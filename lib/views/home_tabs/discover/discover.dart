@@ -7,7 +7,7 @@ import 'package:yuyan_app/views/search/search_action_widget.dart';
 import 'tabs/attention_page.dart';
 
 class DiscoverTab extends StatefulWidget {
-  final Key key;
+  final Key? key;
 
   DiscoverTab({this.key}) : super(key: key);
 
@@ -16,7 +16,7 @@ class DiscoverTab extends StatefulWidget {
 
 class _DiscoverTabState extends State<DiscoverTab>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  TabController? _tabController;
 
   @override
   void initState() {

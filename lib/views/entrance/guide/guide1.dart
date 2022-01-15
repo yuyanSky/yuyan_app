@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Guide1 extends StatelessWidget {
-  const Guide1({Key key}) : super(key: key);
+  const Guide1({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -98,8 +98,8 @@ class CoolText extends StatefulWidget {
 
 class _CoolTextState extends State<CoolText>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
-  Animation<int> animation;
+  late AnimationController animationController;
+  late Animation<int> animation;
   String showText = '';
   String hideText = '';
 

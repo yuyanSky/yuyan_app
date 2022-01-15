@@ -6,10 +6,10 @@ import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 
 class BookRowItemWidget extends StatelessWidget {
-  final BookSeri book;
+  final BookSeri? book;
 
   const BookRowItemWidget({
-    Key key,
+    Key? key,
     this.book,
   }) : super(key: key);
 
@@ -18,7 +18,7 @@ class BookRowItemWidget extends StatelessWidget {
     final bookTile = Row(
       children: [
         Text(
-          book.name,
+          book!.name!,
           maxLines: 1,
           style: AppStyles.textStyleB,
           overflow: TextOverflow.ellipsis,
@@ -28,7 +28,7 @@ class BookRowItemWidget extends StatelessWidget {
           Icons.lock_rounded,
           size: 16,
         ).onlyIf(
-          book.public == 0,
+          book!.public == 0,
         ),
       ],
     );
@@ -52,7 +52,7 @@ class BookRowItemWidget extends StatelessWidget {
         children: [
           Container(
             margin: EdgeInsets.only(left: 20),
-            child: AppIcon.svg(book.scene ?? book.type, size: 28),
+            child: AppIcon.svg(book!.scene ?? book!.type!, size: 28),
           ),
           Expanded(
             child: Container(
@@ -65,13 +65,13 @@ class BookRowItemWidget extends StatelessWidget {
                   SizedBox(height: 2),
                   Container(
                     child: Text(
-                      book.description,
+                      book!.description!,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppStyles.textStyleC,
                     ),
                   ).onlyIf(
-                    !GetUtils.isNullOrBlank(book.description),
+                    !GetUtils.isNullOrBlank(book!.description)!,
                   ),
                 ],
               ),
@@ -83,7 +83,7 @@ class BookRowItemWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        MyRoute.bookDocs(book);
+        MyRoute.bookDocs(book!);
       },
       child: child,
     );

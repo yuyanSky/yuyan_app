@@ -13,7 +13,7 @@ class MyHistPage extends FetchRefreshListViewPage<MyHistController> {
 
   @override
   Widget buildChild() {
-    var data = controller.value.data;
+    List<DocSeri> data = controller.value!.data!;
     return ListView.builder(
       itemCount: data.length,
       itemBuilder: (_, index) {
@@ -28,24 +28,24 @@ class MyHistPage extends FetchRefreshListViewPage<MyHistController> {
 }
 
 class DocHistWidget extends StatelessWidget {
-  final DocSeri item;
+  final DocSeri? item;
 
   DocHistWidget({
-    Key key,
+    Key? key,
     this.item,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: AppIcon.svg(item.type, size: 28).paddingOnly(left: 8, top: 4),
-      title: Text('${item.title}'),
-      subtitle: Text('${Util.timeCut(item.updatedAt)}'),
+      leading: AppIcon.svg(item!.type!, size: 28).paddingOnly(left: 8, top: 4),
+      title: Text('${item!.title}'),
+      subtitle: Text('${Util.timeCut(item!.updatedAt!)}'),
       onTap: () => MyRoute.docDetailWebview(
-        bookId: item.book.id,
-        slug: item.slug,
-        login: item.book.user.login,
-        book: item.book.slug,
+        bookId: item!.book!.id,
+        slug: item!.slug,
+        login: item!.book!.user!.login,
+        book: item!.book!.slug,
       ),
     );
   }

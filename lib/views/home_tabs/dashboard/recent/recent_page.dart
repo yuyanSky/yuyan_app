@@ -9,7 +9,7 @@ import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/animation.dart';
 
 class RecentPage extends StatelessWidget {
-  RecentPage({Key key}) : super(key: key);
+  RecentPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class RecentPage extends StatelessWidget {
         (state) => Container(
           width: MediaQuery.of(context).size.width,
           child: AnimationColumnWidget(
-            children: state.data.mapWidget(
+            children: state!.data!.mapWidget(
               (e) => _UserRecentItemWidget(data: e),
             ),
           ),
@@ -50,29 +50,29 @@ Map<String, String> subjectType = {
 };
 
 class _UserRecentItemWidget extends StatelessWidget {
-  final UserRecentSeri data;
+  final UserRecentSeri? data;
 
   _UserRecentItemWidget({
-    Key key,
+    Key? key,
     this.data,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     String action =
-        "${actionType[data.action]}${subjectType[data.subjectType]}";
-    String url =
-        data.url[0] == '/' ? "https://www.yuque.com" + data.url : data.url;
+        "${actionType[data!.action!]}${subjectType[data!.subjectType!]}";
+    String? url =
+        data!.url![0] == '/' ? "https://www.yuque.com" + data!.url! : data!.url;
     return GestureDetector(
       onTap: () {
-        switch (data.subjectType) {
+        switch (data!.subjectType) {
           case 'Doc':
-            var doc = data.target.serialize<DocSeri>();
+            var doc = data!.target!.serialize<DocSeri>()!;
             MyRoute.docDetailWebview(
               bookId: doc.bookId,
               slug: doc.slug,
-              book: doc.book.slug,
-              login: doc.book.user.login,
+              book: doc.book!.slug,
+              login: doc.book!.user!.login,
             );
             return;
           case 'Book':
@@ -118,10 +118,10 @@ class _UserRecentItemWidget extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(5)),
         ),
         child: Row(
-          children: <Widget>[
+          children: [
             Container(
               margin: EdgeInsets.only(left: 20),
-              child: AppIcon.svg(data.subjectType, size: 28),
+              child: AppIcon.svg(data!.subjectType!, size: 28),
             ),
             Expanded(
               child: Container(
@@ -132,7 +132,7 @@ class _UserRecentItemWidget extends StatelessWidget {
                   children: <Widget>[
                     Container(
                       child: Text(
-                        data.title.clip(20),
+                        data!.title!.clip(20),
                         style: AppStyles.textStyleB,
                       ),
                     ),
@@ -153,14 +153,14 @@ class _UserRecentItemWidget extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildActions(String url) {
+  List<Widget> _buildActions(String? url) {
     return [
       IconButton(
         onPressed: () {
-          MyRoute.webview(url + '/edit');
+          MyRoute.webview(url! + '/edit');
         },
         icon: Icon(Icons.edit),
-      ).onlyIf(data.canEdit),
+      ).onlyIf(data!.canEdit!),
       // PopupMenuButton(
       //   itemBuilder: (_) => [
       //     PopupMenuItem(

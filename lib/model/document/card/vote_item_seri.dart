@@ -1,7 +1,7 @@
 class VoteItemSeri {
-  String id;
-  int count;
-  List<String> members;
+  String? id;
+  int? count;
+  List<String>? members;
 
   VoteItemSeri({this.id, this.count, this.members});
 

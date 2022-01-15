@@ -1,17 +1,17 @@
 class TocSeri {
-  String type;
-  String title;
-  String uuid;
-  String url;
-  String prevUuid;
-  String siblingUuid;
-  String childUuid;
-  String parentUuid;
-  int docId;
-  int level;
-  int id;
-  int openWindow;
-  int visible;
+  String? type;
+  String? title;
+  String? uuid;
+  String? url;
+  String? prevUuid;
+  String? siblingUuid;
+  String? childUuid;
+  String? parentUuid;
+  int? docId;
+  int? level;
+  int? id;
+  int? openWindow;
+  int? visible;
 
   TocSeri({
     this.type,

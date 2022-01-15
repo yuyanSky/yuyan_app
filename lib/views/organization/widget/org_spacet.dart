@@ -24,7 +24,7 @@ class OrgSpaceLeadingWidget extends StatelessWidget {
         return InkWell(
           child: IconButton(
             icon: UserAvatarWidget(
-              avatar: state.data.avatarUrl,
+              avatar: state!.data!.avatarUrl,
             ),
             tooltip: '切换空间',
             onPressed: () {
@@ -50,7 +50,7 @@ class _OrgSpaceSelectDialog extends StatelessWidget {
         onLoading: Container(),
         onIdle: () {
           var defaultSpace = App.userProvider.defaultSpace;
-          var data = [defaultSpace, ...c.value];
+          var data = [defaultSpace, ...c.value!];
           return AnimationColumnWidget(
             children: List.generate(
               data.length,
@@ -67,21 +67,21 @@ class _OrgSpaceSelectDialog extends StatelessWidget {
 
 class _OrgSpaceItemWidget extends StatelessWidget {
   _OrgSpaceItemWidget({
-    Key key,
+    Key? key,
     this.org,
   }) : super(key: key);
 
-  final OrganizationSeri org;
+  final OrganizationSeri? org;
 
   @override
   Widget build(BuildContext context) {
-    String nowOrg = App.currentSpaceProvider.data?.login;
-    bool isCurrent = nowOrg == org.login;
+    String? nowOrg = App.currentSpaceProvider.data?.login;
+    bool isCurrent = nowOrg == org!.login;
     return ListTile(
       selected: isCurrent,
       selectedTileColor: Colors.grey.withOpacity(0.2),
-      leading: UserAvatarWidget(avatar: org.logo),
-      title: Text(org.name),
+      leading: UserAvatarWidget(avatar: org!.logo),
+      title: Text(org!.name!),
       onTap: () async {
         if (!isCurrent) {
           App.currentSpaceProvider.changeSpace(org);

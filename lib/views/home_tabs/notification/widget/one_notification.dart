@@ -53,25 +53,25 @@ class NotificationItemWidget extends StatelessWidget {
     "use_gift_promo": "兑换权益"
   };
 
-  final NotificationItemSeri data;
+  final NotificationItemSeri? data;
   final bool unread;
-  final VoidCallback beforeTab;
+  final VoidCallback? beforeTab;
 
-  bool get deleted => data.subject == null;
+  bool get deleted => data!.subject == null;
 
   deleteItem() {
     final c = Get.find<NotificationAllController>();
-    c.value.remove(data);
+    c.value!.remove(data);
     c.update();
     return futureResolver(
-      ApiRepository.delNotification(ids: '${data.id}'),
-      onData: (_) => ScaffoldMessenger.of(Get.context).showSnackBar(
+      ApiRepository.delNotification(ids: '${data!.id}'),
+      onData: (dynamic _) => ScaffoldMessenger.of(Get.context!).showSnackBar(
         SnackBar(content: Text('已移除')),
       ),
       onError: (err) {
         // fetch previous data
         c.onRefreshCallback();
-        return ScaffoldMessenger.of(Get.context).showSnackBar(
+        return ScaffoldMessenger.of(Get.context!).showSnackBar(
           SnackBar(content: Text('失败: $err')),
         );
       },
@@ -79,7 +79,7 @@ class NotificationItemWidget extends StatelessWidget {
   }
 
   NotificationItemWidget({
-    Key key,
+    Key? key,
     this.data,
     this.beforeTab,
     this.unread = false,
@@ -93,9 +93,9 @@ class NotificationItemWidget extends StatelessWidget {
     final userAvatar = GestureDetector(
       onTap: () {
         beforeTab?.call();
-        if (data.actor != null) {
+        if (data!.actor != null) {
           MyRoute.user(
-            user: data.actor.toUserLiteSeri(),
+            user: data!.actor!.toUserLiteSeri(),
             heroTag: tag,
           );
         }
@@ -105,7 +105,7 @@ class NotificationItemWidget extends StatelessWidget {
         child: Hero(
           tag: tag,
           child: UserAvatarWidget(
-            avatar: data.actor?.avatarUrl,
+            avatar: data!.actor?.avatarUrl,
             height: 45,
           ),
         ),
@@ -117,8 +117,8 @@ class NotificationItemWidget extends StatelessWidget {
         Expanded(
           child: Text(
             "系统消息".onlyIf(
-              data.actor == null,
-              elseif: () => "${data.actor.name}",
+              data!.actor == null,
+              elseif: () => "${data!.actor!.name}",
             ),
             style: AppStyles.textStyleB,
           ),
@@ -126,7 +126,7 @@ class NotificationItemWidget extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(right: 12),
           child: Text(
-            "${Util.timeCut(data.createdAt)}",
+            "${Util.timeCut(data!.createdAt!)}",
             style: AppStyles.textStyleCC,
           ),
         )
@@ -137,7 +137,7 @@ class NotificationItemWidget extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            "${newsType[data.notifyType] ?? data.notifyType}"
+            "${newsType[data!.notifyType!] ?? data!.notifyType}"
             "${notifySub.onlyIf(notifySub == '', elseif: () => ' [$notifySub]')}",
             style: AppStyles.textStyleC.copyWith(
               decoration: deleted ? TextDecoration.lineThrough : null,
@@ -191,7 +191,7 @@ class NotificationItemWidget extends StatelessWidget {
       onTap: () {
         beforeTab?.call();
         if (deleted) {
-          return Get.dialog(
+          Get.dialog(
             AlertDialog(
               content: Text('此消息已被删除，是否删除记录？'),
               actions: [
@@ -206,20 +206,21 @@ class NotificationItemWidget extends StatelessWidget {
               ],
             ),
           );
+          return;
         }
-        if (data.params != null) {
-          switch (data.notifyType) {
+        if (data!.params != null) {
+          switch (data!.notifyType) {
             case 'system':
-              return Get.dialog(
+              Get.dialog(
                 AlertDialog(
                   content: LakeRenderWidget(
-                    data: data.params['html'],
+                    data: data!.params['html'],
                   ),
                   actions: [
                     TextButton(
                       onPressed: () {
                         Get.back();
-                        Util.goUrl('/go/notification/${data.id}');
+                        Util.goUrl('/go/notification/${data!.id}');
                       },
                       child: Text('详情'),
                     ),
@@ -230,38 +231,40 @@ class NotificationItemWidget extends StatelessWidget {
                   ],
                 ),
               );
+              return;
             case 'use_gift_promo':
-              return Util.goUrl('/settings/member');
+              Util.goUrl('/settings/member');
+              return;
           }
         }
-        switch (data.subjectType) {
+        switch (data!.subjectType) {
           case 'User':
             return MyRoute.user(
-              user: data.subject.serialize<UserLiteSeri>('user_lite'),
+              user: data!.subject!.serialize<UserLiteSeri>('user_lite')!,
               heroTag: tag,
             );
           case 'Doc':
-            var doc = data.subject.serialize<DocSeri>();
-            var book = data.secondSubject.serialize<BookSeri>();
+            var doc = data!.subject!.serialize<DocSeri>()!;
+            var book = data!.secondSubject!.serialize<BookSeri>()!;
             return MyRoute.docDetailWebview(
-              bookId: data.secondSubjectId,
+              bookId: data!.secondSubjectId,
               slug: doc.slug,
-              login: book.user.login,
+              login: book.user!.login,
               book: book.slug,
             );
           case 'Topic':
-            var topic = data.subject.serialize<TopicSeri>();
+            var topic = data!.subject!.serialize<TopicSeri>()!;
             return MyRoute.topic(topic.iid, topic.groupId);
           case 'Comment':
-            if (data.secondSubjectType == 'Topic') {
-              var item = data.secondSubject.serialize<TopicSeri>();
+            if (data!.secondSubjectType == 'Topic') {
+              var item = data!.secondSubject!.serialize<TopicSeri>()!;
               return MyRoute.topic(item.iid, item.groupId);
             }
         }
-        return Util.goUrl('/go/notification/${data.id}');
+        return Util.goUrl('/go/notification/${data!.id}');
       },
       child: Dismissible(
-        key: Key('${data.id}'),
+        key: Key('${data!.id}'),
         background: Container(color: Colors.red),
         onDismissed: (_) => deleteItem(),
         child: child,
@@ -269,36 +272,36 @@ class NotificationItemWidget extends StatelessWidget {
     );
   }
 
-  String getNotificationSub() {
-    if (data.params != null) {
-      switch (data.notifyType) {
+  String? getNotificationSub() {
+    if (data!.params != null) {
+      switch (data!.notifyType) {
         case 'system':
-          final content = htmlparser.parseFragment(data.params['html']);
-          return content.text.replaceAll('\n', '');
+          final content = htmlparser.parseFragment(data!.params['html']);
+          return content.text!.replaceAll('\n', '');
         case 'use_gift_promo':
-          final expired = DateTime.tryParse(data.params['expiredTime']);
+          final expired = DateTime.tryParse(data!.params['expiredTime'])!;
           return '语雀会员延长至 ${expired.year}-${expired.month}-${expired.day}';
       }
     }
-    switch (data.subjectType) {
+    switch (data!.subjectType) {
       case 'User':
-        return data.subject.serialize<UserSeri>().name;
+        return data!.subject!.serialize<UserSeri>()!.name;
       case 'Doc':
-        return data.subject.serialize<DocSeri>().title;
+        return data!.subject!.serialize<DocSeri>()!.title;
       case 'Book':
-        return data.subject.serialize<BookSeri>().name;
+        return data!.subject!.serialize<BookSeri>()!.name;
       case 'Topic':
-        var topic = data.subject.serialize<TopicSeri>();
+        var topic = data!.subject!.serialize<TopicSeri>()!;
         return topic.title;
       case 'OrganizationUser':
-        var org = data.secondSubject.serialize<OrganizationLiteSeri>();
+        var org = data!.secondSubject!.serialize<OrganizationLiteSeri>()!;
         return org.name;
       case 'Comment':
-        if (data.secondSubjectType == 'Topic') {
-          var item = data.secondSubject?.serialize<TopicSeri>();
+        if (data!.secondSubjectType == 'Topic') {
+          var item = data!.secondSubject?.serialize<TopicSeri>();
           return item?.title ?? '';
-        } else if (data.secondSubjectType == 'Doc') {
-          var item = data.secondSubject?.serialize<DocSeri>();
+        } else if (data!.secondSubjectType == 'Doc') {
+          var item = data!.secondSubject?.serialize<DocSeri>();
           return item?.title ?? '';
         }
     }

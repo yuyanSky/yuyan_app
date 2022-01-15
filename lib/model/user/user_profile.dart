@@ -1,12 +1,12 @@
 class UserProfileSeri {
-  int id;
-  int userId;
-  String location;
-  String jobTitle;
+  int? id;
+  int? userId;
+  String? location;
+  String? jobTitle;
   dynamic department;
-  String createdAt;
-  String updatedAt;
-  String serializer;
+  String? createdAt;
+  String? updatedAt;
+  String? serializer;
 
   UserProfileSeri({
     this.id,

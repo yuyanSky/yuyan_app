@@ -5,10 +5,10 @@ import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 
 class LakeFileCardWidget extends StatelessWidget {
-  final Map json;
+  final Map? json;
 
   const LakeFileCardWidget({
-    Key key,
+    Key? key,
     this.json,
   }) : super(key: key);
 
@@ -25,7 +25,7 @@ class LakeFileCardWidget extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                '${json['name']}'.clip(12, ellipsis: true),
+                '${json!['name']}'.clip(12, ellipsis: true),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 style: TextStyle(
@@ -39,7 +39,7 @@ class LakeFileCardWidget extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Text(
-                '${json['size']} bytes',
+                '${json!['size']} bytes',
                 overflow: TextOverflow.ellipsis,
               ),
             ),
@@ -49,7 +49,7 @@ class LakeFileCardWidget extends StatelessWidget {
                 child: Icon(Icons.download_outlined),
               ),
               onTap: () {
-                launch(json['src']);
+                launch(json!['src']);
               },
             ),
           ],

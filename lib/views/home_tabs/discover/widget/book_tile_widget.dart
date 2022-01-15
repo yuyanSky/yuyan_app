@@ -7,16 +7,16 @@ import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class BookTileWidget extends StatelessWidget {
-  final BookSeri item;
+  final BookSeri? item;
 
   const BookTileWidget({
-    Key key,
+    Key? key,
     this.item,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var data = item;
+    var data = item!;
     return GestureDetector(
       onTap: () {
         var book = data;
@@ -41,7 +41,7 @@ class BookTileWidget extends StatelessWidget {
           children: [
             SizedBox(width: 4),
             UserAvatarWidget(
-              avatar: data.user.avatarUrl,
+              avatar: data.user!.avatarUrl,
               height: 50,
             ),
             Container(
@@ -52,7 +52,7 @@ class BookTileWidget extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     child: Text(
-                      data.name.clip(10, ellipsis: true),
+                      data.name!.clip(10, ellipsis: true),
                       style: AppStyles.textStyleB,
                     ),
                   ),
@@ -77,16 +77,16 @@ class BookTileWidget extends StatelessWidget {
 }
 
 class BookTileWidgetFlat extends StatelessWidget {
-  final BookSeri item;
+  final BookSeri? item;
 
   const BookTileWidgetFlat({
-    Key key,
+    Key? key,
     this.item,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var data = item;
+    var data = item!;
     var child = Container(
       height: 70,
       color: AppColors.background,
@@ -94,7 +94,7 @@ class BookTileWidgetFlat extends StatelessWidget {
         children: [
           SizedBox(width: 8),
           UserAvatarWidget(
-            avatar: data.user.avatarUrl,
+            avatar: data.user!.avatarUrl,
             height: 48,
           ),
           SizedBox(width: 16),
@@ -104,7 +104,7 @@ class BookTileWidgetFlat extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  data.name.clip(10, ellipsis: true),
+                  data.name!.clip(10, ellipsis: true),
                   style: AppStyles.textStyleB,
                 ),
                 SizedBox(height: 2),
@@ -114,7 +114,7 @@ class BookTileWidgetFlat extends StatelessWidget {
                   // overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   // maxLines: 1,
-                ).onlyIf(!GetUtils.isNullOrBlank(data.description)),
+                ).onlyIf(!GetUtils.isNullOrBlank(data.description)!),
               ],
             ),
           ),

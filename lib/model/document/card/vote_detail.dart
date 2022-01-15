@@ -1,9 +1,9 @@
 import 'vote_item_seri.dart';
 
 class VoteDetailSeri {
-  List<String> voted;
-  List<VoteItemSeri> items;
-  int userId;
+  List<String>? voted;
+  List<VoteItemSeri>? items;
+  int? userId;
 
   VoteDetailSeri({this.voted, this.items, this.userId});
 
@@ -12,7 +12,7 @@ class VoteDetailSeri {
     if (json["items"] != null) {
       items = [];
       json["items"].forEach((v) {
-        items.add(VoteItemSeri.fromJson(v));
+        items!.add(VoteItemSeri.fromJson(v));
       });
     }
     userId = json["user_id"];
@@ -22,7 +22,7 @@ class VoteDetailSeri {
     var map = <String, dynamic>{};
     map["voted"] = voted;
     if (items != null) {
-      map["items"] = items.map((v) => v.toJson()).toList();
+      map["items"] = items!.map((v) => v.toJson()).toList();
     }
     map["user_id"] = userId;
     return map;

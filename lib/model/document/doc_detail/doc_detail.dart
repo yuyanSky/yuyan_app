@@ -6,60 +6,60 @@ import '../../user/user.dart';
 import 'pager.dart';
 
 class DocDetailSeri {
-  int id;
-  int spaceId;
-  String type;
+  int? id;
+  int? spaceId;
+  String? type;
   dynamic subType;
-  String title;
+  String? title;
   dynamic tag;
-  String slug;
-  int userId;
-  int bookId;
-  String cover;
-  String description;
+  String? slug;
+  int? userId;
+  int? bookId;
+  String? cover;
+  String? description;
   dynamic customDescription;
-  String bodyAsl;
-  String format;
-  int status;
-  int readStatus;
-  int viewStatus;
-  int public;
-  int draftVersion;
-  int commentsCount;
-  int likesCount;
+  String? bodyAsl;
+  String? format;
+  int? status;
+  int? readStatus;
+  int? viewStatus;
+  int? public;
+  int? draftVersion;
+  int? commentsCount;
+  int? likesCount;
 
   // Abilities abilities;
-  String contentUpdatedAt;
-  String createdAt;
-  String updatedAt;
-  String publishedAt;
-  String firstPublishedAt;
+  String? contentUpdatedAt;
+  String? createdAt;
+  String? updatedAt;
+  String? publishedAt;
+  String? firstPublishedAt;
   dynamic pinnedAt;
-  int wordCount;
-  String content;
-  bool contentModified;
+  int? wordCount;
+  String? content;
+  bool? contentModified;
   dynamic selectedAt;
   dynamic premiumDaysCount;
   dynamic premiumPrice;
   dynamic premiumStartedAt;
   dynamic premiumExpiredAt;
-  String editorMeta;
-  String editorMetaDraft;
+  String? editorMeta;
+  String? editorMetaDraft;
 
   // Meta meta;
   dynamic premiumPaidUserCount;
   dynamic premiumIncome;
 
   // Like like;
-  int hits;
-  bool marked;
-  UserSeri user;
-  UserSeri lastEditor;
-  JoinTokenSeri joinToken;
-  List<DocSeri> suggests;
-  List<UserLiteSeri> contributors;
-  PagerSeri pager;
-  String serializer;
+  int? hits;
+  bool? marked;
+  UserSeri? user;
+  UserSeri? lastEditor;
+  JoinTokenSeri? joinToken;
+  List<DocSeri>? suggests;
+  List<UserLiteSeri>? contributors;
+  PagerSeri? pager;
+  String? serializer;
 
   DocDetailSeri(
       {this.id,
@@ -171,13 +171,13 @@ class DocDetailSeri {
     if (json["suggests"] != null) {
       suggests = [];
       json["suggests"].forEach((v) {
-        suggests.add(DocSeri.fromJson(v));
+        suggests!.add(DocSeri.fromJson(v));
       });
     }
     if (json["contributors"] != null) {
       contributors = [];
       json["contributors"].forEach((v) {
-        contributors.add(UserLiteSeri.fromJson(v));
+        contributors!.add(UserLiteSeri.fromJson(v));
       });
     }
     pager = json["pager"] != null ? PagerSeri.fromJson(json["pager"]) : null;
@@ -237,22 +237,22 @@ class DocDetailSeri {
     map["hits"] = hits;
     map["marked"] = marked;
     if (user != null) {
-      map["user"] = user.toJson();
+      map["user"] = user!.toJson();
     }
     if (lastEditor != null) {
-      map["last_editor"] = lastEditor.toJson();
+      map["last_editor"] = lastEditor!.toJson();
     }
     if (joinToken != null) {
-      map["joinToken"] = joinToken.toJson();
+      map["joinToken"] = joinToken!.toJson();
     }
     if (suggests != null) {
-      map["suggests"] = suggests.map((v) => v.toJson()).toList();
+      map["suggests"] = suggests!.map((v) => v.toJson()).toList();
     }
     if (contributors != null) {
-      map["contributors"] = contributors.map((v) => v.toJson()).toList();
+      map["contributors"] = contributors!.map((v) => v.toJson()).toList();
     }
     if (pager != null) {
-      map["pager"] = pager.toJson();
+      map["pager"] = pager!.toJson();
     }
     map["_serializer"] = serializer;
     return map;

@@ -24,13 +24,13 @@ import 'widget/doc_comment_widget.dart';
 import 'widget/icon_button_widget.dart';
 
 class DocDetailWebviewPage extends StatefulWidget {
-  final String login;
-  final String book;
-  final int bookId;
-  final String slug;
+  final String? login;
+  final String? book;
+  final int? bookId;
+  final String? slug;
 
   const DocDetailWebviewPage({
-    Key key,
+    Key? key,
     this.book,
     this.bookId,
     this.login,
@@ -54,8 +54,8 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
     return 'https://www.yuque.com/${widget.login}/${widget.book}/${widget.slug}';
   }
 
-  InAppWebViewController _webViewController;
-  PullToRefreshController _pullToRefreshController;
+  InAppWebViewController? _webViewController;
+  PullToRefreshController? _pullToRefreshController;
 
   var visible = false.obs;
   var canScrollTop = false.obs;
@@ -93,7 +93,7 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
   }
 
   Future<void> _injectJavascript() async {
-    await _webViewController.evaluateJavascript(
+    await _webViewController!.evaluateJavascript(
       source: 'document.body.style.padding="16px";',
     );
     final js = '''
@@ -105,7 +105,7 @@ document.querySelectorAll('img[src]')
 		};
 });
     '''; // type: javascript
-    await _webViewController.evaluateJavascript(source: js);
+    await _webViewController!.evaluateJavascript(source: js);
   }
 
   Widget _buildMoreAction() {
@@ -182,7 +182,7 @@ document.querySelectorAll('img[src]')
             ),
           ),
       ],
-      onSelected: (_) => _?.call(),
+      onSelected: (dynamic _) => _?.call(),
     );
   }
 
@@ -214,7 +214,7 @@ document.querySelectorAll('img[src]')
         );
       },
       onTitleChanged: (_, title) {
-        this.title.value = title;
+        this.title.value = title!;
         debugPrint('title => $title');
       },
       onScrollChanged: (_, x, y) {
@@ -266,15 +266,15 @@ document.querySelectorAll('img[src]')
         debugPrint('loadStart => $url');
       },
       onLoadStop: (_, url) async {
-        _pullToRefreshController.endRefreshing();
+        _pullToRefreshController!.endRefreshing();
         debugPrint('loadStop => $url');
         await _injectJavascript();
         // 延迟 100 毫秒，等待 JavaScript 执行效果
         Future.delayed(100.milliseconds, () {
           visible.value = true;
-          _webViewController.getContentHeight().then((h) {
+          _webViewController!.getContentHeight().then((h) {
             debugPrint('contentHeight => $h');
-            if (h > minScrollHeight) {
+            if (h! > minScrollHeight) {
               minScrollHeight = h ~/ 10;
             }
           });
@@ -290,19 +290,19 @@ document.querySelectorAll('img[src]')
         title: GetBuilder<DocDetailController>(
           tag: tag,
           builder: (c) => c.stateBuilder(
-            onError: (err) => Text('${err.title}'),
+            onError: (err) => Text('${err!.title}'),
             onLoading: Text('${title.value}'),
             animation: false,
             onIdle: () {
-              title.value = c.value.title;
+              title.value = c.value!.title!;
               final elseif = Align(
                 child: Text('${title.value}'),
                 alignment: Alignment.centerLeft,
               );
               return Obx(
                 () => _buildUserBar(
-                  c.value.user,
-                  c.value.updatedAt,
+                  c.value!.user!,
+                  c.value!.updatedAt!,
                 ).onlyIf(
                   showUser.value,
                   elseif: () => elseif,
@@ -462,9 +462,9 @@ document.querySelectorAll('img[src]')
       tag: tag,
       builder: (detail) => detail.stateBuilder(
         onLoading: SizedBox.shrink(),
-        onError: (err) => Text('${err.title}'),
+        onError: (err) => Text('${err!.title}'),
         onIdle: () {
-          Get.lazyPut(() => DocCommentsController(detail.value.id), tag: tag);
+          Get.lazyPut(() => DocCommentsController(detail.value!.id), tag: tag);
           final commentBar = GetBuilder<DocCommentsController>(
             tag: tag,
             builder: (c) => c.stateBuilder(
@@ -472,7 +472,7 @@ document.querySelectorAll('img[src]')
               onEmpty: SizedBox.shrink(),
               onIdle: () => __commentInfo(c),
               onError: (err) {
-                if (err.type == ViewErrorType.api) {
+                if (err!.type == ViewErrorType.api) {
                   return __commentInfo(c);
                 }
                 return Text('${err.title}');
@@ -499,12 +499,12 @@ document.querySelectorAll('img[src]')
                 Expanded(child: commentBar),
                 LikeAnimButtonWidget(
                   initValue: ApiRepository.getIfLike(
-                    targetId: detail.value.id,
+                    targetId: detail.value!.id,
                     targetType: 'Doc',
                   ),
                   onTap: (value) => _handleAction(
                     ApiRepository.doLike(
-                      target: detail.value.id,
+                      target: detail.value!.id,
                       type: 'Doc',
                       unlike: !value,
                     ),
@@ -513,12 +513,12 @@ document.querySelectorAll('img[src]')
                 StarAnimButtonWidget(
                   key: Key('star_anim_button'),
                   initValue: ApiRepository.getIfMark(
-                    targetId: detail.value.id,
+                    targetId: detail.value!.id,
                     targetType: 'Doc',
                   ),
                   onTap: (value) => _handleAction(
                     ApiRepository.toggleMark(
-                      targetId: detail.value.id,
+                      targetId: detail.value!.id,
                       targetType: 'Doc',
                       marked: !value,
                     ),
@@ -535,7 +535,7 @@ document.querySelectorAll('img[src]')
   Future<bool> _handleAction(Future future) {
     return futureResolver(
       future,
-      onData: (_) => true,
+      onData: (dynamic _) => true,
       onError: (e) {
         Util.toast('出错了: $e');
         return false;
@@ -546,7 +546,7 @@ document.querySelectorAll('img[src]')
   Widget __commentInfo(DocCommentsController c) {
     return GestureDetector(
       onTap: () {
-        if (GetUtils.isNullOrBlank(c.value?.data)) return;
+        if (GetUtils.isNullOrBlank(c.value?.data)!) return;
         showBarModalBottomSheet(
           context: context,
           builder: (_) {
@@ -570,7 +570,7 @@ document.querySelectorAll('img[src]')
           Text(
             "评论已关闭".onlyIf(
               GetUtils.isNull(c.value?.data),
-              elseif: () => "${c.comments.length} 人评论 说点什么呢⋯⋯",
+              elseif: () => "${c.comments!.length} 人评论 说点什么呢⋯⋯",
             ),
             style: TextStyle(
               color: AppColors.primaryText,
@@ -605,10 +605,10 @@ document.querySelectorAll('img[src]')
               onChanged: (double value) {
                 debugPrint('value => $value');
                 fontSize.value = value;
-                _webViewController.evaluateJavascript(
+                _webViewController!.evaluateJavascript(
                   source: changer('.lake-engine-view', fontSize.value),
                 );
-                _webViewController.evaluateJavascript(
+                _webViewController!.evaluateJavascript(
                   source: changer('.CodeMirror', fontSize.value),
                 );
               },

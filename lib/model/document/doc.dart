@@ -7,43 +7,43 @@ class DocSeri {
   get coverDefault =>
       'https://gw.alipayobjects.com/mdn/prod_resou/afts/img/A*8TQsTpWZtm8AAAAAAAAAAAAAARQnAQ?x-oss-process=image%2Fresize%2Ch_280';
 
-  int id;
-  int spaceId;
-  String type;
+  int? id;
+  int? spaceId;
+  String? type;
   dynamic subType;
-  String title;
+  String? title;
   dynamic titleDraft;
   dynamic tag;
-  String slug;
-  int userId;
-  int bookId;
-  int lastEditorId;
-  String cover;
-  String description;
+  String? slug;
+  int? userId;
+  int? bookId;
+  int? lastEditorId;
+  String? cover;
+  String? description;
   dynamic customDescription;
-  String format;
-  int status;
-  int readStatus;
-  int viewStatus;
-  int public;
-  int draftVersion;
-  int commentsCount;
-  int likesCount;
-  String contentUpdatedAt;
-  String createdAt;
-  String updatedAt;
-  String publishedAt;
-  String firstPublishedAt;
-  int wordCount;
-  String selectedAt;
+  String? format;
+  int? status;
+  int? readStatus;
+  int? viewStatus;
+  int? public;
+  int? draftVersion;
+  int? commentsCount;
+  int? likesCount;
+  String? contentUpdatedAt;
+  String? createdAt;
+  String? updatedAt;
+  String? publishedAt;
+  String? firstPublishedAt;
+  int? wordCount;
+  String? selectedAt;
   dynamic pinnedAt;
-  Serializer meta;
-  BookSeri book;
-  UserSeri user;
+  Serializer? meta;
+  BookSeri? book;
+  UserSeri? user;
   dynamic lastEditor;
   dynamic share;
-  bool isPreimum;
-  String serializer;
+  bool? isPreimum;
+  String? serializer;
 
   DocSeri({
     this.id,
@@ -157,12 +157,12 @@ class DocSeri {
     map["word_count"] = wordCount;
     map["selected_at"] = selectedAt;
     map["pinned_at"] = pinnedAt;
-    map["meta"] = meta.raw;
+    map["meta"] = meta!.raw;
     if (book != null) {
-      map["book"] = book.toJson();
+      map["book"] = book!.toJson();
     }
     if (user != null) {
-      map["user"] = user.toJson();
+      map["user"] = user!.toJson();
     }
     map["last_editor"] = lastEditor;
     map["share"] = share;

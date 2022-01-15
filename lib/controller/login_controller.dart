@@ -34,7 +34,7 @@ class LoginController extends FetchValueController<TokenJsonSeri> {
     return _baseUrl + query;
   }
 
-  String _code = '';
+  String? _code = '';
 
   //监听登陆事件
   onUrlChanged(String url) {
@@ -63,7 +63,7 @@ class LoginController extends FetchValueController<TokenJsonSeri> {
   @override
   onError() {
     Fluttertoast.showToast(
-      msg: '${error.title}',
+      msg: '${error!.title}',
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.CENTER,
     );

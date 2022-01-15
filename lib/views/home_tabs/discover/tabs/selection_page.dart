@@ -21,7 +21,7 @@ class SelectionPage extends StatelessWidget {
         builder: (controller) {
           return controller.builder(
             (state) {
-              var data = state.data;
+              List<Serializer> data = state!.data!;
               return SmartRefresher(
                 controller: controller.refreshController,
                 onRefresh: controller.onRefreshCallback,
@@ -34,7 +34,7 @@ class SelectionPage extends StatelessWidget {
                       return GetBuilder<ExploreSelectionController>(
                         builder: (_) => _.builder(
                           (state) => _ExploreBannerWidget(
-                            data: state.data,
+                            data: state!.data,
                           ),
                         ),
                       );
@@ -53,33 +53,31 @@ class SelectionPage extends StatelessWidget {
 
 class _RecommendItemWidget extends StatelessWidget {
   //Doc, Book, User
-  final Serializer item;
+  final Serializer? item;
 
   const _RecommendItemWidget({
-    Key key,
+    Key? key,
     this.item,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    switch (item.serializer) {
+    switch (item!.serializer) {
       case 'web.doc':
-        return buildDoc(item.serialize<DocSeri>());
+        return buildDoc(item!.serialize<DocSeri>()!);
       case 'web.book':
         return SizedBox.shrink();
-        return Text('book');
       case 'web.user':
         return SizedBox.shrink();
-        return Text('user');
       default:
         return Text('default');
     }
   }
 
   buildDoc(DocSeri data) {
-    bool hasCover = !GetUtils.isNullOrBlank(data.cover);
-    Widget coverWidget;
-    Widget descWidget;
+    bool hasCover = !GetUtils.isNullOrBlank(data.cover)!;
+    late Widget coverWidget;
+    late Widget descWidget;
     if (hasCover) {
       coverWidget = ClipRRect(
         borderRadius: BorderRadius.circular(8),
@@ -87,7 +85,7 @@ class _RecommendItemWidget extends StatelessWidget {
           width: 148,
           height: 90,
           child: CachedNetworkImage(
-            imageUrl: data.cover,
+            imageUrl: data.cover!,
             placeholder: (context, url) => Container(
               color: AppColors.background,
             ), // Colors.white10,
@@ -110,7 +108,7 @@ class _RecommendItemWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          data.title,
+          data.title!,
           maxLines: hasCover ? 4 : 1,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.left,
@@ -120,20 +118,20 @@ class _RecommendItemWidget extends StatelessWidget {
         Spacer(),
         GestureDetector(
           onTap: () {
-            MyRoute.user(user: data.user.toUserLiteSeri());
+            MyRoute.user(user: data.user!.toUserLiteSeri());
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               UserAvatarWidget(
-                avatar: data.user.avatarUrl,
+                avatar: data.user!.avatarUrl,
                 height: 22,
               ),
               SizedBox(width: 7),
               Container(
                 child: Text(
-                  data.user.name.clip(6, ellipsis: true),
+                  data.user!.name!.clip(6, ellipsis: true),
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: AppStyles.textStyleCC,
@@ -150,7 +148,7 @@ class _RecommendItemWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                "${data.likesCount * 7}",
+                "${data.likesCount! * 7}",
                 textAlign: TextAlign.left,
                 style: AppStyles.textStyleCC,
               )
@@ -177,8 +175,8 @@ class _RecommendItemWidget extends StatelessWidget {
         MyRoute.docDetailWebview(
           bookId: data.bookId,
           slug: data.slug,
-          login: data.book.user.login,
-          book: data.book.slug,
+          login: data.book!.user!.login,
+          book: data.book!.slug,
         );
       },
       child: Container(
@@ -199,10 +197,10 @@ class _RecommendItemWidget extends StatelessWidget {
 }
 
 class _ExploreBannerWidget extends StatefulWidget {
-  final List<DocSeri> data;
+  final List<DocSeri>? data;
 
   _ExploreBannerWidget({
-    Key key,
+    Key? key,
     this.data,
   }) : super(key: key);
 
@@ -216,14 +214,14 @@ class __ExploreBannerWidgetState extends State<_ExploreBannerWidget>
   Widget build(BuildContext context) {
     super.build(context);
     return NotificationListener(
-      onNotification: (_) => true,
+      onNotification: (dynamic _) => true,
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
         height: 220,
         child: Swiper(
-          itemCount: widget.data.length,
+          itemCount: widget.data!.length,
           itemBuilder: (context, index) {
-            var item = widget.data[index];
+            var item = widget.data![index];
             return buildItem(item);
           },
           controller: SwiperController(),
@@ -234,17 +232,17 @@ class __ExploreBannerWidgetState extends State<_ExploreBannerWidget>
   }
 
   Widget buildItem(DocSeri data) {
-    var imageUrl = data.cover;
+    var imageUrl = data.cover!;
     // Util.ossImg(data.cover);
     return GestureDetector(
       onTap: () {
         // MyRoute.docDetail(bookId: data.bookId, slug: data.slug);
-        final user = data.book.user ?? data.user;
+        final user = data.book!.user ?? data.user!;
         MyRoute.docDetailWebview(
           bookId: data.bookId,
           slug: data.slug,
           login: user.login,
-          book: data.book.slug,
+          book: data.book!.slug,
         );
       },
       child: Container(
@@ -273,9 +271,9 @@ class __ExploreBannerWidgetState extends State<_ExploreBannerWidget>
             Container(
               height: 46,
               child: UserActionTileWidget(
-                user: data.user.toUserLiteSeri(),
+                user: data.user!.toUserLiteSeri(),
                 title: '${data.title}',
-                subTitle: '${data.user.name} 发布于 ${data.book.name}',
+                subTitle: '${data.user!.name} 发布于 ${data.book!.name}',
               ),
             ),
           ],

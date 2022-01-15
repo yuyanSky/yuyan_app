@@ -4,25 +4,25 @@ import 'package:yuyan_app/model/user/user_lite_seri.dart';
 import 'package:yuyan_app/model/serializer/serializer.dart';
 
 class UserRecentSeri {
-  int id;
-  int organizationId;
-  int userId;
-  String action;
-  String subjectType;
-  String targetType;
-  int targetId;
-  bool canEdit;
-  bool isQuickLink;
-  String url;
-  String createdAt;
-  String updatedAt;
-  String title;
-  Serializer target;
-  BookSeri book;
-  UserSeri user;
+  int? id;
+  int? organizationId;
+  int? userId;
+  String? action;
+  String? subjectType;
+  String? targetType;
+  int? targetId;
+  bool? canEdit;
+  bool? isQuickLink;
+  String? url;
+  String? createdAt;
+  String? updatedAt;
+  String? title;
+  Serializer? target;
+  BookSeri? book;
+  UserSeri? user;
   dynamic share;
-  UserLiteSeri creator;
-  String serializer;
+  UserLiteSeri? creator;
+  String? serializer;
 
   UserRecentSeri({
     this.id,
@@ -86,17 +86,17 @@ class UserRecentSeri {
     map["updated_at"] = updatedAt;
     map["title"] = title;
     if (target != null) {
-      map["target"] = target.toJson();
+      map["target"] = target!.toJson();
     }
     if (book != null) {
-      map["book"] = book.toJson();
+      map["book"] = book!.toJson();
     }
     if (user != null) {
-      map["user"] = user.toJson();
+      map["user"] = user!.toJson();
     }
     map["share"] = share;
     if (creator != null) {
-      map["creator"] = creator.toJson();
+      map["creator"] = creator!.toJson();
     }
     map["_serializer"] = serializer;
     return map;

@@ -5,12 +5,12 @@ import 'package:yuyan_app/util/styles/app_ui.dart';
 
 class SettingTile extends StatelessWidget {
   const SettingTile(
-      {Key key, this.title, this.icon, this.onTap, this.ifBadge: false})
+      {Key? key, this.title, this.icon, this.onTap, this.ifBadge: false})
       : super(key: key);
 
-  final String title;
-  final IconData icon;
-  final Function onTap;
+  final String? title;
+  final IconData? icon;
+  final Function? onTap;
   final bool ifBadge;
 
   @override
@@ -36,7 +36,7 @@ class SettingTile extends StatelessWidget {
         icon,
         color: ThemeController.to.primarySwatchColor,
       ),
-      onTap: onTap,
+      onTap: onTap as void Function()?,
     );
   }
 }

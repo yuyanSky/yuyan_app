@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
 
 class Guide3 extends StatefulWidget {
-  Guide3({Key key}) : super(key: key);
+  Guide3({Key? key}) : super(key: key);
 
   @override
   _Guide3State createState() => _Guide3State();
 }
 
 class _Guide3State extends State<Guide3> {
-  int onPressedTimes;
+  int? onPressedTimes;
 
   @override
   void initState() {
@@ -20,9 +20,9 @@ class _Guide3State extends State<Guide3> {
   goLogin() {
     print(onPressedTimes);
     setState(() {
-      onPressedTimes = onPressedTimes + 1;
+      onPressedTimes = onPressedTimes! + 1;
     });
-    if (onPressedTimes <= 2) {
+    if (onPressedTimes! <= 2) {
       Navigator.of(context).pushNamed("/login");
     } else {
       return () {};

@@ -1,10 +1,10 @@
 class LabelSeri {
-  int id;
-  String name;
-  String color;
-  String createdAt;
-  String updatedAt;
-  String serializer;
+  int? id;
+  String? name;
+  String? color;
+  String? createdAt;
+  String? updatedAt;
+  String? serializer;
 
   LabelSeri({
     this.id,

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class FloatingActionWidget extends StatelessWidget {
-  final Widget button;
-  final VoidCallback onPressed;
-  final Widget child;
+  final Widget? button;
+  final VoidCallback? onPressed;
+  final Widget? child;
 
   const FloatingActionWidget({
-    Key key,
+    Key? key,
     this.button,
     this.onPressed,
     this.child,

@@ -8,7 +8,7 @@ import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class NoteButton extends StatelessWidget {
-  const NoteButton({Key key}) : super(key: key);
+  const NoteButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class QuickView extends StatelessWidget {
                     children: [
                       quickText("快捷入口"),
                       NoteButton(),
-                      ...state.data.map((e) {
+                      ...state!.data!.map((e) {
                         return _QuickLinkEntryWidget(data: e);
                       }).toList(),
                       SizedBox(width: 12)
@@ -105,21 +105,21 @@ class _QuickLinkEntryWidget extends StatelessWidget {
     "Book": "assets/images/dashboard/book.png"
   };
 
-  final QuickLinkSeri data;
+  final QuickLinkSeri? data;
 
   _QuickLinkEntryWidget({
-    Key key,
+    Key? key,
     this.data,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String imageUrl = data.icon.toString().contains("http")
-        ? data.icon
-        : iconType[data.type] ?? "assets/images/dashboard/book.png";
+    String? imageUrl = data!.icon.toString().contains("http")
+        ? data!.icon
+        : iconType[data!.type!] ?? "assets/images/dashboard/book.png";
     return GestureDetector(
       onTap: () {
-        Util.handleQuickLinkNav(data);
+        Util.handleQuickLinkNav(data!);
       },
       child: Container(
         height: 50,
@@ -140,7 +140,7 @@ class _QuickLinkEntryWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
               child: Hero(
-                tag: data.targetId ?? '',
+                tag: data!.targetId ?? '',
                 child: UserAvatarWidget(
                   avatar: imageUrl,
                   height: 36,
@@ -150,7 +150,7 @@ class _QuickLinkEntryWidget extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(right: 20),
               child: Text(
-                data.title.clip(6),
+                data!.title!.clip(6),
                 style: AppStyles.textStyleB,
               ),
             )

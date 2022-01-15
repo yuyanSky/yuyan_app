@@ -3,25 +3,25 @@ import 'package:yuyan_app/model/user/user_profile.dart';
 import 'package:yuyan_app/model/user/user_lite_seri.dart';
 
 class UserSeri {
-  int id;
-  String type;
-  String login;
-  String name;
-  String description;
-  String avatar;
-  String avatarUrl;
-  int followersCount;
-  int followingCount;
-  int status;
-  int public;
+  int? id;
+  String? type;
+  String? login;
+  String? name;
+  String? description;
+  String? avatar;
+  String? avatarUrl;
+  int? followersCount;
+  int? followingCount;
+  int? status;
+  int? public;
   dynamic scene;
-  String createdAt;
-  String updatedAt;
-  bool isPaid;
-  int memberLevel;
-  UserProfileSeri profile;
-  String serializer;
-  List<DocSeri> docs;
+  String? createdAt;
+  String? updatedAt;
+  bool? isPaid;
+  int? memberLevel;
+  UserProfileSeri? profile;
+  String? serializer;
+  List<DocSeri>? docs;
 
   UserSeri({
     this.id,
@@ -94,7 +94,7 @@ class UserSeri {
     map["member_level"] = memberLevel;
     map["profile"] = profile;
     if (this.docs != null) {
-      map["docs"] = docs.map((e) => e.toJson()).toList();
+      map["docs"] = docs!.map((e) => e.toJson()).toList();
     }
     map["_serializer"] = serializer;
     return map;

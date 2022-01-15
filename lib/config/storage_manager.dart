@@ -9,14 +9,14 @@ import 'package:path_provider/path_provider.dart';
 
 class StorageManager {
   //保存 app config相关信息
-  static SharedPreferences sharedPreferences;
+  static late SharedPreferences sharedPreferences;
 
   // 临时目录，保存照片
-  static Directory temporaryDirectory;
+  static late Directory temporaryDirectory;
 
   // 离线可以使用的数据
   // static LocalStorage localStorage;
-  static GetStorage getStorage;
+  static late GetStorage getStorage;
 
   //初始化，同步操作会阻塞，尽量减少储存量
   static init() async {
@@ -32,13 +32,13 @@ class StorageManager {
 abstract class BaseSavableJson<T> extends GetxController {
   String get key;
 
-  T _data;
+  T? _data;
 
-  T get data => _data;
+  T? get data => _data;
 
-  bool get isNullOrEmpty => GetUtils.isNullOrBlank(data);
+  bool? get isNullOrEmpty => GetUtils.isNullOrBlank(data);
 
-  set data(T newData) {
+  set data(T? newData) {
     _data = newData;
     update();
     saveJson();
@@ -48,9 +48,9 @@ abstract class BaseSavableJson<T> extends GetxController {
 
   saveJson();
 
-  updateData([T newData]) => data = newData ?? data;
+  updateData([T? newData]) => data = newData ?? data;
 
-  T convert(json);
+  T? convert(json);
 }
 
 abstract class BaseSaveJson<T> extends BaseSavableJson<T> {
@@ -91,29 +91,29 @@ abstract class BaseSaveJson<T> extends BaseSavableJson<T> {
 }
 
 abstract class BaseSaveListJson<T> extends BaseSaveJson<List<T>> {
-  int get length => data.length;
+  int get length => data!.length;
 
   T operator [](int i) {
-    return data[i];
+    return data![i];
   }
 
   void removeFirst() {
-    data.removeAt(0);
+    data!.removeAt(0);
     updateData();
   }
 
   void removeLast() {
-    data.removeLast();
+    data!.removeLast();
     updateData();
   }
 
   void add(T item) {
-    data.add(item);
+    data!.add(item);
     updateData();
   }
 
   bool remove(T item) {
-    var res = data.remove(item);
+    var res = data!.remove(item);
     updateData();
     return res;
   }

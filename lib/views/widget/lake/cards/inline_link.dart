@@ -4,10 +4,10 @@ import 'package:yuyan_app/util/styles/app_ui.dart';
 
 class LakeInlineLinkWidget extends StatelessWidget {
   const LakeInlineLinkWidget({
-    Key key,
+    Key? key,
     this.link,
   }) : super(key: key);
-  final CardLinkDetailSeri link;
+  final CardLinkDetailSeri? link;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +16,9 @@ class LakeInlineLinkWidget extends StatelessWidget {
       child: Container(
         child: Row(
           children: [
-            AppIcon.iconType(link.type),
+            AppIcon.iconType(link!.type),
             Text(
-              link.title ?? '',
+              link!.title ?? '',
               style: TextStyle(
                 color: Colors.blue,
               ),

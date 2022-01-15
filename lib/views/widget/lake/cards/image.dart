@@ -8,13 +8,13 @@ import 'package:yuyan_app/views/component/image_page/image_view_page.dart';
 import '../lake_render.dart';
 
 class LakeImageWidget extends StatelessWidget {
-  final Map json;
-  final List<String> others;
-  final Size size;
+  final Map? json;
+  final List<String>? others;
+  final Size? size;
   final EdgeInsets margin;
 
   const LakeImageWidget({
-    Key key,
+    Key? key,
     this.json,
     this.others,
     this.size,
@@ -23,25 +23,25 @@ class LakeImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var imageUrl = json['src'] as String;
+    var imageUrl = json!['src'] as String;
     if (imageUrl.startsWith('//')) {
       imageUrl = 'https:' + imageUrl;
     }
-    if (json['status'] != null && json['status'] != 'done') {
+    if (json!['status'] != null && json!['status'] != 'done') {
       return SizedBox.shrink();
     }
     var isSvg = imageUrl.endsWith('.svg');
     if (!isSvg) others?.add(imageUrl);
-    var width = HtmlUtil.parseDouble(json['width']);
-    var height = HtmlUtil.parseDouble(json['height']);
+    var width = HtmlUtil.parseDouble(json!['width']);
+    var height = HtmlUtil.parseDouble(json!['height']);
     if (width != null && height != null) {
       var ratio = width / height;
       width = width.clamp(0, Get.width);
       height = width / ratio;
     }
     if (width == null && height == null && size != null) {
-      width = size.width;
-      height = size.height;
+      width = size!.width;
+      height = size!.height;
     }
     Widget child;
     if (isSvg) {
@@ -65,7 +65,7 @@ class LakeImageWidget extends StatelessWidget {
           Get.dialog(
             ImageViewerPage(
               initUrl: imageUrl,
-              imageUrls: others,
+              imageUrls: others!,
             ),
           );
         }
@@ -79,17 +79,17 @@ class LakeImageWidget extends StatelessWidget {
 }
 
 class CachedImageWidget extends StatelessWidget {
-  final String url;
+  final String? url;
 
   const CachedImageWidget({
-    Key key,
+    Key? key,
     this.url,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl: url,
+      imageUrl: url!,
       placeholder: (context, url) => FlareActor(
         "assets/flares/progress.flr",
         animation: "active",

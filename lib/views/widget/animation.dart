@@ -3,15 +3,15 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:yuyan_app/util/util.dart';
 
 class AnimationListWidget extends StatelessWidget {
-  final ScrollController controller;
-  final int itemCount;
-  final IndexedWidgetBuilder itemBuilder;
+  final ScrollController? controller;
+  final int? itemCount;
+  final IndexedWidgetBuilder? itemBuilder;
   final int animationType;
-  final ScrollPhysics physics;
+  final ScrollPhysics? physics;
   final bool shrinkWrap;
 
   AnimationListWidget({
-    Key key,
+    Key? key,
     this.controller,
     this.itemCount,
     this.itemBuilder,
@@ -35,7 +35,7 @@ class AnimationListWidget extends StatelessWidget {
             verticalOffset: 50.0,
             child: Util.animationTypeBuild(
               type: animationType,
-              child: itemBuilder(context, i),
+              child: itemBuilder!(context, i),
             ),
           ),
         );
@@ -46,10 +46,10 @@ class AnimationListWidget extends StatelessWidget {
 
 class AnimationChildWidget extends StatelessWidget {
   final int index;
-  final Widget child;
+  final Widget? child;
 
   const AnimationChildWidget({
-    Key key,
+    Key? key,
     this.index = 0,
     this.child,
   }) : super(key: key);
@@ -62,7 +62,7 @@ class AnimationChildWidget extends StatelessWidget {
       child: SlideAnimation(
         verticalOffset: 50.0,
         child: FadeInAnimation(
-          child: child,
+          child: child!,
         ),
       ),
     );
@@ -70,14 +70,14 @@ class AnimationChildWidget extends StatelessWidget {
 }
 
 class AnimationColumnWidget extends StatelessWidget {
-  final List<Widget> children;
+  final List<Widget>? children;
   final MainAxisAlignment mainAxisAlignment;
   final CrossAxisAlignment crossAxisAlignment;
   final int milliseconds;
   final int animationType;
 
   AnimationColumnWidget({
-    Key key,
+    Key? key,
     this.mainAxisAlignment = MainAxisAlignment.center,
     this.crossAxisAlignment = CrossAxisAlignment.start,
     this.children,
@@ -100,7 +100,7 @@ class AnimationColumnWidget extends StatelessWidget {
               child: widget,
             ),
           ),
-          children: children,
+          children: children!,
         ),
       ),
     );
@@ -108,12 +108,12 @@ class AnimationColumnWidget extends StatelessWidget {
 }
 
 class AnimationRowWidget extends StatelessWidget {
-  final List<Widget> children;
+  final List<Widget>? children;
   final MainAxisAlignment mainAxisAlignment;
   final CrossAxisAlignment crossAxisAlignment;
 
   AnimationRowWidget({
-    Key key,
+    Key? key,
     this.mainAxisAlignment = MainAxisAlignment.center,
     this.crossAxisAlignment = CrossAxisAlignment.start,
     this.children,
@@ -133,7 +133,7 @@ class AnimationRowWidget extends StatelessWidget {
               child: widget,
             ),
           ),
-          children: children,
+          children: children!,
         ),
       ),
     );

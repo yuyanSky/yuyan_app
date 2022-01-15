@@ -8,8 +8,8 @@ import 'package:yuyan_app/model/search/search_result_seri.dart';
 import 'package:yuyan_app/util/util.dart';
 
 class SearchQueryEntity {
-  String query; //用于去重
-  DateTime createdTime; //用于排序
+  String? query; //用于去重
+  DateTime? createdTime; //用于排序
 
   SearchQueryEntity({
     this.query,
@@ -25,7 +25,7 @@ class SearchQueryEntity {
 
   Map toJson() => {
         'query': query,
-        'createdTime': createdTime.toIso8601String(),
+        'createdTime': createdTime!.toIso8601String(),
       };
 }
 
@@ -42,7 +42,7 @@ class SearchHistoryProvider extends BaseSaveListJson<SearchQueryEntity> {
 }
 
 class SearchController extends FetchListValueController<SearchResultSeri> {
-  final String type;
+  final String? type;
 
   SearchController({
     this.type,
@@ -51,22 +51,22 @@ class SearchController extends FetchListValueController<SearchResultSeri> {
           initialFetch: false,
         );
 
-  int get totalHits => value.first.totalHits;
+  int? get totalHits => value!.first.totalHits;
 
-  int get numHits => value.map((e) => e.numHits).sum();
+  int? get numHits => value!.map((e) => e.numHits).sum();
 
   /// 重写检查空数据的方法
   bool isEmpty(data) => data.map((e) => e.numHits).sum() == 0;
 
-  List<SearchHitSeri> get hits =>
-      value.map((e) => e.hits).reduce((a, b) => a + b);
+  List<SearchHitSeri>? get hits =>
+      value!.map((e) => e.hits).reduce((a, b) => a! + b!);
 
-  String query;
-  bool relateMe;
+  String? query;
+  late bool relateMe;
 
   int page = 1;
 
-  doSearch(String text, {bool relate = false}) {
+  doSearch(String? text, {bool relate = false}) {
     query = text;
     relateMe = relate;
     onRefresh(force: true);

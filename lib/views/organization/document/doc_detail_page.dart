@@ -8,11 +8,11 @@ import 'package:yuyan_app/views/widget/menu_item.dart';
 import 'package:yuyan_app/views/widget/lake/lake_render.dart';
 
 class DocDetailPage extends StatefulWidget {
-  final int bookId;
-  final String slug;
+  final int? bookId;
+  final String? slug;
 
   const DocDetailPage({
-    Key key,
+    Key? key,
     this.bookId,
     this.slug,
   }) : super(key: key);
@@ -67,7 +67,7 @@ class _DocDetailPageState extends State<DocDetailPage> {
               // ),
               PopupMenuItem(
                 value: () {
-                  MyRoute.webview('https://www.yuque.com/go/doc/${c.value.id}');
+                  MyRoute.webview('https://www.yuque.com/go/doc/${c.value!.id}');
                 },
                 child: MenuItemWidget(
                   iconData: Icons.share,
@@ -84,7 +84,7 @@ class _DocDetailPageState extends State<DocDetailPage> {
                 ),
               ),
             ],
-            onSelected: (_) => _?.call(),
+            onSelected: (dynamic _) => _?.call(),
           ),
         ],
       ),
@@ -93,8 +93,8 @@ class _DocDetailPageState extends State<DocDetailPage> {
         builder: (c) => c.stateBuilder(
           onIdle: () {
             Future.delayed(Duration(milliseconds: 100), () {
-              webUrl = 'https://www.yuque.com/go/doc/${c.value.id}';
-              title.value = c.value.title;
+              webUrl = 'https://www.yuque.com/go/doc/${c.value!.id}';
+              title.value = c.value!.title!;
 
               App.analytics.logEvent(
                 name: 'view_doc_detail',
@@ -109,8 +109,8 @@ class _DocDetailPageState extends State<DocDetailPage> {
                 child: Column(
                   children: [
                     LakeRenderWidget(
-                      data: c.value.content,
-                      docId: c.value.id,
+                      data: c.value!.content,
+                      docId: c.value!.id,
                     ),
                   ],
                 ),

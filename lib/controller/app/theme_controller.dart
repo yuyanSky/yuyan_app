@@ -28,20 +28,20 @@ class ThemeController extends GetxController {
     Colors.brown,
   ];
 
-  int _colorIndex;
-  MaterialColor _primarySwatchColor;
-  ThemeData _themeData;
+  late int _colorIndex;
+  MaterialColor? _primarySwatchColor;
+  ThemeData? _themeData;
 
-  MaterialColor get primarySwatchColor => _primarySwatchColor;
+  MaterialColor? get primarySwatchColor => _primarySwatchColor;
 
-  ThemeData get themeData => _themeData;
+  ThemeData? get themeData => _themeData;
 
   onInit() {
     super.onInit();
 
     loadColorIndex();
     updateThemeData();
-    Get.changeTheme(themeData);
+    Get.changeTheme(themeData!);
   }
 
   saveColorIndex() async {
@@ -78,7 +78,7 @@ class ThemeController extends GetxController {
     _primarySwatchColor = _definedColors[_colorIndex];
     updateThemeData();
     saveColorIndex();
-    Get.changeTheme(themeData);
+    Get.changeTheme(themeData!);
     update();
   }
 }

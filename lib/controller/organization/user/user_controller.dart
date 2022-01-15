@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:yuyan_app/config/net/api.dart';
 import 'package:yuyan_app/config/service/api2_repository.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
@@ -11,8 +14,8 @@ import 'package:yuyan_app/model/user/events/event_seri.dart';
 import 'package:yuyan_app/model/v2/user_detail.dart';
 
 class UserInfoController extends FetchValueController<UserDetailSeri> {
-  final int userId;
-  final String login;
+  final int? userId;
+  final String? login;
 
   UserInfoController({this.userId, this.login});
 
@@ -23,7 +26,7 @@ class UserInfoController extends FetchValueController<UserDetailSeri> {
 }
 
 class UserGroupController extends FetchListValueController<GroupSeri> {
-  final int userId;
+  final int? userId;
 
   UserGroupController(this.userId);
 
@@ -34,7 +37,7 @@ class UserGroupController extends FetchListValueController<GroupSeri> {
 }
 
 class UserFollowerController extends FetchListValueController<UserSeri> {
-  final int userId;
+  final int? userId;
 
   UserFollowerController(this.userId);
 
@@ -45,7 +48,7 @@ class UserFollowerController extends FetchListValueController<UserSeri> {
 }
 
 class UserFollowingController extends FetchListValueController<UserSeri> {
-  final int userId;
+  final int? userId;
 
   UserFollowingController(this.userId);
 
@@ -56,7 +59,7 @@ class UserFollowingController extends FetchListValueController<UserSeri> {
 }
 
 class UserBookController extends FetchListValueController<BookSeri> {
-  final int userId;
+  final int? userId;
 
   UserBookController(this.userId);
 
@@ -67,7 +70,7 @@ class UserBookController extends FetchListValueController<BookSeri> {
 }
 
 class NoteDetailController extends FetchValueController<NoteSeri> {
-  final int noteId;
+  final int? noteId;
 
   NoteDetailController(this.noteId);
 
@@ -78,7 +81,7 @@ class NoteDetailController extends FetchValueController<NoteSeri> {
 }
 
 class UserStackController extends FetchValueController<BookStackSeri> {
-  final int userId;
+  final int? userId;
 
   UserStackController(this.userId);
 
@@ -89,7 +92,7 @@ class UserStackController extends FetchValueController<BookStackSeri> {
 }
 
 class UserReadmeController extends FetchValueController<DocletSeri> {
-  final int userId;
+  final int? userId;
 
   UserReadmeController(this.userId);
 
@@ -100,21 +103,21 @@ class UserReadmeController extends FetchValueController<DocletSeri> {
 }
 
 class UserEventsController extends FetchListValueController<EventSeri> {
-  final int userId;
+  final int? userId;
 
   UserEventsController(this.userId);
 
   bool hasMore = true;
 
   Future<List<EventSeri>> _doFetch([bool loadmore = false]) async {
-    var res = await ApiRepository.getUserEvents(
+    var res = await (ApiRepository.getUserEvents(
       userId: userId,
       limit: 20,
       offset: loadmore ? offset : 0,
-    );
+    ) as FutureOr<ApiResponse>);
 
     var list = (res.data as List).map((e) => EventSeri.fromJson(e)).toList();
-    hasMore = (res.meta['hasMore'] ?? false);
+    hasMore = (res.meta!['hasMore'] ?? false);
     return list;
   }
 

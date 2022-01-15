@@ -17,7 +17,7 @@ class AppColors {
   // 主要文字段落灰色 纯黑的45%
   static Color primaryText = Colors.black45;
 
-  static Color get primary => ThemeController.to.primarySwatchColor;
+  static Color? get primary => ThemeController.to.primarySwatchColor;
 
   // 页面背景
   static Color background = Colors.white;
@@ -136,8 +136,8 @@ class AppIcon {
   static Widget svg(
     String type, {
     double size = 24,
-    VoidCallback onTap,
-    Color color,
+    VoidCallback? onTap,
+    Color? color,
   }) {
     type = type.toLowerCase();
     final table = {
@@ -170,9 +170,9 @@ class AppIcon {
   }
 
   static Widget iconType(
-    String iconName, {
-    double size,
-    VoidCallback onTap,
+    String? iconName, {
+    double? size,
+    VoidCallback? onTap,
   }) {
     Map<String, Icon> iconDic = {
       "doc": Icon(

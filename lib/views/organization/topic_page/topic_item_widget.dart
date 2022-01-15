@@ -10,11 +10,11 @@ import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class TopicTileWidget extends StatelessWidget {
-  final TopicSeri topic;
+  final TopicSeri? topic;
   final bool showLabel;
 
   TopicTileWidget({
-    Key key,
+    Key? key,
     this.topic,
     this.showLabel = false,
   }) : super(key: key);
@@ -30,7 +30,7 @@ class TopicTileWidget extends StatelessWidget {
         children: [
           Icon(Icons.question_answer, size: 16),
           Text(
-            "${topic.commentsCount}",
+            "${topic!.commentsCount}",
             style: AppStyles.textStyleCC,
           )
         ],
@@ -39,13 +39,13 @@ class TopicTileWidget extends StatelessWidget {
     Widget user = Row(
       children: [
         UserAvatarWidget(
-          avatar: topic.user.avatarUrl,
+          avatar: topic!.user!.avatarUrl,
           height: 18,
         ),
         SizedBox(width: 4),
         Container(
           child: Text(
-            "${topic.user.name} 创建于 ${Util.timeCut(topic.createdAt)}",
+            "${topic!.user!.name} 创建于 ${Util.timeCut(topic!.createdAt!)}",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppStyles.textStyleCC,
@@ -65,15 +65,15 @@ class TopicTileWidget extends StatelessWidget {
               children: [
                 Container(
                   child: Text(
-                    '${topic.title}',
+                    '${topic!.title}',
                     style: AppStyles.textStyleB,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 SizedBox(height: 3),
-                if (showLabel && !GetUtils.isNullOrBlank(topic.labels))
-                  _labels(topic.labels),
+                if (showLabel && !GetUtils.isNullOrBlank(topic!.labels)!)
+                  _labels(topic!.labels!),
                 SizedBox(height: 3),
                 user,
               ],
@@ -85,7 +85,7 @@ class TopicTileWidget extends StatelessWidget {
     );
     return GestureDetector(
       onTap: () {
-        MyRoute.topic(topic.iid, topic.groupId);
+        MyRoute.topic(topic!.iid, topic!.groupId);
       },
       child: child,
     );
@@ -100,7 +100,7 @@ class TopicTileWidget extends StatelessWidget {
           return TextSpan(
             text: ' ${e.name} ',
             style: TextStyle(
-              backgroundColor: SmartColor.parse(e.color),
+              backgroundColor: SmartColor.parse(e.color!),
             ),
           );
         }).toList(),
@@ -110,10 +110,10 @@ class TopicTileWidget extends StatelessWidget {
 }
 
 class TopicRowItemWidget2 extends StatelessWidget {
-  final TopicSeri topic;
+  final TopicSeri? topic;
 
   TopicRowItemWidget2({
-    Key key,
+    Key? key,
     this.topic,
   }) : super(key: key);
 
@@ -127,7 +127,7 @@ class TopicRowItemWidget2 extends StatelessWidget {
           Icon(Icons.question_answer, size: 16),
           Expanded(
             child: Text(
-              "${topic.commentsCount}",
+              "${topic!.commentsCount}",
               textAlign: TextAlign.right,
             ),
           )
@@ -143,20 +143,20 @@ class TopicRowItemWidget2 extends StatelessWidget {
             children: [
               Container(
                 child: Text(
-                  topic.title,
+                  topic!.title!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppStyles.textStyleB,
                 ),
               ),
               SizedBox(height: 3),
-              if (!GetUtils.isNullOrBlank(topic.labels)) _labels(topic.labels),
+              if (!GetUtils.isNullOrBlank(topic!.labels)!) _labels(topic!.labels!),
               SizedBox(height: 3),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   UserAvatarWidget(
-                    avatar: topic.user.avatarUrl,
+                    avatar: topic!.user!.avatarUrl,
                     height: 20,
                   ),
                   Container(
@@ -169,7 +169,7 @@ class TopicRowItemWidget2 extends StatelessWidget {
                         SizedBox(height: 2),
                         Container(
                           child: Text(
-                            "${topic.user.name} 创建于 ${Util.timeCut(topic.createdAt)}",
+                            "${topic!.user!.name} 创建于 ${Util.timeCut(topic!.createdAt!)}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppStyles.textStyleC,
@@ -187,7 +187,7 @@ class TopicRowItemWidget2 extends StatelessWidget {
       ],
     );
     return GestureDetector(
-      onTap: () => MyRoute.topic(topic.iid, topic.groupId),
+      onTap: () => MyRoute.topic(topic!.iid, topic!.groupId),
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
@@ -216,7 +216,7 @@ class TopicRowItemWidget2 extends StatelessWidget {
           return TextSpan(
             text: ' ${e.name} ',
             style: TextStyle(
-              backgroundColor: SmartColor.parse(e.color),
+              backgroundColor: SmartColor.parse(e.color!),
             ),
           );
         }).toList(),
@@ -226,15 +226,15 @@ class TopicRowItemWidget2 extends StatelessWidget {
 }
 
 class TopicRowItemWidget extends StatelessWidget {
-  final TopicSeri data;
+  final TopicSeri? data;
 
-  const TopicRowItemWidget({Key key, this.data}) : super(key: key);
+  const TopicRowItemWidget({Key? key, this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    data.labels ??= [];
+    data!.labels ??= [];
 
-    UserSeri user = data.user ?? data.group.toUserSeri();
+    UserSeri user = data!.user ?? data!.group!.toUserSeri();
 
     return GestureDetector(
       onTap: () {
@@ -246,7 +246,7 @@ class TopicRowItemWidget extends StatelessWidget {
         //   iid: data.iid,
         //   groupId: data.groupId,
         // );
-        MyRoute.topic(data.iid, data.groupId);
+        MyRoute.topic(data!.iid, data!.groupId);
       },
       child: Container(
         margin: EdgeInsets.only(top: 2, bottom: 9, left: 10, right: 10),
@@ -274,7 +274,7 @@ class TopicRowItemWidget extends StatelessWidget {
                 ),
                 SizedBox(width: 8),
                 Text(
-                  user.name,
+                  user.name!,
                   overflow: TextOverflow.ellipsis,
                   style: AppStyles.textStyleC,
                 )
@@ -285,10 +285,10 @@ class TopicRowItemWidget extends StatelessWidget {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: data.title + "  ",
+                    text: data!.title! + "  ",
                     style: AppStyles.textStyleB,
                   ),
-                ]..addAll(data.labels.map(label)),
+                ]..addAll(data!.labels!.map(label)),
               ),
             ),
             SizedBox(height: 2),
@@ -303,7 +303,7 @@ class TopicRowItemWidget extends StatelessWidget {
       text: label.name,
       style: TextStyle(
         backgroundColor: SmartColor.parse(
-          label.color,
+          label.color!,
         ),
       ),
     );

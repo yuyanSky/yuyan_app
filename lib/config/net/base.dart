@@ -23,7 +23,8 @@ class PrintInterceptor extends InterceptorsWrapper {
     //debug
     debug += '\n\t${req.method.toUpperCase()}-->${req.path}';
     // debugPrint('  ${options.method.toUpperCase()}-->${options.path}');
-    if (req.queryParameters != null && req.queryParameters.isNotEmpty) {
+    // if (req.queryParameters != null &&
+    if (req.queryParameters.isNotEmpty) {
       debug += '\n\tquery--> ${req.queryParameters}';
     }
     if (req.data != null) {
@@ -32,7 +33,7 @@ class PrintInterceptor extends InterceptorsWrapper {
     return debug;
   }
 
-  String getResponseDebug(Response resp) {
+  String getResponseDebug(Response? resp) {
     if (resp == null)
       return 'PrintInterceptor => getResponseDebug => parameter resp is null';
     //debug purpose
@@ -59,7 +60,7 @@ class PrintInterceptor extends InterceptorsWrapper {
         debug += '\n\tdata-->\n${resp.data}\n';
       }
     }
-    if (resp.isRedirect != null && resp.isRedirect) {
+    if (resp.isRedirect != null && resp.isRedirect!) {
       debug +=
           '\n\tredirects-->\n${resp.redirects.map((e) => e.location).toString()}\n';
     }

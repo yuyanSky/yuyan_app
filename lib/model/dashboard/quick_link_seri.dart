@@ -1,20 +1,20 @@
 class QuickLinkSeri {
-  int id;
-  int userId;
-  int organizationId;
-  String type;
+  int? id;
+  int? userId;
+  int? organizationId;
+  String? type;
   dynamic icon;
-  String title;
-  String url;
-  int orderNum;
-  int targetId;
-  String targetType;
-  String createdAt;
-  String updatedAt;
-  String refId;
+  String? title;
+  String? url;
+  int? orderNum;
+  int? targetId;
+  String? targetType;
+  String? createdAt;
+  String? updatedAt;
+  String? refId;
   dynamic target;
   dynamic user;
-  String serializer;
+  String? serializer;
 
   QuickLinkSeri({
     this.id,

@@ -6,11 +6,11 @@ import 'package:yuyan_app/controller/organization/card/action_controller.dart';
 import 'package:yuyan_app/model/user/user.dart';
 
 class FollowButtonWidget extends StatefulWidget {
-  final UserSeri user;
-  final bool initialFollow;
+  final UserSeri? user;
+  final bool? initialFollow;
 
   FollowButtonWidget({
-    Key key,
+    Key? key,
     this.user,
     this.initialFollow,
   }) : super(key: key);
@@ -22,7 +22,7 @@ class FollowButtonWidget extends StatefulWidget {
 class _FollowButtonWidgetState extends State<FollowButtonWidget> {
   @override
   Widget build(BuildContext context) {
-    var isSelf = App.userProvider.data.id == widget.user.id;
+    var isSelf = App.userProvider.data!.id == widget.user!.id;
     return Container(
       width: 88,
       height: 35,
@@ -44,10 +44,10 @@ class _FollowButtonWidgetState extends State<FollowButtonWidget> {
               ),
             )
           : GetBuilder<FollowUserController>(
-              tag: '${widget.user.id}',
+              tag: '${widget.user!.id}',
               autoRemove: false,
               init: FollowUserController(
-                userId: widget.user.id,
+                userId: widget.user!.id,
                 isFollow: widget.initialFollow,
               ),
               builder: (c) {

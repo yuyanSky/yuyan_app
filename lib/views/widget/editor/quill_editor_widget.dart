@@ -31,7 +31,7 @@ class QuillEditorController extends QuillController {
     return mark;
   }
 
-  Future<String> toLakeHtml() async {
+  Future<String?> toLakeHtml() async {
     var mark = toMarkdown();
     var lake = await ApiRepository.convertLake(markdown: mark);
     return lake;
@@ -39,14 +39,14 @@ class QuillEditorController extends QuillController {
 }
 
 class QuillEditorWidget extends StatelessWidget {
-  final QuillEditorController controller;
+  final QuillEditorController? controller;
   final EdgeInsets padding;
   final bool autoFocus;
   final bool readOnly;
   final QuillEditorToolbarType toolbarType;
 
   const QuillEditorWidget({
-    Key key,
+    Key? key,
     this.controller,
     this.padding = EdgeInsets.zero,
     this.autoFocus = false,
@@ -57,7 +57,7 @@ class QuillEditorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var editor = QuillEditor(
-      controller: controller,
+      controller: controller!,
       focusNode: FocusNode(),
       scrollController: ScrollController(),
       scrollable: true,
@@ -67,7 +67,7 @@ class QuillEditorWidget extends StatelessWidget {
       expands: false,
     );
     var toolbar = QuillToolbar.basic(
-      controller: controller,
+      controller: controller!,
       onImagePickCallback: Util.editorImageUploadCallback,
     );
     var children = <Widget>[

@@ -4,45 +4,45 @@ import '../user/user.dart';
 import 'group_home/summary.dart';
 
 class BookSeri {
-  int id;
-  String type;
-  String scene;
-  String slug;
-  String name;
-  int userId;
-  String description;
-  int public;
-  String createdAt;
-  String updatedAt;
-  String contentUpdatedAt;
-  String layout;
-  String docViewport;
+  int? id;
+  String? type;
+  String? scene;
+  String? slug;
+  String? name;
+  int? userId;
+  String? description;
+  int? public;
+  String? createdAt;
+  String? updatedAt;
+  String? contentUpdatedAt;
+  String? layout;
+  String? docViewport;
   dynamic docTypography;
-  bool enableAutoPublish;
-  UserSeri user;
+  bool? enableAutoPublish;
+  UserSeri? user;
   dynamic creator;
-  String serializer;
+  String? serializer;
 
   ///book_stack添加
-  int itemsCount;
-  int likesCount;
-  int watchesCount;
-  int creatorId;
-  MetaAbilitySeri abilities;
+  int? itemsCount;
+  int? likesCount;
+  int? watchesCount;
+  int? creatorId;
+  MetaAbilitySeri? abilities;
   dynamic pinnedAt;
   dynamic archivedAt;
-  List<SummarySeri> summary;
-  int status;
+  List<SummarySeri>? summary;
+  int? status;
   dynamic stackId;
   dynamic rank;
-  String cover;
+  String? cover;
   dynamic original;
-  int organizationId;
+  int? organizationId;
 
   ///v2 获取知识库详情添加
-  String v2toc;
-  String v2tocYaml;
-  String v2Namespace;
+  String? v2toc;
+  String? v2tocYaml;
+  String? v2Namespace;
 
   BookSeri.fromJson(dynamic json) {
     id = json["id"];
@@ -77,7 +77,7 @@ class BookSeri {
     if (json["summary"] != null) {
       summary = [];
       json["summary"].forEach((v) {
-        summary.add(SummarySeri.fromJson(v));
+        summary!.add(SummarySeri.fromJson(v));
       });
     }
     status = json["status"];
@@ -111,7 +111,7 @@ class BookSeri {
     map["doc_typography"] = docTypography;
     map["enable_auto_publish"] = enableAutoPublish;
     if (user != null) {
-      map["user"] = user.toJson();
+      map["user"] = user!.toJson();
     }
     map["creator"] = creator;
     map["_serializer"] = serializer;
@@ -122,12 +122,12 @@ class BookSeri {
     map["watches_count"] = watchesCount;
     map["creator_id"] = creatorId;
     if (abilities != null) {
-      map["abilities"] = abilities.toJson();
+      map["abilities"] = abilities!.toJson();
     }
     map["pinned_at"] = pinnedAt;
     map["archived_at"] = archivedAt;
     if (summary != null) {
-      map["summary"] = summary.map((v) => v.toJson()).toList();
+      map["summary"] = summary!.map((v) => v.toJson()).toList();
     }
     map["status"] = status;
     map["stack_id"] = stackId;

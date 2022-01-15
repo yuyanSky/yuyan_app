@@ -3,7 +3,7 @@ import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/model/document/card/card_video_info_seri.dart';
 
 class CardVideoController extends FetchValueController<CardVideoResSeri> {
-  final String videoId;
+  final String? videoId;
 
   CardVideoController(this.videoId);
 

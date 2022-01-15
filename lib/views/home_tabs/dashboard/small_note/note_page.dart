@@ -39,11 +39,11 @@ class SmallNotePage extends StatelessWidget {
             onLoading: c.onLoadMoreCallback,
             enablePullUp: true,
             child: ListView.builder(
-              itemCount: state.data.length,
+              itemCount: state!.data!.length,
               itemBuilder: (_, i) {
                 return _NoteItemWidget(
-                  key: Key('${state.data[i].id}'),
-                  item: state.data[i],
+                  key: Key('${state.data![i].id}'),
+                  item: state.data![i],
                 );
               },
             ),
@@ -56,10 +56,10 @@ class SmallNotePage extends StatelessWidget {
 }
 
 class _NoteItemWidget extends StatelessWidget {
-  final NoteSeri item;
+  final NoteSeri? item;
 
   const _NoteItemWidget({
-    Key key,
+    Key? key,
     this.item,
   }) : super(key: key);
 
@@ -79,7 +79,7 @@ class _NoteItemWidget extends StatelessWidget {
         ],
         borderRadius: BorderRadius.all(Radius.circular(4)),
       ),
-      child: _buildNoteContent(item),
+      child: _buildNoteContent(item!),
     );
   }
 
@@ -92,7 +92,7 @@ class _NoteItemWidget extends StatelessWidget {
             AppIcon.svg('notes-icon-default', size: 16),
             SizedBox(width: 8),
             Text(
-              Util.timeCut(item.updatedAt),
+              Util.timeCut(item.updatedAt!),
               style: AppStyles.countTextStyle,
             ),
             Spacer(),
@@ -112,7 +112,7 @@ class _NoteItemWidget extends StatelessWidget {
                   value: () {
                     // MyRoute.webview(webUrl);
                     ApiRepository.deleteNote(item.id).then((_) {
-                      if (_) {
+                      if (_!) {
                         MyNoteController.to.remove(item);
                         BotToast.showText(text: '成功');
                       }
@@ -126,7 +126,7 @@ class _NoteItemWidget extends StatelessWidget {
                   ),
                 ),
               ],
-              onSelected: (_) => _?.call(),
+              onSelected: (dynamic _) => _?.call(),
             ),
           ],
         ),
@@ -145,7 +145,7 @@ class _NoteItemWidget extends StatelessWidget {
           },
           child: Text('查看全部'),
         ).onlyIf(
-          item.description.endsWith('<!-- note-viewmore -->'),
+          item.description!.endsWith('<!-- note-viewmore -->'),
           elseif: () => SizedBox(height: 8),
         ),
       ],
@@ -173,8 +173,8 @@ class MyNoteDetailPage extends StatelessWidget {
                       horizontal: 4,
                     ),
                     child: LakeRenderWidget(
-                      data: c.value.doclet.bodyAsl,
-                      docId: c.value.docletId,
+                      data: c.value!.doclet!.bodyAsl,
+                      docId: c.value!.docletId,
                     ),
                   ),
                 ),

@@ -4,10 +4,10 @@ import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
 
 class ViewErrorWidget extends StatelessWidget {
-  final ViewError error;
+  final ViewError? error;
 
   const ViewErrorWidget({
-    Key key,
+    Key? key,
     this.error,
   }) : super(key: key);
 
@@ -22,12 +22,12 @@ class ViewErrorWidget extends StatelessWidget {
 }
 
 class ViewButtonWidget extends StatelessWidget {
-  final Icon icon;
+  final Icon? icon;
   final Widget child;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const ViewButtonWidget({
-    Key key,
+    Key? key,
     this.icon,
     this.child = const Text('刷新'),
     this.onPressed,
@@ -40,7 +40,7 @@ class ViewButtonWidget extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (icon != null) icon,
+          if (icon != null) icon!,
           if (icon != null) SizedBox(width: 4),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
@@ -53,7 +53,7 @@ class ViewButtonWidget extends StatelessWidget {
 }
 
 class ViewEmptyWidget extends StatelessWidget {
-  final Key key;
+  final Key? key;
   final double top;
   final String tip;
   final Widget child;

@@ -2,36 +2,36 @@
 import '../user_lite_seri.dart';
 
 class DocEventSeri {
-  int id;
-  int spaceId;
-  String type;
+  int? id;
+  int? spaceId;
+  String? type;
   dynamic subType;
-  String title;
+  String? title;
   dynamic titleDraft;
   dynamic tag;
-  String slug;
-  int userId;
-  int bookId;
-  int lastEditorId;
-  String cover;
-  String description;
+  String? slug;
+  int? userId;
+  int? bookId;
+  int? lastEditorId;
+  String? cover;
+  String? description;
   dynamic customDescription;
-  String format;
-  int status;
-  int readStatus;
-  int public;
-  int draftVersion;
-  int commentsCount;
-  int likesCount;
-  String contentUpdatedAt;
-  String createdAt;
-  String updatedAt;
-  String publishedAt;
-  String firstPublishedAt;
-  int wordCount;
-  UserLiteSeri user;
+  String? format;
+  int? status;
+  int? readStatus;
+  int? public;
+  int? draftVersion;
+  int? commentsCount;
+  int? likesCount;
+  String? contentUpdatedAt;
+  String? createdAt;
+  String? updatedAt;
+  String? publishedAt;
+  String? firstPublishedAt;
+  int? wordCount;
+  UserLiteSeri? user;
   dynamic lastEditor;
-  String sSerializer;
+  String? sSerializer;
 
   DocEventSeri({
     this.id,
@@ -128,7 +128,7 @@ class DocEventSeri {
     data['published_at'] = this.publishedAt;
     data['first_published_at'] = this.firstPublishedAt;
     data['word_count'] = this.wordCount;
-    data['user'] = this.user.toJson();
+    data['user'] = this.user!.toJson();
     data['last_editor'] = this.lastEditor;
     data['_serializer'] = this.sSerializer;
     return data;

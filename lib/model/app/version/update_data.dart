@@ -1,16 +1,16 @@
 class UpdateJson {
-  int code;
-  String msg;
-  int updateStatus;
-  int versionCode;
-  String versionName;
-  String iOSVersionName;
-  String iOSInstallUrl;
-  String uploadTime;
-  String modifyContent;
-  String downloadUrl;
-  int apkSize;
-  String apkMd5;
+  int? code;
+  String? msg;
+  int? updateStatus;
+  int? versionCode;
+  String? versionName;
+  String? iOSVersionName;
+  String? iOSInstallUrl;
+  String? uploadTime;
+  String? modifyContent;
+  String? downloadUrl;
+  int? apkSize;
+  String? apkMd5;
 
   UpdateJson(
       {this.code,

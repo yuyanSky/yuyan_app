@@ -15,11 +15,11 @@ import 'package:yuyan_app/views/organization/widget/group.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class SearchResultWidget extends StatefulWidget {
-  final String query;
-  final RxInt initIndex;
+  final String? query;
+  final RxInt? initIndex;
 
   const SearchResultWidget({
-    Key key,
+    Key? key,
     this.query,
     this.initIndex,
   }) : super(key: key);
@@ -56,7 +56,7 @@ class _SearchResultWidgetState extends State<SearchResultWidget>
     }).toList();
   }
 
-  TabController _tabController;
+  TabController? _tabController;
 
   initState() {
     super.initState();
@@ -74,20 +74,20 @@ class _SearchResultWidgetState extends State<SearchResultWidget>
     });
 
     _tabController = TabController(
-      initialIndex: widget.initIndex.value,
+      initialIndex: widget.initIndex!.value,
       length: tabIcons.length,
       vsync: this,
     );
 
-    _tabController.addListener(() {
-      debugPrint('new index => ${_tabController.index}');
-      widget.initIndex.value = _tabController.index;
+    _tabController!.addListener(() {
+      debugPrint('new index => ${_tabController!.index}');
+      widget.initIndex!.value = _tabController!.index;
     });
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _tabController!.dispose();
 
     super.dispose();
   }
@@ -110,18 +110,18 @@ class _SearchResultWidgetState extends State<SearchResultWidget>
   }
 
   List<Widget> _buildTabView() {
-    var query = widget.query;
+    var query = widget.query!;
     return [
       //文档
       FetchRefreshListViewBuilder<SearchController>(
         tag: 'doc+' + query,
         builder: (c) {
-          var data = c.hits;
+          var data = c.hits!;
           return ListView.builder(
             key: PageStorageKey('doc'),
             itemCount: data.length,
             itemBuilder: (_, i) {
-              var item = data[i].record.serialize<DocSeri>();
+              var item = data[i].record!.serialize<DocSeri>();
               return DocTileWidget(item: item);
             },
           );
@@ -131,12 +131,12 @@ class _SearchResultWidgetState extends State<SearchResultWidget>
       FetchRefreshListViewBuilder<SearchController>(
         tag: 'book+' + query,
         builder: (c) {
-          var data = c.hits;
+          var data = c.hits!;
           return ListView.builder(
             key: PageStorageKey('book'),
             itemCount: data.length,
             itemBuilder: (_, i) {
-              var item = data[i].record.serialize<BookSeri>();
+              var item = data[i].record!.serialize<BookSeri>();
               return BookTileWidget(item: item);
             },
           );
@@ -146,12 +146,12 @@ class _SearchResultWidgetState extends State<SearchResultWidget>
       FetchRefreshListViewBuilder<SearchController>(
         tag: 'topic+' + query,
         builder: (c) {
-          var data = c.hits;
+          var data = c.hits!;
           return ListView.builder(
             key: PageStorageKey('topic'),
             itemCount: data.length,
             itemBuilder: (_, i) {
-              var item = data[i].record.serialize<TopicSeri>();
+              var item = data[i].record!.serialize<TopicSeri>();
               return TopicRowItemWidget(data: item);
             },
           );
@@ -161,12 +161,12 @@ class _SearchResultWidgetState extends State<SearchResultWidget>
       FetchRefreshListViewBuilder<SearchController>(
         tag: 'group+' + query,
         builder: (c) {
-          var data = c.hits;
+          var data = c.hits!;
           return ListView.builder(
             key: PageStorageKey('group'),
             itemCount: data.length,
             itemBuilder: (_, i) {
-              var item = data[i].record.serialize<GroupSeri>();
+              var item = data[i].record!.serialize<GroupSeri>();
               return GroupTileWidget(group: item);
             },
           );
@@ -176,12 +176,12 @@ class _SearchResultWidgetState extends State<SearchResultWidget>
       FetchRefreshListViewBuilder<SearchController>(
         tag: 'user+' + query,
         builder: (c) {
-          var data = c.hits;
+          var data = c.hits!;
           return ListView.builder(
             key: PageStorageKey('user'),
             itemCount: data.length,
             itemBuilder: (_, i) {
-              var item = data[i].record.serialize<UserSeri>();
+              var item = data[i].record!.serialize<UserSeri>()!;
               return UserTileWidget(user: item.toUserLiteSeri());
             },
           );

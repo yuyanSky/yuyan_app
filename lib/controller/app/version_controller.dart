@@ -16,16 +16,16 @@ class VersionController extends GetxController {
       "https://service-kuz2fghy-1256880247.gz.apigw.tencentcs.com/release/yuyan_v2?v=";
   var _isLatest = true.obs;
 
-  bool get isLatest => _isLatest?.value ?? true;
-  String _message;
+  bool get isLatest => _isLatest.value;
+  String? _message;
   String _version = App.version.version;
 
   String get appVersion => _version;
 
-  String get getMessage => _message;
-  UpdateJson _updateJson;
+  String? get getMessage => _message;
+  UpdateJson? _updateJson;
 
-  UpdateJson get updateJson => _updateJson;
+  UpdateJson? get updateJson => _updateJson;
 
   onInit() {
     super.onInit();
@@ -68,10 +68,10 @@ class VersionController extends GetxController {
       });
 
       FlutterXUpdate.setUpdateHandler(
-          onUpdateError: (Map<String, dynamic> message) async {
+          onUpdateError: (Map<String, dynamic>? message) async {
         print(message);
         //下载失败
-        if (message["code"] == 4000) {
+        if (message!["code"] == 4000) {
           FlutterXUpdate.showRetryUpdateTipDialog(
             retryContent: "下载失败，重试一下？",
             retryUrl: checkUrl + "$_version",
@@ -79,9 +79,9 @@ class VersionController extends GetxController {
         }
         _message = "$message";
         update();
-      }, onUpdateParse: (String json) async {
+      }, onUpdateParse: (String? json) async {
         //这里是自定义json解析
-        return customParseJson(json);
+        return customParseJson(json!);
       });
     } else if ((Platform.isIOS)) {}
   }
@@ -93,7 +93,7 @@ class VersionController extends GetxController {
 
   ///将自定义的json内容解析为UpdateEntity实体类
   UpdateEntity customParseJson(String json) {
-    AppInfo appInfo = AppInfo.fromJson(json);
+    AppInfo appInfo = AppInfo.fromJson(json)!;
     print(appInfo);
     return UpdateEntity(
       hasUpdate: appInfo.hasUpdate,

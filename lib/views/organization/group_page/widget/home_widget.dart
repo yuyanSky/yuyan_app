@@ -24,15 +24,15 @@ import 'package:yuyan_app/views/widget/user_widget.dart';
 import 'group_event_widget.dart';
 
 class GroupHomeWidget extends StatelessWidget {
-  final List<GroupViewBlockSeri> items;
+  final List<GroupViewBlockSeri>? items;
   final Map meta;
   final int version;
-  final int groupId;
+  final int? groupId;
 
   GroupHomeWidget({
-    Key key,
+    Key? key,
     this.items,
-    this.meta,
+    required this.meta,
     this.groupId,
   })  : version = meta['version'] ?? 3,
         super(key: key);
@@ -50,13 +50,13 @@ class GroupHomeWidget extends StatelessWidget {
     }
     // 这里是version 3版本，携带有数据
     List<GroupViewBlockSeri> blocks = [];
-    items.forEach((out) {
+    items!.forEach((out) {
       /// placements一般有两个元素
       /// 第一个是左边区域，第二个是右边区域
       /// 但是手机一般不能同时显示左右区域
       /// 这里，给的顺序来，先左，后右
-      out.placements.forEach((inner) {
-        blocks.addAll(inner.blocks);
+      out.placements!.forEach((inner) {
+        blocks.addAll(inner.blocks!);
       });
     });
     var c = Get.find<GroupHomeController>(tag: '$groupId');
@@ -120,7 +120,7 @@ class GroupHomeWidget extends StatelessWidget {
           tag: tag,
           builder: (c) => c.stateBuilder(
             onIdle: () {
-              var data = c.value;
+              List<TopicSeri>? data = c.value;
               return _BlockWidgetWrap(
                 title: '话题',
                 child: Card(
@@ -144,7 +144,7 @@ class GroupHomeWidget extends StatelessWidget {
           tag: tag,
           builder: (c) => c.stateBuilder(
             onIdle: () {
-              var data = c.value;
+              List<BookStackSeri>? data = c.value;
               return BookStackWidget(
                 stack: data,
               );
@@ -156,7 +156,7 @@ class GroupHomeWidget extends StatelessWidget {
           tag: tag,
           builder: (c) => c.stateBuilder(
             onIdle: () {
-              var books = c.value;
+              List<BookSeri> books = c.value!;
               return _BlockWidgetWrap(
                 title: '最新知识库',
                 child: Card(
@@ -225,7 +225,7 @@ class GroupHomeWidget extends StatelessWidget {
         //TODO(@dreamer2q): 组织内部搜索，由scope参数提供
         return SizedBox.shrink();
       case 'memberList':
-        var members = block.data.list<GroupUserSeri>();
+        var members = block.data!.list<GroupUserSeri>();
         return _BlockWidgetWrap(
           title: block.title,
           child: _MemberListWidget(
@@ -233,7 +233,7 @@ class GroupHomeWidget extends StatelessWidget {
           ),
         );
       case 'bookList':
-        var books = block.data.list<BookSeri>();
+        var books = block.data!.list<BookSeri>()!;
         return _BlockWidgetWrap(
           title: block.title,
           child: Card(
@@ -253,7 +253,7 @@ class GroupHomeWidget extends StatelessWidget {
           ),
         );
       case 'quickLinks':
-        var links = block.data.list<QuickLinkSeri>();
+        var links = block.data!.list<QuickLinkSeri>();
         return _BlockWidgetWrap(
           title: block.title,
           child: _GroupQuickLinks(
@@ -261,7 +261,7 @@ class GroupHomeWidget extends StatelessWidget {
           ),
         );
       case 'custom':
-        var data = block.data.serialize<DocletSeri>();
+        var data = block.data!.serialize<DocletSeri>()!;
         return _BlockWidgetWrap(
           title: block.title,
           child: Card(
@@ -290,23 +290,23 @@ class GroupHomeWidget extends StatelessWidget {
               vertical: 6,
             ),
             child: _TopicListWidget(
-              topics: block.data.list<TopicSeri>(),
+              topics: block.data!.list<TopicSeri>(),
             ),
           ),
         );
       case 'bookStacks':
         return BookStackWidget(
-          stack: block.data.list<BookStackSeri>(),
+          stack: block.data!.list<BookStackSeri>(),
         );
       case 'banner':
         return _BannerWidget(
-          data: block.data.list<QuickLinkSeri>(),
+          data: block.data!.list<QuickLinkSeri>(),
         );
       case 'docList':
         return _BlockWidgetWrap(
           title: block.title,
           child: _DocListWidget(
-            docs: block.data.list<DocSeri>(),
+            docs: block.data!.list<DocSeri>(),
           ),
         );
       case 'events':
@@ -337,10 +337,10 @@ class GroupHomeWidget extends StatelessWidget {
 }
 
 class _GroupQuickLinks extends StatelessWidget {
-  final List<QuickLinkSeri> links;
+  final List<QuickLinkSeri>? links;
 
   const _GroupQuickLinks({
-    Key key,
+    Key? key,
     this.links,
   }) : super(key: key);
 
@@ -353,9 +353,9 @@ class _GroupQuickLinks extends StatelessWidget {
         height: 50,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: links.length,
+          itemCount: links!.length,
           itemBuilder: (_, i) {
-            var link = links[i];
+            var link = links![i];
             return InkWell(
               onTap: () => Util.handleQuickLinkNav(link),
               child: Container(
@@ -381,10 +381,10 @@ class _GroupQuickLinks extends StatelessWidget {
 }
 
 class _BannerWidget extends StatelessWidget {
-  final List<QuickLinkSeri> data;
+  final List<QuickLinkSeri>? data;
 
   const _BannerWidget({
-    Key key,
+    Key? key,
     this.data,
   }) : super(key: key);
 
@@ -395,9 +395,9 @@ class _BannerWidget extends StatelessWidget {
       width: Get.width,
       height: 160,
       child: Swiper(
-        itemCount: data.length,
+        itemCount: data!.length,
         itemBuilder: (_, i) {
-          var item = data[i];
+          var item = data![i];
           Widget child = Container(
             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
             child: Stack(
@@ -428,7 +428,7 @@ class _BannerWidget extends StatelessWidget {
           );
           return GestureDetector(
             onTap: () {
-              MyRoute.webview(item.url);
+              MyRoute.webview(item.url!);
             },
             child: child,
           );
@@ -439,10 +439,10 @@ class _BannerWidget extends StatelessWidget {
 }
 
 class _DocListWidget extends StatelessWidget {
-  final List<DocSeri> docs;
+  final List<DocSeri>? docs;
 
   const _DocListWidget({
-    Key key,
+    Key? key,
     this.docs,
   }) : super(key: key);
 
@@ -458,8 +458,8 @@ class _DocListWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 6),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: docs.map((e) {
-            return _DocTileWidget(doc: e, last: e == docs.last);
+          children: docs!.map((e) {
+            return _DocTileWidget(doc: e, last: e == docs!.last);
           }).toList(),
         ),
       ),
@@ -468,12 +468,12 @@ class _DocListWidget extends StatelessWidget {
 }
 
 class _DocTileWidget extends StatelessWidget {
-  final DocSeri doc;
+  final DocSeri? doc;
   final bool last;
   final Border border;
 
   const _DocTileWidget({
-    Key key,
+    Key? key,
     this.doc,
     this.last = false,
     this.border = const Border(
@@ -496,7 +496,7 @@ class _DocTileWidget extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.only(right: 8, left: 12),
-            child: AppIcon.iconType(doc.type, size: 24),
+            child: AppIcon.iconType(doc!.type, size: 24),
           ),
           Expanded(
             child: Column(
@@ -504,7 +504,7 @@ class _DocTileWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "${doc.title}",
+                  "${doc!.title}",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppStyles.textStyleB,
@@ -519,8 +519,8 @@ class _DocTileWidget extends StatelessWidget {
                       LakeMentionWidget(
                         before: '',
                         showLogin: false,
-                        login: doc.user.login,
-                        name: doc.user.name,
+                        login: doc!.user!.login,
+                        name: doc!.user!.name,
                         fontSize: 10,
                       ),
                       Text(
@@ -529,7 +529,7 @@ class _DocTileWidget extends StatelessWidget {
                           fontSize: 10,
                         ),
                       ),
-                      Text('${doc.book.name}'),
+                      Text('${doc!.book!.name}'),
                     ],
                   ),
                 ),
@@ -543,10 +543,10 @@ class _DocTileWidget extends StatelessWidget {
 }
 
 class _TopicListWidget extends StatelessWidget {
-  final List<TopicSeri> topics;
+  final List<TopicSeri>? topics;
 
   const _TopicListWidget({
-    Key key,
+    Key? key,
     this.topics,
   }) : super(key: key);
 
@@ -554,7 +554,7 @@ class _TopicListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        children: topics.mapWidget(
+        children: topics!.mapWidget(
           (item) => _TopicTileWidget(topic: item),
           divide: true,
         ),
@@ -564,10 +564,10 @@ class _TopicListWidget extends StatelessWidget {
 }
 
 class _TopicTileWidget extends StatelessWidget {
-  final TopicSeri topic;
+  final TopicSeri? topic;
 
   _TopicTileWidget({
-    Key key,
+    Key? key,
     this.topic,
   }) : super(key: key);
 
@@ -582,7 +582,7 @@ class _TopicTileWidget extends StatelessWidget {
         children: [
           Icon(Icons.question_answer, size: 16),
           Text(
-            "${topic.commentsCount}",
+            "${topic!.commentsCount}",
             style: AppStyles.textStyleCC,
           )
         ],
@@ -591,13 +591,13 @@ class _TopicTileWidget extends StatelessWidget {
     Widget user = Row(
       children: [
         UserAvatarWidget(
-          avatar: topic.user.avatarUrl,
+          avatar: topic!.user!.avatarUrl,
           height: 18,
         ),
         SizedBox(width: 4),
         Container(
           child: Text(
-            "${topic.user.name} 创建于 ${Util.timeCut(topic.createdAt)}",
+            "${topic!.user!.name} 创建于 ${Util.timeCut(topic!.createdAt!)}",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppStyles.textStyleCC,
@@ -617,7 +617,7 @@ class _TopicTileWidget extends StatelessWidget {
               children: [
                 Container(
                   child: Text(
-                    '${topic.title}',
+                    '${topic!.title}',
                     style: AppStyles.textStyleB,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -634,7 +634,7 @@ class _TopicTileWidget extends StatelessWidget {
     );
     return GestureDetector(
       onTap: () {
-        MyRoute.topic(topic.iid, topic.groupId);
+        MyRoute.topic(topic!.iid, topic!.groupId);
       },
       child: child,
     );
@@ -642,10 +642,10 @@ class _TopicTileWidget extends StatelessWidget {
 }
 
 class _MemberListWidget extends StatelessWidget {
-  final List<GroupUserSeri> members;
+  final List<GroupUserSeri>? members;
 
   const _MemberListWidget({
-    Key key,
+    Key? key,
     this.members,
   }) : super(key: key);
 
@@ -660,9 +660,9 @@ class _MemberListWidget extends StatelessWidget {
         height: 125,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: members.length,
+          itemCount: members!.length,
           itemBuilder: (_, i) {
-            var member = members[i].user;
+            var member = members![i].user!;
             var tag = '${member.id}';
             Widget child = Container(
               padding: const EdgeInsets.symmetric(
@@ -698,7 +698,7 @@ class _MemberListWidget extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '${members[i].epv30}',
+                            '${members![i].epv30}',
                             style: AppStyles.textStyleCC,
                           ),
                         ],
@@ -729,12 +729,12 @@ class _MemberListWidget extends StatelessWidget {
 }
 
 class _BlockWidgetWrap extends StatelessWidget {
-  final String title;
-  final Widget child;
+  final String? title;
+  final Widget? child;
   final Border border;
 
   const _BlockWidgetWrap({
-    Key key,
+    Key? key,
     this.title,
     this.child,
     this.border = const Border(

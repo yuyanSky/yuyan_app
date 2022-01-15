@@ -9,19 +9,19 @@ import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 
 class BookStackWidget extends StatelessWidget {
-  final List<BookStackSeri> stack;
+  final List<BookStackSeri?>? stack;
 
   BookStackWidget({
-    Key key,
+    Key? key,
     this.stack,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: stack.mapWidget(
+      children: stack!.mapWidget(
         (item) => _BlockWidgetWrap(
-          title: '${item.name}',
+          title: '${item!.name}',
           child: _buildStack(item),
         ),
       ),
@@ -30,14 +30,14 @@ class BookStackWidget extends StatelessWidget {
 
   Widget _buildStack(BookStackSeri item) {
     return Column(
-      children: item.books.mapWidget(
+      children: item.books!.mapWidget(
         (e) => _stackItem(e, item.displayType),
       ),
     );
   }
 
-  Widget _stackItem(BookSeri item, int type) {
-    Widget bottom;
+  Widget _stackItem(BookSeri item, int? type) {
+    Widget? bottom;
     switch (type) {
       case 0: //基础样式，无summary
         break;
@@ -78,19 +78,19 @@ class BookStackWidget extends StatelessWidget {
   }
 
   List<Widget> _summaryList(
-      BookSeri book, List<SummarySeri> items, String type) {
+      BookSeri book, List<SummarySeri>? items, String? type) {
     switch (type) {
       case 'Book':
       case 'Sheet':
-        return items.mapWidget((e) => _docItem(book, e));
+        return items!.mapWidget((e) => _docItem(book, e));
       case 'Design':
         return [
           Row(
-            children: items.map((e) {
+            children: items!.map((e) {
               return Flexible(
                 flex: 1,
                 child: Container(
-                  child: CachedNetworkImage(imageUrl: e.image),
+                  child: CachedNetworkImage(imageUrl: e.image!),
                 ),
               );
             }).toList(),
@@ -110,7 +110,7 @@ class BookStackWidget extends StatelessWidget {
           bookId: item.bookId,
           slug: item.slug,
           book: book.slug,
-          login: book.user.login,
+          login: book.user!.login,
         );
       },
       child: Container(
@@ -123,7 +123,7 @@ class BookStackWidget extends StatelessWidget {
               ),
             ),
             Text(
-              Util.timeCut(item.contentUpdatedAt ?? item.createdAt),
+              Util.timeCut(item.contentUpdatedAt ?? item.createdAt!),
               style: AppStyles.textStyleCC,
             ),
           ],
@@ -134,15 +134,15 @@ class BookStackWidget extends StatelessWidget {
 }
 
 class BookTileWrapWidget extends StatelessWidget {
-  final BookSeri book;
-  final Widget top;
-  final Widget bottom;
+  final BookSeri? book;
+  final Widget? top;
+  final Widget? bottom;
   final EdgeInsets padding;
-  final EdgeInsets margin;
+  final EdgeInsets? margin;
   final Widget divider;
 
   const BookTileWrapWidget({
-    Key key,
+    Key? key,
     this.book,
     this.top,
     this.bottom,
@@ -161,7 +161,7 @@ class BookTileWrapWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget tile = GestureDetector(
       onTap: () {
-        MyRoute.bookDocs(book);
+        MyRoute.bookDocs(book!);
       },
       child: _buildTile(),
     );
@@ -169,7 +169,7 @@ class BookTileWrapWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (top != null) top,
+          if (top != null) top!,
           if (top != null) divider,
           Container(
             margin: margin,
@@ -177,7 +177,7 @@ class BookTileWrapWidget extends StatelessWidget {
             child: tile,
           ),
           if (bottom != null) divider,
-          if (bottom != null) bottom,
+          if (bottom != null) bottom!,
         ],
       ),
     );
@@ -188,7 +188,7 @@ class BookTileWrapWidget extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.only(right: 8),
-          child: AppIcon.iconType(book.type, size: 24),
+          child: AppIcon.iconType(book!.type, size: 24),
         ),
         Expanded(
           child: Column(
@@ -196,14 +196,14 @@ class BookTileWrapWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "${book.name}",
+                "${book!.name}",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppStyles.textStyleB,
               ),
-              if (!GetUtils.isNullOrBlank(book.description))
+              if (!GetUtils.isNullOrBlank(book!.description)!)
                 Text(
-                  "${book.description}",
+                  "${book!.description}",
                   style: AppStyles.textStyleCC,
                 )
             ],
@@ -215,12 +215,12 @@ class BookTileWrapWidget extends StatelessWidget {
 }
 
 class _BlockWidgetWrap extends StatelessWidget {
-  final String title;
-  final Widget child;
+  final String? title;
+  final Widget? child;
   final Border border;
 
   const _BlockWidgetWrap({
-    Key key,
+    Key? key,
     this.title,
     this.child,
     this.border = const Border(

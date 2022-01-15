@@ -10,7 +10,7 @@ import 'recent/recent_page.dart';
 import 'small_note/quick_view.dart';
 
 class DashboardTab extends StatefulWidget {
-  DashboardTab({Key key}) : super(key: key);
+  DashboardTab({Key? key}) : super(key: key);
 
   @override
   _DashboardTabState createState() => _DashboardTabState();

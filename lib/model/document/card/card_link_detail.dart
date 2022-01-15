@@ -1,13 +1,13 @@
 class CardLinkDetailSeri {
-  String image;
-  String title;
-  String type;
-  String belong;
-  String belongUrl;
-  String desc;
-  String url;
-  String targetType;
-  String serializer;
+  String? image;
+  String? title;
+  String? type;
+  String? belong;
+  String? belongUrl;
+  String? desc;
+  String? url;
+  String? targetType;
+  String? serializer;
 
   CardLinkDetailSeri({
     this.image,

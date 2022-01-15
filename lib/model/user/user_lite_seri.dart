@@ -1,20 +1,20 @@
 import 'package:yuyan_app/model/user/group/group.dart';
 
 class UserLiteSeri {
-  int id;
-  String type;
-  String login;
-  String name;
-  String avatar;
+  int? id;
+  String? type;
+  String? login;
+  String? name;
+  String? avatar;
   dynamic scene;
-  String avatarUrl;
-  int role;
-  bool isPaid;
-  int memberLevel;
-  int followersCount;
-  int followingCount;
-  String description;
-  String serializer;
+  String? avatarUrl;
+  int? role;
+  bool? isPaid;
+  int? memberLevel;
+  int? followersCount;
+  int? followingCount;
+  String? description;
+  String? serializer;
 
   UserLiteSeri({
     this.id,
@@ -33,7 +33,7 @@ class UserLiteSeri {
     this.serializer,
   });
 
-  UserLiteSeri.fromJson(Map<String, dynamic> json) {
+  UserLiteSeri.fromJson(Map<String, dynamic>? json) {
     if (json == null) return;
     id = json['id'];
     type = json['type'];

@@ -37,7 +37,7 @@ enum ViewErrorType {
 }
 
 class ViewError {
-  final String title;
+  final String? title;
   final String content;
   final dynamic error;
   final ViewErrorType type;
@@ -72,17 +72,17 @@ class ViewError {
 
 class ViewStateUtil {
   static ViewError _handlerApiError(ApiError err) {
-    if (err.response.status == 401) {
+    if (err.response!.status == 401) {
       return ViewError(
         title: '未认证',
-        content: err.response.errorDescription(),
+        content: err.response!.errorDescription(),
         error: err,
         type: ViewErrorType.unauthorized,
       );
     }
     return ViewError(
       title: 'API错误',
-      content: err.response.errorDescription(),
+      content: err.response!.errorDescription(),
       error: err,
       type: ViewErrorType.api,
     );
@@ -101,7 +101,7 @@ class ViewStateUtil {
         var err = (e as DioError).error;
         //这里 Dio 会将错误强制包装成 DioError 类型
         //因此只能通过这个来判断是否 ApiError
-        if ((e as DioError).type == DioErrorType.other) {
+        if (e.type == DioErrorType.other) {
           return handlerError(err);
         }
         return ViewError(
@@ -119,7 +119,7 @@ class ViewStateUtil {
           type: ViewErrorType.network,
         );
       case NoSuchMethodError: //调用 null 对象
-        var err = e as NoSuchMethodError;
+        var err = e as NoSuchMethodError?;
         return ViewError(
           title: '空对象错误(NoSuchMethod)',
           content: '开发者没有很好的处理特殊情况，\n'
@@ -178,7 +178,7 @@ mixin ControllerStateMixin on GetxController {
 
   ViewState get state => _state;
 
-  ViewError error;
+  ViewError? error;
 
   set state(ViewState newState) {
     _state = newState;
@@ -215,7 +215,7 @@ mixin ControllerStateMixin on GetxController {
     error = ViewStateUtil.handlerError(e);
 
     state = ViewState.error;
-    onError?.call();
+    onError.call();
 
     //used for debug
     ViewStateUtil.errorPrint(e, stack);
@@ -224,7 +224,7 @@ mixin ControllerStateMixin on GetxController {
     App.analytics.logEvent(
       name: 'view_state_error',
       parameters: {
-        ...error.toJson(),
+        ...error!.toJson() as Map<String, Object?>,
         'stack': stack,
       },
     );
@@ -249,12 +249,12 @@ mixin ControllerStateMixin on GetxController {
   /// [skipIdle] is used to skip unnecessary wrap for [onIdle] builder, since
   /// it usually builds the entire page with [Scaffold] as the topmost widget.
   Widget pageBuilder<T>({
-    Widget Function(Widget child) parent,
+    Widget Function(Widget child)? parent,
     bool skipIdle = true,
-    WidgetCallback onIdle,
-    Widget onLoading,
-    Widget onEmpty,
-    Widget Function(ViewError error) onError,
+    WidgetCallback? onIdle,
+    Widget? onLoading,
+    Widget? onEmpty,
+    Widget Function(ViewError? error)? onError,
   }) {
     if (parent == null) {
       return Scaffold(
@@ -267,7 +267,7 @@ mixin ControllerStateMixin on GetxController {
       );
     }
     if (skipIdle && (this.isIdleState || this.isRefreshState)) {
-      return onIdle();
+      return onIdle!();
     }
     return parent(stateBuilder(
       onIdle: onIdle,
@@ -287,10 +287,10 @@ mixin ControllerStateMixin on GetxController {
   /// [scaffold] used for page without Scaffold
   /// [animation] build with FadedAnimation
   Widget stateBuilder<T>({
-    WidgetCallback onIdle,
-    Widget onLoading,
-    Widget onEmpty,
-    Widget Function(ViewError error) onError,
+    WidgetCallback? onIdle,
+    Widget? onLoading,
+    Widget? onEmpty,
+    Widget? Function(ViewError? error)? onError,
     bool animation = true,
     bool scaffold = false,
     bool centerLayout = false,
@@ -299,7 +299,7 @@ mixin ControllerStateMixin on GetxController {
     switch (state) {
       case ViewState.refreshing:
       case ViewState.idle:
-        child = onIdle();
+        child = onIdle!();
         break;
       case ViewState.empty:
         child = onEmpty ?? const ViewEmptyWidget();
@@ -340,7 +340,7 @@ mixin ControllerStateMixin on GetxController {
       if (initLoading) {
         setLoading();
       }
-      await callback?.call();
+      await callback.call();
       setIdle();
     } catch (e) {
       setError(e);
@@ -349,7 +349,7 @@ mixin ControllerStateMixin on GetxController {
 }
 
 Widget _linearLayoutBuilder(
-    Widget currentChild, List<Widget> previousChildren) {
+    Widget? currentChild, List<Widget> previousChildren) {
   return Stack(
     children: <Widget>[
       ...previousChildren,

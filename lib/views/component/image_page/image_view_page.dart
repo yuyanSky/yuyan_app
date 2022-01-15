@@ -9,17 +9,17 @@ import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/util/util.dart';
 
 class SingleImageViewer extends StatelessWidget {
-  final String imageUrl;
+  final String? imageUrl;
 
   SingleImageViewer({
-    Key key,
+    Key? key,
     this.imageUrl,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // final provider = CachedNetworkImageProvider(imageUrl);
-    final provider = NetworkImage(imageUrl);
+    final provider = NetworkImage(imageUrl!);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Stack(
@@ -50,7 +50,7 @@ class SingleImageViewer extends StatelessWidget {
                   color: Colors.white,
                   icon: Icon(Icons.share),
                   onPressed: () {
-                    var url = imageUrl;
+                    var url = imageUrl!;
                     var name = Util.getUrlBaseNameWithSplash(url);
                     var filepath =
                         StorageManager.temporaryDirectory.path + name;
@@ -86,19 +86,17 @@ class ImageViewerPage extends StatefulWidget {
   final String initUrl;
 
   const ImageViewerPage({
-    Key key,
-    this.imageUrls,
-    this.initUrl,
-  })  : assert(imageUrls != null),
-        assert(initUrl != null),
-        super(key: key);
+    Key? key,
+    required this.imageUrls,
+    required this.initUrl,
+  }) : super(key: key);
 
   @override
   _ImageViewerPageState createState() => _ImageViewerPageState();
 }
 
 class _ImageViewerPageState extends State<ImageViewerPage> {
-  ExtendedPageController _controller;
+  ExtendedPageController? _controller;
 
   var _index = 0.obs;
   var imgLength = 1;
@@ -106,7 +104,7 @@ class _ImageViewerPageState extends State<ImageViewerPage> {
   @override
   void initState() {
     super.initState();
-    var index = widget.imageUrls?.indexOf(widget.initUrl);
+    var index = widget.imageUrls.indexOf(widget.initUrl);
     if (index != -1) {
       _index.value = index;
       imgLength = widget.imageUrls.length;
@@ -155,7 +153,7 @@ class _ImageViewerPageState extends State<ImageViewerPage> {
                         mode: ExtendedImageMode.gesture,
                         filterQuality: FilterQuality.high,
                         onDoubleTap: (state) {
-                          var scale = state.gestureDetails.totalScale;
+                          var scale = state.gestureDetails!.totalScale;
                           if (scale == 1) {
                             state.handleDoubleTap(scale: 2);
                           } else {

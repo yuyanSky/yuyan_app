@@ -8,7 +8,7 @@ import 'package:yuyan_app/views/home_tabs/discover/widget/book_tile_widget.dart'
 import 'package:yuyan_app/views/organization/widget/group.dart';
 
 class SpacePubPage extends StatefulWidget {
-  SpacePubPage({Key key}) : super(key: key);
+  SpacePubPage({Key? key}) : super(key: key);
 
   @override
   _SpacePubPageState createState() => _SpacePubPageState();
@@ -48,7 +48,7 @@ class _SpacePubPageState extends State<SpacePubPage>
                   builder: (c) => c.stateBuilder(
                     onIdle: () => TileListWidget(
                       title: '知识库',
-                      children: c.value.mapWidget(
+                      children: c.value!.mapWidget(
                         (item) => BookTileWidgetFlat(item: item),
                       ),
                     ),
@@ -59,7 +59,7 @@ class _SpacePubPageState extends State<SpacePubPage>
                   builder: (c) => c.stateBuilder(
                     onIdle: () => TileListWidget(
                       title: '团队',
-                      children: c.value.mapWidget(
+                      children: c.value!.mapWidget(
                         (item) => GroupTileWidgetFlat(group: item),
                       ),
                     ),
@@ -78,14 +78,14 @@ class _SpacePubPageState extends State<SpacePubPage>
 }
 
 class TileListWidget extends StatelessWidget {
-  final String title;
-  final List<Widget> children;
+  final String? title;
+  final List<Widget>? children;
   final bool divide;
   final EdgeInsets padding;
   final EdgeInsets margin;
 
   const TileListWidget({
-    Key key,
+    Key? key,
     this.title,
     this.children,
     this.divide = true,
@@ -107,13 +107,13 @@ class TileListWidget extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 8, top: 8, bottom: 8),
-            child: Text(title, style: AppStyles.textStyleB),
+            child: Text(title!, style: AppStyles.textStyleB),
           ),
           Divider(height: 1),
           Padding(
             padding: padding,
             child: Column(
-              children: children.mapWidget(
+              children: children!.mapWidget(
                 (item) => item,
                 divide: divide,
               ),

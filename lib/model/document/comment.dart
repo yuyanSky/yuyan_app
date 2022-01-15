@@ -2,32 +2,32 @@
 import 'package:yuyan_app/model/meta/meta.dart';
 
 class CommentSeri {
-  String body;
-  String bodyAsl;
-  MetaSeri meta;
-  bool isBanned;
-  int id;
-  int spaceId;
-  String commentableType;
-  int commentableId;
-  int userId;
-  int parentId;
-  int likesCount;
-  String format;
-  String createdAt;
-  String updatedAt;
-  int status;
+  String? body;
+  String? bodyAsl;
+  MetaSeri? meta;
+  bool? isBanned;
+  int? id;
+  int? spaceId;
+  String? commentableType;
+  int? commentableId;
+  int? userId;
+  int? parentId;
+  int? likesCount;
+  String? format;
+  String? createdAt;
+  String? updatedAt;
+  int? status;
   dynamic sourceType;
   dynamic sourceId;
-  int mood;
+  int? mood;
   dynamic toUserId;
   dynamic type;
   dynamic selectionId;
   dynamic selectionType;
   dynamic bookId;
   dynamic deletedAt;
-  String bodyHtml;
-  String fullBodyHtml;
+  String? bodyHtml;
+  String? fullBodyHtml;
 
   CommentSeri({
     this.body,
@@ -92,7 +92,7 @@ class CommentSeri {
     map["body"] = body;
     map["body_asl"] = bodyAsl;
     if (meta != null) {
-      map["meta"] = meta.toJson();
+      map["meta"] = meta!.toJson();
     }
     map["isBanned"] = isBanned;
     map["id"] = id;

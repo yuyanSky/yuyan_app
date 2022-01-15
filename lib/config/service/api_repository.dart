@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:tuple/tuple.dart';
 import 'package:yuyan_app/config/app.dart';
@@ -38,7 +40,7 @@ import 'package:yuyan_app/model/user/user_profile.dart';
 class ApiRepository {
   static BaseApi api = BaseApi();
 
-  static int get currentUserId => App.userProvider.data.id;
+  static int? get currentUserId => App.userProvider.data!.id;
 
   static Future<MineSeri> getMineInfo() async {
     var res = await api.get('/mine');
@@ -47,7 +49,7 @@ class ApiRepository {
   }
 
   static Future<Tuple2<List<EventSeri>, ApiResponse>> getAttendEvents(
-      [int offset = 0]) async {
+      [int? offset = 0]) async {
     var resp = await api.get('/events', queryParameters: {
       'offset': offset,
     });
@@ -98,19 +100,19 @@ class ApiRepository {
     }
   }
 
-  static Future<bool> deleteRecentItem(int id) async {
-    var res = await api.delete('/mine/recent/$id');
+  static Future<bool?> deleteRecentItem(int id) async {
+    Response<dynamic> res = await api.delete('/mine/recent/$id');
     return res.data.current;
   }
 
-  static Future<DocletSeri> getUserReadme({int userId}) async {
+  static Future<DocletSeri> getUserReadme({int? userId}) async {
     var res = await api.get('/users/$userId/readme');
     var asp = (res.data as ApiResponse);
     return DocletSeri.fromJson(asp.data['doclet']);
   }
 
-  static Future<ApiResponse> getUserEvents({
-    int userId,
+  static Future<ApiResponse?> getUserEvents({
+    int? userId,
     int limit = 20,
     int offset = 0,
   }) async {
@@ -121,7 +123,7 @@ class ApiRepository {
         'offset': offset,
       },
     );
-    var data = (res.data as ApiResponse);
+    var data = (res.data as ApiResponse?);
     return data;
   }
 
@@ -149,12 +151,13 @@ class ApiRepository {
   }
 
   static Future<bool> putNotification({String ids = 'all'}) async {
-    var asp = await api.put('/notifications', data: {'ids': ids});
+    Response<dynamic> asp = await api.put('/notifications', data: {'ids': ids});
     return (asp.data as ApiResponse).data['ok'] == 1;
   }
 
   static Future<bool> delNotification({String ids = 'all'}) async {
-    var asp = await api.delete('/notifications', data: {'ids': ids});
+    Response<dynamic> asp =
+        await api.delete('/notifications', data: {'ids': ids});
     return (asp.data as ApiResponse).data['ok'] == 1;
   }
 
@@ -177,7 +180,7 @@ class ApiRepository {
   }
 
   static Future<List<OrganizationLiteSeri>> getOrganizationList(
-      {int userId}) async {
+      {int? userId}) async {
     var resp = await api.get('/users/$userId/organizations');
     var asp = resp.data as ApiResponse;
     var list = (asp.data as List)
@@ -186,15 +189,15 @@ class ApiRepository {
     return list;
   }
 
-  static Future<UserProfileSeri> getUserProfile({int userId}) async {
-    userId ??= App.userProvider.data.id;
+  static Future<UserProfileSeri> getUserProfile({int? userId}) async {
+    userId ??= App.userProvider.data!.id;
     var res = await api.get("/users/$userId/profile");
     var asp = (res.data as ApiResponse);
     return UserProfileSeri.fromJson(asp.data);
   }
 
-  static Future<List<GroupSeri>> getOrgGroupList({int orgId}) async {
-    orgId ??= App.currentSpaceProvider.data.id;
+  static Future<List<GroupSeri>> getOrgGroupList({int? orgId}) async {
+    orgId ??= App.currentSpaceProvider.data!.id;
     var res = await api.get('/organizations/$orgId/groups');
     var asp = (res.data as ApiResponse);
     var list = (asp.data as List).map((e) => GroupSeri.fromJson(e)).toList();
@@ -202,10 +205,10 @@ class ApiRepository {
   }
 
   static Future<List<GroupSeri>> getGroupList({
-    int userId,
+    int? userId,
     int offset = 0,
   }) async {
-    userId ??= App.userProvider.data.id;
+    userId ??= App.userProvider.data!.id;
     var res = await api.get(
       "/users/$userId/groups",
       queryParameters: {
@@ -217,19 +220,19 @@ class ApiRepository {
     return list;
   }
 
-  static Future<List<GroupUserSeri>> getGroupMemberList({int groupId}) async {
+  static Future<List<GroupUserSeri>> getGroupMemberList({int? groupId}) async {
     var res = await api.get("/groups/$groupId/users?with_count=true");
     var data = (res.data as ApiResponse).data as List;
     return data.map((e) => GroupUserSeri.fromJson(e)).toList();
   }
 
-  static Future<BookStackSeri> getUserBookStack({int userId}) async {
+  static Future<BookStackSeri> getUserBookStack({int? userId}) async {
     var res = await api.get('/users/$userId/book_stack');
     var data = (res.data as ApiResponse).data;
     return BookStackSeri.fromJson(data['stack']);
   }
 
-  static Future<List<BookStackSeri>> getBookStack({int groupId}) async {
+  static Future<List<BookStackSeri>> getBookStack({int? groupId}) async {
     var res = await api.get("/groups/$groupId/bookstacks");
     var asp = (res.data as ApiResponse).data;
     var list = (asp as List).map((e) => BookStackSeri.fromJson(e)).toList();
@@ -237,7 +240,7 @@ class ApiRepository {
   }
 
   static Future<Tuple2<List<GroupViewBlockSeri>, ApiResponse>> getGroupHome(
-      {int groupId}) async {
+      {int? groupId}) async {
     var res = await api.get(
       '/groups/$groupId/homepage',
       queryParameters: {'include_data': true},
@@ -258,7 +261,7 @@ class ApiRepository {
 
   //目前仅用于获取Group的动态
   static Future<Tuple2<List<UserEventSeri>, ApiResponse>> getViewBlocks({
-    int blockId,
+    int? blockId,
     int offset = 0,
   }) async {
     var resp = await api.get('/view_blocks/$blockId', queryParameters: {
@@ -270,9 +273,9 @@ class ApiRepository {
     return Tuple2.fromList([data, asp]);
   }
 
-  static Future<ApiResponse> getResources({
-    int bookId,
-    int parentId,
+  static Future<ApiResponse?> getResources({
+    int? bookId,
+    int? parentId,
     int offset = 0,
   }) async {
     var res = await api.get(
@@ -283,11 +286,11 @@ class ApiRepository {
         'offset': offset,
       },
     );
-    return (res.data as ApiResponse);
+    return (res.data as ApiResponse?);
   }
 
-  static Future<ApiResponse> getResourceParents({
-    int resourceId,
+  static Future<ApiResponse?> getResourceParents({
+    int? resourceId,
     int level = 3,
   }) async {
     var res = await api.get(
@@ -296,15 +299,15 @@ class ApiRepository {
         'level': level,
       },
     );
-    return (res.data as ApiResponse);
+    return (res.data as ApiResponse?);
   }
 
   static Future<List<BookSeri>> getOrgBookList({
-    int orgId,
+    int? orgId,
     int limit = 200,
   }) async {
     if (orgId == null) {
-      orgId = App.currentSpaceProvider.data.id;
+      orgId = App.currentSpaceProvider.data!.id;
     }
     var res = await api.get(
       '/organizations/$orgId/books',
@@ -318,7 +321,7 @@ class ApiRepository {
   }
 
   static Future<List<BookSeri>> getBookList({
-    int userId,
+    int? userId,
     int limit = 200,
   }) async {
     var res = await api.get(
@@ -333,7 +336,7 @@ class ApiRepository {
     return list;
   }
 
-  static Future<bool> getIfFollow({int userId}) async {
+  static Future<bool> getIfFollow({int? userId}) async {
     var res = await api.get(
       "/actions/user-owned",
       queryParameters: {
@@ -347,7 +350,7 @@ class ApiRepository {
   }
 
   static Future<List<UserSeri>> getFollowingList({
-    int userId,
+    int? userId,
     int offset = 0,
   }) async {
     // var res = await api.get(
@@ -371,7 +374,7 @@ class ApiRepository {
   }
 
   static Future<List<UserSeri>> getFollowerList({
-    int userId,
+    int? userId,
     int offset = 0,
   }) async {
     // var res = await api.get(
@@ -394,8 +397,8 @@ class ApiRepository {
     return (asp.data['data'] as List).map((e) => UserSeri.fromJson(e)).toList();
   }
 
-  static Future<bool> followUser({int userId}) async {
-    var res = await api.post("/actions", data: {
+  static Future<bool> followUser({int? userId}) async {
+    Response<dynamic> res = await api.post("/actions", data: {
       "action_type": "follow",
       "target_type": "User",
       "target_id": userId,
@@ -405,8 +408,8 @@ class ApiRepository {
     return data.targetId == userId;
   }
 
-  static Future<bool> unfollowUser({int userId}) async {
-    var res = await api.delete("/actions", data: {
+  static Future<bool> unfollowUser({int? userId}) async {
+    Response<dynamic> res = await api.delete("/actions", data: {
       "action_type": "follow",
       "target_type": "User",
       "target_id": userId,
@@ -446,7 +449,7 @@ class ApiRepository {
 
   // 查看是否收藏(文章或团队)
   static Future<bool> getIfMark({
-    int targetId,
+    int? targetId,
     String targetType = "Doc",
   }) async {
     var res = await api.get("/actions", queryParameters: {
@@ -459,8 +462,8 @@ class ApiRepository {
   }
 
   static Future<bool> toggleMark({
-    int targetId,
-    String targetType,
+    int? targetId,
+    String? targetType,
     bool marked = false,
   }) {
     return marked
@@ -469,10 +472,10 @@ class ApiRepository {
   }
 
   static Future<bool> mark({
-    int targetId,
-    String targetType = "Doc",
+    int? targetId,
+    String? targetType = "Doc",
   }) async {
-    var res = await api.post("/mine/marks", data: {
+    Response<dynamic> res = await api.post("/mine/marks", data: {
       // "action_type": "mark",
       "target_id": targetId,
       "target_type": targetType,
@@ -482,10 +485,10 @@ class ApiRepository {
   }
 
   static Future<bool> unmark({
-    int targetId,
-    String targetType = "Doc",
+    int? targetId,
+    String? targetType = "Doc",
   }) async {
-    var res = await api.delete("/mine/marks", data: {
+    Response<dynamic> res = await api.delete("/mine/marks", data: {
       // "action_type": "mark",
       "target_id": targetId,
       "target_type": targetType,
@@ -494,8 +497,8 @@ class ApiRepository {
     return asp.data['ok'] == 1;
   }
 
-  static Future<ActionSeri> doLike(
-      {bool unlike = false, int target, String type = 'Doc'}) async {
+  static Future<ActionSeri?> doLike(
+      {bool unlike = false, int? target, String type = 'Doc'}) async {
     return doAction(
       actionType: 'like',
       targetId: target,
@@ -505,20 +508,20 @@ class ApiRepository {
   }
 
   static Future<bool> getIfLike({
-    int targetId,
+    int? targetId,
     String targetType = 'Doc',
   }) async {
-    var res = await getAction(
+    var res = await (getAction(
       '',
       actionType: 'like',
       targetId: targetId,
       targetType: targetType,
-    );
+    ) as FutureOr<ApiResponse>);
     return res.data['actioned'] != null;
   }
 
-  static Future<ApiResponse> getLikeUsers({
-    int targetId,
+  static Future<ApiResponse?> getLikeUsers({
+    int? targetId,
     String targetType = 'Doc',
   }) async {
     var res = await getAction(
@@ -530,11 +533,11 @@ class ApiRepository {
     return res;
   }
 
-  static Future<ApiResponse> getAction(
+  static Future<ApiResponse?> getAction(
     String path, {
     String actionType = 'like',
-    int targetId,
-    String targetType,
+    int? targetId,
+    String? targetType,
     int limit = 20,
     int offset = 0,
   }) async {
@@ -545,17 +548,17 @@ class ApiRepository {
       'offset': offset,
       'limit': limit,
     });
-    return res.data as ApiResponse;
+    return res.data as ApiResponse?;
   }
 
-  static Future<ActionSeri> doAction({
+  static Future<ActionSeri?> doAction({
     // like, watch, follow, watch-comments, watch-topics, mark, read, reaction
-    String actionType,
-    int targetId,
+    String? actionType,
+    int? targetId,
     // Doc, Book, Artboard, ArtboardGroup,
     // ArtboardComment, Comment, Topic, User,
     // Resource, DocVersion, Quan, Note
-    String targetType,
+    String? targetType,
     bool del = false,
   }) async {
     var data = {
@@ -563,7 +566,7 @@ class ApiRepository {
       "target_id": targetId,
       "target_type": targetType,
     };
-    var res = await (del
+    Response<dynamic> res = await (del
         ? api.delete('/actions', data: data)
         : api.post('/actions', data: data));
     var asp = res.data as ApiResponse;
@@ -584,9 +587,9 @@ class ApiRepository {
 
   /// TOPIC [话题] 相关
   static Future<CommentDetailSeri> postComment({
-    int commentId,
-    String comment,
-    int parentId,
+    int? commentId,
+    String? comment,
+    int? parentId,
     String commentType = 'Topic',
     bool lake = false,
   }) async {
@@ -600,21 +603,21 @@ class ApiRepository {
       "body_asl": comment,
       "format": "lake"
     };
-    var res = await api.post("/comments", data: data);
+    Response<dynamic> res = await api.post("/comments", data: data);
     var asp = (res.data as ApiResponse);
     return CommentDetailSeri.fromJson(asp.data);
   }
 
-  static Future<CommentDetailSeri> deleteComment(int commentId) async {
-    var res = await api.delete("/comments/$commentId");
+  static Future<CommentDetailSeri> deleteComment(int? commentId) async {
+    Response<dynamic> res = await api.delete("/comments/$commentId");
     var asp = (res.data as ApiResponse);
     return CommentDetailSeri.fromJson(asp.data);
   }
 
   static Future<TopicDetailSeri> addTopic({
-    String title,
-    String body,
-    int groupId,
+    String? title,
+    String? body,
+    int? groupId,
   }) async {
     Map<String, dynamic> data = {
       "group_id": groupId,
@@ -626,12 +629,13 @@ class ApiRepository {
       "milestone_id": null,
       "uuid": null,
     };
-    var res = await api.post('/topics', data: data);
+    Response<dynamic> res = await api.post('/topics', data: data);
     var asp = (res.data as ApiResponse).data;
     return TopicDetailSeri.fromJson(asp);
   }
 
-  static Future<TopicDetailSeri> getTopicDetail({int iid, int groupId}) async {
+  static Future<TopicDetailSeri> getTopicDetail(
+      {int? iid, int? groupId}) async {
     var res = await api.get('/topics/$iid', queryParameters: {
       'group_id': groupId,
     });
@@ -639,15 +643,16 @@ class ApiRepository {
     return TopicDetailSeri.fromJson(asp.data);
   }
 
-  static Future<ApiResponse> getTopicDetailRes({int iid, int groupId}) async {
+  static Future<ApiResponse?> getTopicDetailRes(
+      {int? iid, int? groupId}) async {
     var res = await api.get('/topics/$iid', queryParameters: {
       'group_id': groupId,
     });
-    return res.data as ApiResponse;
+    return res.data as ApiResponse?;
   }
 
-  static Future<bool> putTopicAction({int id, String type}) async {
-    var res = await api.put('/topics/$id/action', data: {
+  static Future<bool> putTopicAction({int? id, String? type}) async {
+    Response<dynamic> res = await api.put('/topics/$id/action', data: {
       // close, reopen, pin, unpin, block, unblock
       "type": type,
     });
@@ -655,17 +660,18 @@ class ApiRepository {
   }
 
   static Future<List<CommentDetailSeri>> getCommentsList({
-    int commentId,
+    int? commentId,
     //comment_type => 要求是 Doc, Topic, ArtboardComment, Resource, DocVersion, Note 其中的一个
     String commentType = 'Topic',
   }) async {
-    var res = await getComments(commentId: commentId, commentType: commentType);
+    var res = await (getComments(commentId: commentId, commentType: commentType)
+        as FutureOr<ApiResponse>);
     var data = res.data as List;
     return data.map((e) => CommentDetailSeri.fromJson(e)).toList();
   }
 
-  static Future<ApiResponse> getComments({
-    int commentId,
+  static Future<ApiResponse?> getComments({
+    int? commentId,
     //comment_type => 要求是 Doc, Topic, ArtboardComment, Resource, DocVersion, Note 其中的一个
     String commentType = 'Topic',
   }) async {
@@ -674,12 +680,12 @@ class ApiRepository {
       'commentable_type': commentType,
       'include_section': true,
     });
-    var data = (res.data as ApiResponse);
+    var data = (res.data as ApiResponse?);
     return data;
   }
 
   static Future<List<TopicSeri>> getTopicList({
-    int groupId,
+    int? groupId,
     int offset = 0,
     String state = 'open',
     int limit = 100,
@@ -708,7 +714,7 @@ class ApiRepository {
 
   static Future<List<TopicSeri>> getMyTopics({
     String type = 'participated', // created, participated, assigned, commented
-    String state = 'open', // open, closed
+    String? state = 'open', // open, closed
     int limit = 100,
     int offset = 0,
   }) async {
@@ -745,22 +751,22 @@ class ApiRepository {
   }
 
   ///语雀小记
-  static Future<bool> deleteNote(int id) async {
-    var res = await api.delete('/notes/$id');
+  static Future<bool?> deleteNote(int? id) async {
+    Response<dynamic> res = await api.delete('/notes/$id');
     var asp = (res.data as ApiResponse);
     return asp.data;
   }
 
-  static Future<String> convertLake({
-    String markdown,
+  static Future<String?> convertLake({
+    String? markdown,
   }) async {
-    var res = await api.post(
+    Response<dynamic> res = await api.post(
       '/docs/convert',
       data: {
         'from': 'markdown',
         'to': 'lake',
         'content': markdown,
-        'ctoken': App.tokenProvider.data.cToken,
+        'ctoken': App.tokenProvider.data!.cToken,
       },
       options: Options(headers: {
         'referer': 'https://www.yuque.com/dashboard/notes',
@@ -771,11 +777,11 @@ class ApiRepository {
   }
 
   static Future<NoteSeri> postNote({
-    String html,
-    int id = 0,
+    required String html,
+    int? id = 0,
     String type = 'all',
   }) async {
-    var res = await api.put(
+    Response<dynamic> res = await api.put(
       '/notes/$id',
       data: {
         "body_asl": html,
@@ -810,7 +816,7 @@ class ApiRepository {
   }
 
   static Future<NoteSeri> getNoteDetail({
-    int noteId,
+    int? noteId,
   }) async {
     var res = await api.get('/notes/$noteId');
     var asp = (res.data as ApiResponse);
@@ -824,24 +830,24 @@ class ApiRepository {
   }
 
   static Future<UploadResultSeri> postAttachFile({
-    String path, //文件路径
-    String attachableType,
-    int attachableId, //讨论区=>groupId, 小记=>noteId
+    required String path, //文件路径
+    String? attachableType,
+    int? attachableId, //讨论区=>groupId, 小记=>noteId
     String type = 'image', //一般情况下都是image
     // String attachUuid = '',
-    ProgressCallback progressCallback, //进度回调函数
+    ProgressCallback? progressCallback, //进度回调函数
   }) async {
     /// attachableType: Doclet: 小记 doc: 文档; 讨论区-> User,
     var name = path.substring(path.lastIndexOf('/') + 1);
     Map<String, dynamic> query = {
       "type": type,
-      "ctoken": App.tokenProvider.data.cToken,
+      "ctoken": App.tokenProvider.data!.cToken,
       "attachable_id": attachableId ?? '',
       "attachable_type": attachableType ?? '',
     };
     var image = await MultipartFile.fromFile(path, filename: name);
     FormData formData = FormData.fromMap({"file": image});
-    var res = await api.post(
+    Response<dynamic> res = await api.post(
       '/upload/attach',
       queryParameters: query,
       data: formData,
@@ -857,7 +863,7 @@ class ApiRepository {
   }
 
   ///文档
-  static Future<List<TagSeri>> getDocTags({int docId}) async {
+  static Future<List<TagSeri>> getDocTags({int? docId}) async {
     var res = await api.get(
       '/tags',
       queryParameters: {
@@ -868,7 +874,7 @@ class ApiRepository {
     return data.map((e) => TagSeri.fromJson(e)).toList();
   }
 
-  static Future<List<TocSeri>> getBookTocList({int bookId}) async {
+  static Future<List<TocSeri>> getBookTocList({int? bookId}) async {
     var res = await api.get(
       '/catalog_nodes',
       queryParameters: {'book_id': bookId},
@@ -878,7 +884,7 @@ class ApiRepository {
     return list;
   }
 
-  static Future<DocDetailSeri> getDocDetail({int bookId, String slug}) async {
+  static Future<DocDetailSeri> getDocDetail({int? bookId, String? slug}) async {
     var res = await api.get('/docs/$slug', queryParameters: {
       'book_id': bookId,
       // in order to obtain additional information
@@ -892,7 +898,7 @@ class ApiRepository {
     return DocDetailSeri.fromJson(asp.data);
   }
 
-  static Future<List<ArtboardSeri>> getBookArtboardList({int bookId}) async {
+  static Future<List<ArtboardSeri>> getBookArtboardList({int? bookId}) async {
     var res = await api.get(
       '/artboard_groups',
       queryParameters: {'book_id': bookId},
@@ -901,7 +907,7 @@ class ApiRepository {
     return asp.map((e) => ArtboardSeri.fromJson(e)).toList();
   }
 
-  static Future<List<DocSeri>> getBookDocList({int bookId}) async {
+  static Future<List<DocSeri>> getBookDocList({int? bookId}) async {
     var res = await api.get('/books/$bookId/docs', queryParameters: {
       'include_contributors': true,
       'include_hits': true,
@@ -913,20 +919,20 @@ class ApiRepository {
   }
 
   //视频
-  static Future<CardVideoResSeri> getCardVideo({String videoId}) async {
+  static Future<CardVideoResSeri> getCardVideo({String? videoId}) async {
     var res = await api.get('/video', queryParameters: {
       'video_id': videoId,
-      'ctoken': App.tokenProvider.data.cToken,
+      'ctoken': App.tokenProvider.data!.cToken,
     });
     return CardVideoResSeri.fromJson(res.data.current);
   }
 
   //投票
   static Future<VoteDetailSeri> getVoteDetail({
-    int docId,
-    String voteId,
-    List<String> items,
-    String deadline,
+    int? docId,
+    String? voteId,
+    required List<String?> items,
+    String? deadline,
   }) async {
     var res = await api.get(
       '/votes',
@@ -935,21 +941,21 @@ class ApiRepository {
         'vote_id': voteId,
         'deadline': deadline, //iso标准
         'items': items.join(','), //列表，逗号分割
-        'ctoken': App.tokenProvider.data.cToken,
+        'ctoken': App.tokenProvider.data!.cToken,
       },
     );
     var data = (res.data as ApiResponse);
     return VoteDetailSeri.fromJson(data.data);
   }
 
-  static Future<String> decryptText({String pwd, String text}) async {
-    var res = await api.post(
+  static Future<String?> decryptText({String? pwd, String? text}) async {
+    Response<dynamic> res = await api.post(
       '/services/crypto',
       data: {
         'pwd': pwd,
         'text': text,
         'action': 'decrypt',
-        'ctoken': App.tokenProvider.data.cToken,
+        'ctoken': App.tokenProvider.data!.cToken,
       },
     );
     var asp = (res.data as ApiResponse);
@@ -958,9 +964,9 @@ class ApiRepository {
 
   //# 搜索相关
   static Future<SearchResultSeri> search({
-    String query = '',
+    String? query = '',
     //topic, book, doc, artboard, group, user, attachment, resource, note, content, edison
-    String type = 'doc',
+    String? type = 'doc',
     int page = 1,
     bool relateMe = false,
   }) async {
@@ -982,10 +988,10 @@ class ApiRepository {
     // 0902 => 色情淫秽
     // 0903 => 反社会、暴力
     // 0904 => 其它(毒品、借贷、枪支等),
-    String reason,
-    int targetId,
+    String? reason,
+    int? targetId,
     String targetType = 'Doc',
-    String url,
+    String? url,
   }) async {
     var data = {
       'meta': {
@@ -996,7 +1002,7 @@ class ApiRepository {
       'target_id': targetId,
       'target_type': targetType,
     };
-    var res = await api.post('content_reports', data: data);
+    Response<dynamic> res = await api.post('content_reports', data: data);
     return res.data != null ? true : false;
   }
 }

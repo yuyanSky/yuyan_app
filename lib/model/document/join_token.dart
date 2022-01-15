@@ -1,17 +1,17 @@
 import 'package:yuyan_app/model/user/user.dart';
 
 class JoinTokenSeri {
-  int id;
-  String targetType;
-  int targetId;
-  String token;
-  int approve;
-  UserSeri creator;
-  String createdAt;
+  int? id;
+  String? targetType;
+  int? targetId;
+  String? token;
+  int? approve;
+  UserSeri? creator;
+  String? createdAt;
   dynamic expiredAt;
-  String updatedAt;
-  int role;
-  String serializer;
+  String? updatedAt;
+  int? role;
+  String? serializer;
 
   JoinTokenSeri(
       {this.id,
@@ -49,7 +49,7 @@ class JoinTokenSeri {
     map["token"] = token;
     map["approve"] = approve;
     if (creator != null) {
-      map["creator"] = creator.toJson();
+      map["creator"] = creator!.toJson();
     }
     map["created_at"] = createdAt;
     map["expired_at"] = expiredAt;

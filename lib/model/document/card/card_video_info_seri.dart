@@ -1,6 +1,6 @@
 class CardVideoResSeri {
-  String status;
-  CardVideoOkSeri info;
+  String? status;
+  CardVideoOkSeri? info;
 
   CardVideoResSeri({
     this.status,
@@ -16,16 +16,16 @@ class CardVideoResSeri {
     var map = <String, dynamic>{};
     map["status"] = status;
     if (info != null) {
-      map["info"] = info.toJson();
+      map["info"] = info!.toJson();
     }
     return map;
   }
 }
 
 class CardVideoOkSeri {
-  String type;
-  String cover;
-  String video;
+  String? type;
+  String? cover;
+  String? video;
 
   CardVideoOkSeri({this.type, this.cover, this.video});
 

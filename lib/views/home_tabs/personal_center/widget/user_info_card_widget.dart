@@ -9,10 +9,10 @@ import 'package:yuyan_app/views/widget/animation.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class MyInfoCardWidget extends StatelessWidget {
-  final MineSeri info;
+  final MineSeri? info;
 
   MyInfoCardWidget({
-    Key key,
+    Key? key,
     this.info,
   }) : super(key: key);
 
@@ -51,7 +51,7 @@ class MyInfoCardWidget extends StatelessWidget {
           GestureDetector(
             onTap: () {
               MyRoute.user(
-                user: info.toUserLite(),
+                user: info!.toUserLite(),
                 heroTag: tag,
               );
             },
@@ -63,7 +63,7 @@ class MyInfoCardWidget extends StatelessWidget {
                 Hero(
                   tag: tag,
                   child: UserAvatarWidget(
-                    avatar: info.avatarUrl,
+                    avatar: info!.avatarUrl,
                     height: 60,
                   ),
                 ),
@@ -81,11 +81,11 @@ class MyInfoCardWidget extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              "${info.name}",
+                              "${info!.name}",
                               textAlign: TextAlign.center,
                               style: AppStyles.textStyleA,
                             ),
-                            UserMemberIconWidget().onlyIf(info.isPaid),
+                            UserMemberIconWidget().onlyIf(info!.isPaid!),
                           ],
                         ),
                       ),
@@ -93,7 +93,7 @@ class MyInfoCardWidget extends StatelessWidget {
                         width: descriptionWidth,
                         margin: EdgeInsets.only(left: 3),
                         child: Text(
-                          "${info.description ?? '笔墨待识君'}",
+                          "${info!.description ?? '笔墨待识君'}",
                           textAlign: TextAlign.left,
                           maxLines: 2,
                           style: AppStyles.countTextStyle,
@@ -114,10 +114,10 @@ class MyInfoCardWidget extends StatelessWidget {
 }
 
 class MyInfoNumberWidget extends StatelessWidget {
-  final MineSeri info;
+  final MineSeri? info;
 
   MyInfoNumberWidget({
-    Key key,
+    Key? key,
     this.info,
   }) : super(key: key);
 
@@ -133,25 +133,25 @@ class MyInfoNumberWidget extends StatelessWidget {
           children: [
             InfoNumberItemWidget(
               title: "团队",
-              number: Get.find<MyGroupController>().value.data?.length ?? 0,
+              number: Get.find<MyGroupController>().value!.data?.length ?? 0,
               namedRoute: RouteName.myGroup,
             ),
             InfoNumberItemWidget(
               title: "知识库",
               // number: Get.find<MyBookController>().value.data?.length ?? 0,
-              number: info.booksCount,
+              number: info!.booksCount,
               namedRoute: RouteName.myRepos,
             ),
             InfoNumberItemWidget(
               title: "关注了",
               // number: Get.find<MyFollowingController>().value.data?.length ?? 0,
-              number: info.followingCount,
+              number: info!.followingCount,
               namedRoute: RouteName.myFollowing,
             ),
             InfoNumberItemWidget(
               title: "关注者",
               // number: Get.find<MyFollowerController>().value.data?.length ?? 0,
-              number: info.followersCount,
+              number: info!.followersCount,
               namedRoute: RouteName.myFollower,
             ),
           ],
@@ -162,12 +162,12 @@ class MyInfoNumberWidget extends StatelessWidget {
 }
 
 class InfoNumberItemWidget extends StatelessWidget {
-  final String title;
-  final int number;
-  final String namedRoute;
+  final String? title;
+  final int? number;
+  final String? namedRoute;
 
   InfoNumberItemWidget({
-    Key key,
+    Key? key,
     this.title,
     this.number,
     this.namedRoute,
@@ -180,7 +180,7 @@ class InfoNumberItemWidget extends StatelessWidget {
       child: InkWell(
         onTap: () {
           if (namedRoute != null) {
-            Get.toNamed(namedRoute);
+            Get.toNamed(namedRoute!);
           }
         },
         child: Column(

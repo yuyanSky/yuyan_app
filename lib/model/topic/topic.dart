@@ -5,29 +5,29 @@ import 'assignee.dart';
 import 'labels.dart';
 
 class TopicSeri {
-  int id;
-  int spaceId;
-  int iid;
-  String title;
-  String format;
-  int userId;
-  int groupId;
+  int? id;
+  int? spaceId;
+  int? iid;
+  String? title;
+  String? format;
+  int? userId;
+  int? groupId;
   dynamic milestoneId;
-  int assigneeId;
-  int public;
-  int commentsCount;
-  int labelsCount;
+  int? assigneeId;
+  int? public;
+  int? commentsCount;
+  int? labelsCount;
   dynamic deletedAt;
   dynamic pinnedAt;
   dynamic closedAt;
-  String createdAt;
-  String updatedAt;
-  UserSeri user;
-  GroupSeri group;
-  AssigneeSeri assignee;
+  String? createdAt;
+  String? updatedAt;
+  UserSeri? user;
+  GroupSeri? group;
+  AssigneeSeri? assignee;
   dynamic milestone;
-  List<LabelSeri> labels;
-  String serializer;
+  List<LabelSeri>? labels;
+  String? serializer;
 
   TopicSeri({
     this.id,
@@ -83,7 +83,7 @@ class TopicSeri {
     if (json["labels"] != null) {
       labels = [];
       json["labels"].forEach((v) {
-        labels.add(LabelSeri.fromJson(v));
+        labels!.add(LabelSeri.fromJson(v));
       });
     }
     serializer = json["_serializer"];
@@ -109,17 +109,17 @@ class TopicSeri {
     map["created_at"] = createdAt;
     map["updated_at"] = updatedAt;
     if (user != null) {
-      map["user"] = user.toJson();
+      map["user"] = user!.toJson();
     }
     if (group != null) {
-      map["group"] = group.toJson();
+      map["group"] = group!.toJson();
     }
     if (assignee != null) {
-      map["assignee"] = assignee.toJson();
+      map["assignee"] = assignee!.toJson();
     }
     map["milestone"] = milestone;
     if (labels != null) {
-      map["labels"] = labels.map((v) => v.toJson()).toList();
+      map["labels"] = labels!.map((v) => v.toJson()).toList();
     }
     map["_serializer"] = serializer;
     return map;

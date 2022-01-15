@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:bot_toast/bot_toast.dart';
+import 'package:yuyan_app/config/net/api.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
@@ -7,11 +10,11 @@ import 'package:yuyan_app/model/document/card/vote_detail.dart';
 import 'package:yuyan_app/util/util.dart';
 
 class FollowUserController extends FetchValueController<bool> {
-  final int userId;
+  final int? userId;
 
   FollowUserController({
     this.userId,
-    bool isFollow,
+    bool? isFollow,
   }) : super(
           initialFetch: isFollow == null,
           initValue: isFollow,
@@ -30,14 +33,14 @@ class FollowUserController extends FetchValueController<bool> {
     try {
       setLoading();
       bool res = false;
-      if (this.value) {
+      if (this.value!) {
         res = await unfollow();
       } else {
         res = await follow();
       }
       if (res) {
-        this.value = !value;
-        BotToast.showText(text: this.value ? '关注成功' : '取消关注成功');
+        this.value = !value!;
+        BotToast.showText(text: this.value! ? '关注成功' : '取消关注成功');
       } else {
         BotToast.showText(text: '操作失败');
       }
@@ -55,11 +58,11 @@ class FollowUserController extends FetchValueController<bool> {
 }
 
 class GroupMarkController extends FetchValueController<bool> {
-  final int targetId;
+  final int? targetId;
 
   GroupMarkController({
     this.targetId,
-    bool isFollow,
+    bool? isFollow,
   }) : super(
           initialFetch: isFollow == null,
           initValue: isFollow,
@@ -78,14 +81,14 @@ class GroupMarkController extends FetchValueController<bool> {
     try {
       setLoading();
       bool res = false;
-      if (this.value) {
+      if (this.value!) {
         res = await unfollow();
       } else {
         res = await follow();
       }
       if (res) {
-        this.value = !value;
-        BotToast.showText(text: this.value ? '成功' : '取消成功');
+        this.value = !value!;
+        BotToast.showText(text: this.value! ? '成功' : '取消成功');
       } else {
         BotToast.showText(text: '操作失败');
       }
@@ -103,10 +106,10 @@ class GroupMarkController extends FetchValueController<bool> {
 }
 
 class VoteController extends FetchValueController<VoteDetailSeri> {
-  final int docId;
-  final String voteId;
-  final List<String> items;
-  final String deadline;
+  final int? docId;
+  final String? voteId;
+  final List<String?>? items;
+  final String? deadline;
 
   VoteController({this.docId, this.voteId, this.items, this.deadline});
 
@@ -115,14 +118,14 @@ class VoteController extends FetchValueController<VoteDetailSeri> {
     return ApiRepository.getVoteDetail(
       docId: docId,
       voteId: voteId,
-      items: items,
+      items: items!,
       deadline: deadline,
     );
   }
 }
 
 class BookMarkController extends MarkBaseController {
-  final int targetId;
+  final int? targetId;
   BookMarkController(this.targetId);
 
   @override
@@ -181,20 +184,20 @@ abstract class MarkBaseController extends FetchValueController<bool> {
 }
 
 class BookWatchController extends MarkBaseController {
-  final int bookId;
+  final int? bookId;
 
   BookWatchController(this.bookId);
 
-  ActionResultSeri result;
+  late ActionResultSeri result;
 
   @override
   Future<bool> fetch() async {
-    var res = await ApiRepository.getAction(
+    var res = await (ApiRepository.getAction(
       '',
       targetId: bookId,
       actionType: 'watch',
       targetType: 'Book',
-    );
+    ) as FutureOr<ApiResponse>);
     result = ActionResultSeri.fromJson(res.data);
     return result.actioned != null;
   }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class LakeCalenderWidget extends StatelessWidget {
-  final Map json;
+  final Map? json;
 
   const LakeCalenderWidget({
-    Key key,
+    Key? key,
     this.json,
   }) : super(key: key);
 

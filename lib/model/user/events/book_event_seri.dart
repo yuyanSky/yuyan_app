@@ -3,22 +3,22 @@ import 'package:yuyan_app/model/document/book.dart';
 import '../user_lite_seri.dart';
 
 class BookEventSeri {
-  int id;
-  String type;
-  String slug;
-  String name;
-  int userId;
-  String description;
-  int itemsCount;
-  int likesCount;
-  int watchesCount;
-  int creatorId;
-  int public;
-  String createdAt;
-  String updatedAt;
-  String contentUpdatedAt;
-  UserLiteSeri user;
-  String sSerializer;
+  int? id;
+  String? type;
+  String? slug;
+  String? name;
+  int? userId;
+  String? description;
+  int? itemsCount;
+  int? likesCount;
+  int? watchesCount;
+  int? creatorId;
+  int? public;
+  String? createdAt;
+  String? updatedAt;
+  String? contentUpdatedAt;
+  UserLiteSeri? user;
+  String? sSerializer;
 
   BookEventSeri({
     this.id,
@@ -39,7 +39,7 @@ class BookEventSeri {
     this.sSerializer,
   });
 
-  BookEventSeri.fromJson(Map<String, dynamic> json) {
+  BookEventSeri.fromJson(Map<String, dynamic>? json) {
     if (json == null) return;
     id = json['id'];
     type = json['type'];

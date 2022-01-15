@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/viewstate/view_page.dart';
 import 'package:yuyan_app/controller/home/personal/my_controller.dart';
+import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/views/organization/widget/group.dart';
 import 'package:yuyan_app/views/widget/animation.dart';
 
@@ -9,7 +10,7 @@ class MyGroupPage extends FetchRefreshListViewPage<MyGroupController> {
 
   @override
   Widget buildChild() {
-    var data = controller.value.data;
+    List<GroupSeri> data = controller.value!.data!;
     return ListView.builder(
       itemCount: data.length,
       itemBuilder: (_, index) {

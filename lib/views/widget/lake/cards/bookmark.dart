@@ -4,16 +4,16 @@ import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 
 class LakeBookmarkWidget extends StatelessWidget {
-  final Map json;
+  final Map? json;
 
   LakeBookmarkWidget({
-    Key key,
+    Key? key,
     this.json,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var detail = json['detail'];
+    var detail = json!['detail'];
     var child = Card(
       elevation: 2,
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
@@ -42,7 +42,7 @@ class LakeBookmarkWidget extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           vertical: 4, horizontal: 8),
                       child: Text(
-                        '${json['src']}',
+                        '${json!['src']}',
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
@@ -57,7 +57,7 @@ class LakeBookmarkWidget extends StatelessWidget {
     );
     return GestureDetector(
       onTap: () {
-        MyRoute.webview(json['src']);
+        MyRoute.webview(json!['src']);
       },
       child: child,
     );

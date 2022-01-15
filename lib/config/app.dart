@@ -14,7 +14,7 @@ class App {
   static MyUserProvider userProvider = MyUserProvider();
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
-  static PackageInfo version;
+  static late PackageInfo version;
 
   static init() async {
     version = await PackageInfo.fromPlatform();

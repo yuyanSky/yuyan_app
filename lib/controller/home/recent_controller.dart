@@ -55,7 +55,7 @@ class RecentController extends FetchSavableController<RecentDataProvider> {
   static RecentController get to => Get.find();
 
   void remove(UserRecentSeri item){
-    value.remove(item);
+    value!.remove(item);
     update();
   }
 
@@ -67,7 +67,7 @@ class RecentController extends FetchSavableController<RecentDataProvider> {
 
   @override
   Future fetchMore() async {
-    return ApiRepository.getUserRecentList(offset: value.length);
+    return ApiRepository.getUserRecentList(offset: value!.length);
   }
 
   @override

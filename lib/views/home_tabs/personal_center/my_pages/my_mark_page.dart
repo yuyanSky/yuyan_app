@@ -27,7 +27,7 @@ class MyMarkPage extends FetchRefreshListViewPage<MyMarkController> {
 
   @override
   Widget buildChild() {
-    var data = controller.value.data;
+    List<ActionSeri> data = controller.value!.data!;
     return ListView.builder(
       itemCount: data.length,
       itemBuilder: (_, i) {
@@ -38,57 +38,57 @@ class MyMarkPage extends FetchRefreshListViewPage<MyMarkController> {
 }
 
 class MyMarkItemWidget extends StatelessWidget {
-  final ActionSeri data;
+  final ActionSeri? data;
 
   const MyMarkItemWidget({
-    Key key,
+    Key? key,
     this.data,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // 如果收藏的是团队，那么 avatarUrl 的位置变了一下...
-    String userName;
-    String avatarUrl;
-    String description = '';
+    String? userName;
+    String? avatarUrl;
+    String? description = '';
     String heroTag = '';
     VoidCallback onTap;
-    switch (data.targetType) {
+    switch (data!.targetType) {
       case 'User':
-        var user = data.target.serialize<UserLiteSeri>();
-        userName = data.title;
+        var user = data!.target!.serialize<UserLiteSeri>()!;
+        userName = data!.title;
         avatarUrl = user.avatarUrl;
         description = user.description;
-        if (data.actionOption == 'group') {
+        if (data!.actionOption == 'group') {
           onTap = () => MyRoute.group(group: user.toGroup(), tag: heroTag);
         } else {
           onTap = () => MyRoute.user(user: user, heroTag: heroTag);
         }
         break;
       case 'Book':
-        var book = data.target.serialize<BookSeri>();
-        userName = book.user.name;
-        avatarUrl = book.user.avatarUrl;
+        var book = data!.target!.serialize<BookSeri>()!;
+        userName = book.user!.name;
+        avatarUrl = book.user!.avatarUrl;
         description = book.description;
         onTap = () => MyRoute.bookDocs(book);
         break;
       case 'Doc':
-        var doc = data.target.serialize<DocLiteSeri>();
-        userName = doc.user.name;
-        avatarUrl = doc.user.avatarUrl;
+        var doc = data!.target!.serialize<DocLiteSeri>()!;
+        userName = doc.user!.name;
+        avatarUrl = doc.user!.avatarUrl;
         description = doc.description;
         onTap = () => MyRoute.docDetail(
               bookId: doc.bookId,
               slug: doc.slug,
-              book: doc.book.slug,
-              login: doc.user.login,
+              book: doc.book!.slug,
+              login: doc.user!.login,
             );
         break;
       default:
         return Container(
           child: ListTile(
-            title: Text('Unsupported type: ${data.targetType}'),
-            subtitle: Text('url => ${data.url}'),
+            title: Text('Unsupported type: ${data!.targetType}'),
+            subtitle: Text('url => ${data!.url}'),
           ),
         );
     }
@@ -130,7 +130,7 @@ class MyMarkItemWidget extends StatelessWidget {
           ),
           SizedBox(height: 6),
           Text(
-            '${data.title}',
+            '${data!.title}',
             style: AppStyles.textStyleB,
           ),
           SizedBox(height: 2),

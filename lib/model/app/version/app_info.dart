@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 class AppInfo {
-  final bool hasUpdate;
-  final bool isIgnorable;
-  final int versionCode;
-  final String versionName;
-  final String updateLog;
-  final String apkUrl;
-  final int apkSize;
+  final bool? hasUpdate;
+  final bool? isIgnorable;
+  final int? versionCode;
+  final String? versionName;
+  final String? updateLog;
+  final String? apkUrl;
+  final int? apkSize;
 
   AppInfo({
     this.hasUpdate,
@@ -31,7 +31,7 @@ class AppInfo {
     };
   }
 
-  static AppInfo fromMap(Map<String, dynamic> map) {
+  static AppInfo? fromMap(Map<String, dynamic>? map) {
     if (map == null) return null;
 
     return AppInfo(
@@ -47,7 +47,7 @@ class AppInfo {
 
   String toJson() => json.encode(toMap());
 
-  static AppInfo fromJson(String source) => fromMap(json.decode(source));
+  static AppInfo? fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() {

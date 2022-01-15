@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/config/viewstate/view_state_widget.dart';
 import 'package:yuyan_app/controller/home/notification/notification_controller.dart';
+import 'package:yuyan_app/model/notification/notification_item.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/organization/widget/org_spacet.dart';
@@ -11,7 +12,7 @@ import 'package:yuyan_app/views/organization/widget/org_spacet.dart';
 import 'widget/one_notification.dart';
 
 class NotificationTab extends StatefulWidget {
-  NotificationTab({Key key}) : super(key: key);
+  NotificationTab({Key? key}) : super(key: key);
 
   @override
   _NotificationTabState createState() => _NotificationTabState();
@@ -50,13 +51,13 @@ class _NotificationTabState extends State<NotificationTab> {
                     controller: c.refreshController,
                     onRefresh: c.onRefreshCallback,
                     child: ListView.separated(
-                      itemCount: c.value.length,
+                      itemCount: c.value!.length,
                       separatorBuilder: (_, i) => Divider(height: 4),
                       itemBuilder: (_, i) {
-                        var item = c.value[i];
+                        NotificationItemSeri? item = c.value![i];
                         return NotificationItemWidget(
                           data: item,
-                          unread: item.readAt == null,
+                          unread: item?.readAt == null ? false : true,
                         );
                       },
                     ),

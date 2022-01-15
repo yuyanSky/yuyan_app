@@ -22,11 +22,11 @@ import 'package:yuyan_app/views/widget/menu_item.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class TopicDetailPage extends StatefulWidget {
-  final int commentId;
-  final int groupId;
+  final int? commentId;
+  final int? groupId;
 
   TopicDetailPage({
-    Key key,
+    Key? key,
     this.commentId,
     this.groupId,
   }) : super(key: key);
@@ -39,7 +39,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
   // final _textController = TextEditingController();
   final _refreshController = RefreshController();
 
-  int _commentId;
+  int? _commentId;
   var _hintText = '评论千万条，友善第一条';
 
   String get tag => '${widget.groupId}';
@@ -102,7 +102,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
   //   );
   // }
 
-  _openBottomSheet([int reply, String replyHint]) async {
+  _openBottomSheet([int? reply, String? replyHint]) async {
     var postController = CommentPostController(_commentId);
     showMaterialModalBottomSheet(
       context: context,
@@ -145,7 +145,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
       builder: (c) => c.stateBuilder(
         scaffold: true,
         onIdle: () {
-          _commentId = c.value.id;
+          _commentId = c.value!.id;
           return Scaffold(
             appBar: AppBar(
               title: Text('话题详情'),
@@ -153,7 +153,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
                 //TODO(@dreamer2q): 添加话题控制panel
                 PopupMenuButton<VoidCallback>(
                   itemBuilder: (_) => [
-                    if (c.abilities.update)
+                    if (c.abilities!.update!)
                       PopupMenuItem(
                         value: () {
                           Util.toast('敬请期待');
@@ -162,61 +162,66 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
                           title: '编辑',
                         ),
                       ),
-                    if (c.abilities.update)
+                    if (c.abilities!.update!)
                       PopupMenuItem(
                         value: () => Util.safeHandler(
                           ApiRepository.putTopicAction(
-                            id: c.value.id,
-                            type: c.value.closedAt == null ? 'close' : 'reopen',
+                            id: c.value!.id,
+                            type:
+                                c.value!.closedAt == null ? 'close' : 'reopen',
                           ),
-                          onData: (_) => [c.onRefresh(), Util.toast('成功')],
+                          onData: (dynamic _) =>
+                              [c.onRefresh(), Util.toast('成功')],
                         ),
                         child: MenuItemWidget(
-                          title: c.value.closedAt == null ? '关闭' : '重新开启',
+                          title: c.value!.closedAt == null ? '关闭' : '重新开启',
                         ),
                       ),
-                    if (c.abilities.block)
+                    if (c.abilities!.block!)
                       PopupMenuItem(
                         value: () => Util.safeHandler(
                           ApiRepository.putTopicAction(
-                            id: c.value.id,
-                            type:
-                                c.value.blockedAt == null ? 'block' : 'unblock',
+                            id: c.value!.id,
+                            type: c.value!.blockedAt == null
+                                ? 'block'
+                                : 'unblock',
                           ),
-                          onData: (_) => [c.onRefresh(), Util.toast('成功')],
+                          onData: (dynamic _) =>
+                              [c.onRefresh(), Util.toast('成功')],
                         ),
                         child: MenuItemWidget(
                           title: '屏蔽'.onlyIf(
-                            c.value.blockedAt == null,
+                            c.value!.blockedAt == null,
                             elseif: () => '取消屏蔽',
                           ),
                         ),
                       ),
-                    if (c.abilities.pin)
+                    if (c.abilities!.pin!)
                       PopupMenuItem(
                         value: () => Util.safeHandler(
                           ApiRepository.putTopicAction(
-                            id: c.value.id,
-                            type: c.value.pinnedAt == null ? 'pin' : 'unpin',
+                            id: c.value!.id,
+                            type: c.value!.pinnedAt == null ? 'pin' : 'unpin',
                           ),
-                          onData: (_) => [c.onRefresh(), Util.toast('成功')],
+                          onData: (dynamic _) =>
+                              [c.onRefresh(), Util.toast('成功')],
                         ),
                         child: MenuItemWidget(
-                          title: c.value.pinnedAt == null ? '置顶' : '取消置顶',
+                          title: c.value!.pinnedAt == null ? '置顶' : '取消置顶',
                         ),
                       ),
 
                     /// comment operations
                     PopupMenuItem(
                       value: () =>
-                          Util.goUrl('/${c.groupId}/topics/${c.value.iid}'),
+                          Util.goUrl('/${c.groupId}/topics/${c.value!.iid}'),
                       child: MenuItemWidget(
                         iconData: Icons.open_in_browser,
                         title: '打开网页版',
                       ),
                     ),
                   ],
-                  onSelected: (_) => _?.call(),
+                  onSelected: (_) => _.call(),
                 ),
                 // IconButton(
                 //   icon: Icon(Icons.more_horiz),
@@ -260,7 +265,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
                             data: c.value,
                             abilities: c.abilities,
                           ),
-                          _buildCommentList(c.value.id),
+                          _buildCommentList(c.value!.id),
                         ],
                       ),
                     ),
@@ -311,7 +316,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
     );
   }
 
-  _buildCommentList(int commentId) {
+  _buildCommentList(int? commentId) {
     return GetBuilder<TopicCommentsController>(
       tag: tag,
       init: TopicCommentsController(commentId),
@@ -328,28 +333,28 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
               Container(
                 margin: EdgeInsets.only(left: 16, top: 20, bottom: 2),
                 child: Text(
-                  "${comments.value.length} 条评论",
+                  "${comments.value!.length} 条评论",
                   style: AppStyles.textStyleBBB,
                 ),
               ),
               SizedBox(height: 10),
-              ...comments.value.mapWidget((e) {
+              ...comments.value!.mapWidget((e) {
                 return CommentDetailItemWidget(
                   current: e,
                   comments: comments.value,
                   onTap: () {
-                    var hint = '回复 ${e.user.name}: ';
+                    var hint = '回复 ${e.user!.name}: ';
                     _openBottomSheet(e.id, hint);
                   },
                   onLongPressed: () {
-                    if (e.userId == App.userProvider.data.id) {
+                    if (e.userId == App.userProvider.data!.id) {
                       Util.showConfirmDialog(
                         context,
                         content: '删除这条评论吗?',
                         confirmCallback: () {
                           Util.futureWrap(
                             ApiRepository.deleteComment(e.id),
-                            onData: (data) {
+                            onData: (dynamic data) {
                               Get.find<TopicCommentsController>(
                                 tag: tag,
                               ).onRefresh(force: true);
@@ -374,13 +379,13 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
 }
 
 class CommentDetailItemWidget extends StatefulWidget {
-  final List<CommentDetailSeri> comments;
-  final CommentDetailSeri current;
-  final VoidCallback onTap;
-  final VoidCallback onLongPressed;
+  final List<CommentDetailSeri>? comments;
+  final CommentDetailSeri? current;
+  final VoidCallback? onTap;
+  final VoidCallback? onLongPressed;
 
   CommentDetailItemWidget({
-    Key key,
+    Key? key,
     this.current,
     this.comments,
     this.onTap,
@@ -393,15 +398,15 @@ class CommentDetailItemWidget extends StatefulWidget {
 }
 
 class _CommentDetailItemWidgetState extends State<CommentDetailItemWidget> {
-  UserSeri parent;
+  UserSeri? parent;
 
   @override
   void initState() {
     super.initState();
-    if (widget.current.parentId != null) {
-      parent = widget.comments
-          .firstWhere((item) => item.id == widget.current.parentId,
-              orElse: () => null) // 这个 orElse 坑死我了orz
+    if (widget.current!.parentId != null) {
+      parent = widget.comments!
+          .firstWhereOrNull((item) =>
+              item.id == widget.current!.parentId) // 这个 orElse 坑死我了orz
           ?.user;
     }
   }
@@ -432,19 +437,21 @@ class _CommentDetailItemWidgetState extends State<CommentDetailItemWidget> {
                     child: Hero(
                       tag: tag,
                       child: UserAvatarWidget(
-                        avatar: widget.current.user.avatarUrl,
+                        avatar: widget.current!.user!.avatarUrl,
                         height: 28,
                       ),
                     ),
                     onTap: () {
-                      MyRoute.user(user: widget.current.user.toUserLiteSeri());
+                      MyRoute.user(
+                          user: widget.current!.user!.toUserLiteSeri());
                     },
                   ),
                   SizedBox(width: 8),
-                  Text(widget.current.user.name, style: AppStyles.textStyleB),
+                  Text(widget.current!.user!.name!,
+                      style: AppStyles.textStyleB),
                   Spacer(),
                   Text(
-                    Util.timeCut(widget.current.updatedAt),
+                    Util.timeCut(widget.current!.updatedAt!),
                     style: AppStyles.textStyleCC,
                   ),
                 ],
@@ -470,8 +477,8 @@ class _CommentDetailItemWidgetState extends State<CommentDetailItemWidget> {
                       children: [
                         Text('回复 '),
                         LakeMentionWidget(
-                          name: parent.name,
-                          login: parent.login,
+                          name: parent!.name,
+                          login: parent!.login,
                           showLogin: false,
                         ),
                       ],
@@ -485,7 +492,7 @@ class _CommentDetailItemWidgetState extends State<CommentDetailItemWidget> {
                   bottom: 4,
                 ),
                 child: LakeRenderWidget(
-                  data: widget.current.bodyAsl,
+                  data: widget.current!.bodyAsl,
                 ),
               )
             ],
@@ -497,11 +504,11 @@ class _CommentDetailItemWidgetState extends State<CommentDetailItemWidget> {
 }
 
 class TopicDescWidget extends StatelessWidget {
-  final TopicDetailSeri data;
-  final MetaAbilitySeri abilities;
+  final TopicDetailSeri? data;
+  final MetaAbilitySeri? abilities;
 
   const TopicDescWidget({
-    Key key,
+    Key? key,
     this.data,
     this.abilities,
   }) : super(key: key);
@@ -517,7 +524,7 @@ class TopicDescWidget extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
               padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
               decoration: BoxDecoration(
-                color: SmartColor.parse(e.color),
+                color: SmartColor.parse(e.color!),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
@@ -590,14 +597,15 @@ class TopicDescWidget extends StatelessWidget {
             margin: EdgeInsets.only(bottom: 20),
             child: Text.rich(
               TextSpan(
-                text: data.title,
+                text: data!.title,
                 children: [
                   TextSpan(
-                    text: '\t\t#${data.iid}',
+                    text: '\t\t#${data!.iid}',
                     style: AppStyles.textStyleCB,
                   ),
-                  if (data.closedAt != null) closedBadge,
-                  if (data.blockedAt != null && abilities.block) blockedBadge,
+                  if (data!.closedAt != null) closedBadge,
+                  if (data!.blockedAt != null && abilities!.block!)
+                    blockedBadge,
                 ],
               ),
               style: AppStyles.textStyleA,
@@ -606,46 +614,46 @@ class TopicDescWidget extends StatelessWidget {
           Row(
             children: [
               UserAvatarWidget(
-                avatar: data.user.avatarUrl,
+                avatar: data!.user!.avatarUrl,
               ),
               SizedBox(width: 10),
               Text(
-                data.user.name,
+                data!.user!.name!,
                 style: AppStyles.textStyleB,
               ),
               Spacer(),
-              if (data.public == 0) lock,
+              if (data!.public == 0) lock,
               Text(
-                Util.timeCut(data.createdAt),
+                Util.timeCut(data!.createdAt!),
                 style: AppStyles.textStyleC,
               ),
             ],
           ),
           SizedBox(height: 18),
           LakeRenderWidget(
-            data: data.bodyAsl,
+            data: data!.bodyAsl,
           ),
           DefaultTextStyle(
             style: AppStyles.textStyleC,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (data.assignee != null)
+                if (data!.assignee != null)
                   Row(
                     children: [
                       Text('指派给：'),
-                      Text(data.user.name),
+                      Text(data!.user!.name!),
                     ],
                   ).paddingOnly(top: 32),
-                if (data.milestone != null)
+                if (data!.milestone != null)
                   Row(
                     children: [
                       Text('看板：'),
-                      Text('${data.milestone.title}'),
+                      Text('${data!.milestone!.title}'),
                     ],
                   ),
-                if (data.labels != null)
-                  _labels(data.labels).paddingOnly(top: 12),
+                if (data!.labels != null)
+                  _labels(data!.labels!).paddingOnly(top: 12),
               ],
             ),
           ),
@@ -656,7 +664,7 @@ class TopicDescWidget extends StatelessWidget {
     return Stack(
       children: [
         child,
-        if (data.pinnedAt != null)
+        if (data!.pinnedAt != null)
           Positioned(
             left: 8,
             top: 4,
