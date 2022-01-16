@@ -112,7 +112,7 @@ class _NoteItemWidget extends StatelessWidget {
                   value: () {
                     // MyRoute.webview(webUrl);
                     ApiRepository.deleteNote(item.id).then((_) {
-                      if (_!) {
+                      if (_) {
                         MyNoteController.to.remove(item);
                         BotToast.showText(text: '成功');
                       }

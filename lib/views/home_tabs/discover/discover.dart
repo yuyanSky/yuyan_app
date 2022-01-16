@@ -15,18 +15,28 @@ class DiscoverTab extends StatefulWidget {
 }
 
 class _DiscoverTabState extends State<DiscoverTab>
-    with SingleTickerProviderStateMixin {
-  TabController? _tabController;
+// with SingleTickerProviderStateMixin
+{
+  // since the `unused page` is removed,
+  // so do the following code.
+  // late TabController _tabController;
 
-  @override
-  void initState() {
-    super.initState();
+  // @override
+  // void initState() {
+  //   super.initState();
 
-    _tabController = TabController(
-      length: 2,
-      vsync: this,
-    );
-  }
+  //   _tabController = TabController(
+  //     length: 2,
+  //     vsync: this,
+  //   );
+  // }
+
+  // @override
+  // void dispose() {
+  //   super.dispose();
+
+  //   _tabController.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

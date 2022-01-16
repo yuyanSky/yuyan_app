@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:yuyan_app/config/net/api.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
@@ -108,17 +107,22 @@ class GroupMarkController extends FetchValueController<bool> {
 class VoteController extends FetchValueController<VoteDetailSeri> {
   final int? docId;
   final String? voteId;
-  final List<String?>? items;
+  final List<String> items;
   final String? deadline;
 
-  VoteController({this.docId, this.voteId, this.items, this.deadline});
+  VoteController({
+    this.docId,
+    this.voteId,
+    required this.items,
+    this.deadline,
+  });
 
   @override
   Future<VoteDetailSeri> fetch() {
     return ApiRepository.getVoteDetail(
       docId: docId,
       voteId: voteId,
-      items: items!,
+      items: items,
       deadline: deadline,
     );
   }
@@ -192,12 +196,12 @@ class BookWatchController extends MarkBaseController {
 
   @override
   Future<bool> fetch() async {
-    var res = await (ApiRepository.getAction(
+    var res = await ApiRepository.getAction(
       '',
       targetId: bookId,
       actionType: 'watch',
       targetType: 'Book',
-    ) as FutureOr<ApiResponse>);
+    );
     result = ActionResultSeri.fromJson(res.data);
     return result.actioned != null;
   }

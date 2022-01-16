@@ -101,11 +101,10 @@ class ViewEmptyWidget extends StatelessWidget {
               ),
             ],
           ),
-          if (child != null)
-            Container(
-              padding: const EdgeInsets.all(4),
-              child: child,
-            ),
+          Container(
+            padding: const EdgeInsets.all(4),
+            child: child,
+          ),
         ],
       ),
     );

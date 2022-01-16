@@ -27,7 +27,7 @@ class VoteCardWidget extends StatelessWidget {
         voteId: voteId,
         deadline: deadline,
         items: (json!['items'] as List)
-            .map<String?>((e) => e['id'] as String?)
+            .map<String>((e) => e['id'] as String)
             .toList(),
       ),
       tag: voteId,

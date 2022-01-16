@@ -68,7 +68,7 @@ class _SettingPageState extends State<SettingPage> {
                     new MaterialPageRoute(
                       builder: (BuildContext context) => LoginPage(),
                     ),
-                    (Route route) => route == null);
+                    (Route? route) => route == null);
               });
             },
           ),

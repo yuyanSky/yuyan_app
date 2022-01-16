@@ -5,7 +5,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:delta_markdown/delta_markdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_quill/models/documents/attribute.dart';
 import 'package:flutter_quill/models/documents/document.dart';
 import 'package:flutter_quill/models/documents/nodes/embed.dart';
 import 'package:flutter_quill/widgets/controller.dart';
@@ -127,107 +126,107 @@ class _CommentToolbarWidgetState extends State<CommentToolbarWidget>
     );
   }
 
-  _buildBarIcons() {
-    final iconSize = 18.0;
-    final height = Get.mediaQuery.viewInsets.bottom;
-    if (height > 150 && extraView.value) {
-      extraView.value = false;
-    }
-    return QuillToolbar(
-      multiRowsDisplay: false,
-      children: [
-        QuillIconButton(
-          icon: Icon(
-            Icons.emoji_emotions,
-            size: iconSize,
-          ),
-          size: iconSize * 1.77,
-          onPressed: () {
-            extraView.value = !extraView.value;
-            if (extraView.value) {
-              widget.focusNode!.unfocus();
-            } else {
-              widget.focusNode!.requestFocus();
-            }
-          },
-        ),
-        SizedBox(width: 0.6),
-        ToggleStyleButton(
-          attribute: Attribute.bold,
-          icon: Icons.format_bold,
-          controller: controller!,
-        ),
-        SizedBox(width: 0.6),
-        ToggleStyleButton(
-          attribute: Attribute.italic,
-          icon: Icons.format_italic,
-          controller: controller!,
-        ),
-        SizedBox(width: 0.6),
-        ToggleStyleButton(
-          attribute: Attribute.underline,
-          icon: Icons.format_underline,
-          controller: controller!,
-        ),
-        SizedBox(width: 0.6),
-        // ImageButton(
-        //   icon: Icons.image,
-        //   controller: controller,
-        //   imageSource: ImageSource.gallery,
-        //   onImagePickCallback: _imageUpload,
-        // ),
-        // SizedBox(width: 0.6),
-        // ImageButton(
-        //   icon: Icons.photo_camera,
-        //   controller: controller,
-        //   imageSource: ImageSource.camera,
-        //   onImagePickCallback: _imageUpload,
-        // ),
-        VerticalDivider(
-          indent: 16,
-          endIndent: 16,
-          color: Colors.grey.shade400,
-        ),
-        ToggleStyleButton(
-          attribute: Attribute.ol,
-          controller: controller!,
-          icon: Icons.format_list_numbered,
-        ),
-        SizedBox(width: 0.6),
-        ToggleStyleButton(
-          attribute: Attribute.ul,
-          controller: controller!,
-          icon: Icons.format_list_bulleted,
-        ),
-        SizedBox(width: 0.6),
-        ToggleCheckListButton(
-          attribute: Attribute.unchecked,
-          controller: controller!,
-          icon: Icons.check_box,
-        ),
-        SizedBox(width: 0.6),
-        ToggleStyleButton(
-          attribute: Attribute.codeBlock,
-          controller: controller!,
-          icon: Icons.code,
-        ),
-        SizedBox(width: 0.6),
-        ToggleStyleButton(
-          attribute: Attribute.blockQuote,
-          controller: controller!,
-          icon: Icons.format_quote,
-        ),
-        VerticalDivider(
-          indent: 16,
-          endIndent: 16,
-          color: Colors.grey.shade400,
-        ),
-        LinkStyleButton(
-          controller: controller!,
-        ),
-      ],
-    );
-  }
+  // _buildBarIcons() {
+  //   final iconSize = 18.0;
+  //   final height = Get.mediaQuery.viewInsets.bottom;
+  //   if (height > 150 && extraView.value) {
+  //     extraView.value = false;
+  //   }
+  //   return QuillToolbar(
+  //     multiRowsDisplay: false,
+  //     children: [
+  //       QuillIconButton(
+  //         icon: Icon(
+  //           Icons.emoji_emotions,
+  //           size: iconSize,
+  //         ),
+  //         size: iconSize * 1.77,
+  //         onPressed: () {
+  //           extraView.value = !extraView.value;
+  //           if (extraView.value) {
+  //             widget.focusNode!.unfocus();
+  //           } else {
+  //             widget.focusNode!.requestFocus();
+  //           }
+  //         },
+  //       ),
+  //       SizedBox(width: 0.6),
+  //       ToggleStyleButton(
+  //         attribute: Attribute.bold,
+  //         icon: Icons.format_bold,
+  //         controller: controller!,
+  //       ),
+  //       SizedBox(width: 0.6),
+  //       ToggleStyleButton(
+  //         attribute: Attribute.italic,
+  //         icon: Icons.format_italic,
+  //         controller: controller!,
+  //       ),
+  //       SizedBox(width: 0.6),
+  //       ToggleStyleButton(
+  //         attribute: Attribute.underline,
+  //         icon: Icons.format_underline,
+  //         controller: controller!,
+  //       ),
+  //       SizedBox(width: 0.6),
+  //       // ImageButton(
+  //       //   icon: Icons.image,
+  //       //   controller: controller,
+  //       //   imageSource: ImageSource.gallery,
+  //       //   onImagePickCallback: _imageUpload,
+  //       // ),
+  //       // SizedBox(width: 0.6),
+  //       // ImageButton(
+  //       //   icon: Icons.photo_camera,
+  //       //   controller: controller,
+  //       //   imageSource: ImageSource.camera,
+  //       //   onImagePickCallback: _imageUpload,
+  //       // ),
+  //       VerticalDivider(
+  //         indent: 16,
+  //         endIndent: 16,
+  //         color: Colors.grey.shade400,
+  //       ),
+  //       ToggleStyleButton(
+  //         attribute: Attribute.ol,
+  //         controller: controller!,
+  //         icon: Icons.format_list_numbered,
+  //       ),
+  //       SizedBox(width: 0.6),
+  //       ToggleStyleButton(
+  //         attribute: Attribute.ul,
+  //         controller: controller!,
+  //         icon: Icons.format_list_bulleted,
+  //       ),
+  //       SizedBox(width: 0.6),
+  //       ToggleCheckListButton(
+  //         attribute: Attribute.unchecked,
+  //         controller: controller!,
+  //         icon: Icons.check_box,
+  //       ),
+  //       SizedBox(width: 0.6),
+  //       ToggleStyleButton(
+  //         attribute: Attribute.codeBlock,
+  //         controller: controller!,
+  //         icon: Icons.code,
+  //       ),
+  //       SizedBox(width: 0.6),
+  //       ToggleStyleButton(
+  //         attribute: Attribute.blockQuote,
+  //         controller: controller!,
+  //         icon: Icons.format_quote,
+  //       ),
+  //       VerticalDivider(
+  //         indent: 16,
+  //         endIndent: 16,
+  //         color: Colors.grey.shade400,
+  //       ),
+  //       LinkStyleButton(
+  //         controller: controller!,
+  //       ),
+  //     ],
+  //   );
+  // }
 
   _doPublish() async {
     try {

@@ -27,8 +27,7 @@ class DocLikesController extends FetchListValueController<UserSeri> {
 
   @override
   Future<List<UserSeri>> fetch() async {
-    var data = await (ApiRepository.getLikeUsers(targetId: targetId)
-        as FutureOr<ApiResponse>);
+    var data = await ApiRepository.getLikeUsers(targetId: targetId);
     return (data.data as List).map((e) => UserSeri.fromJson(e)).toList();
   }
 }
@@ -42,10 +41,10 @@ class DocCommentsController extends FetchValueController<ApiResponse> {
 
   @override
   Future<ApiResponse> fetch() async {
-    var res = await (ApiRepository.getComments(
+    var res = await ApiRepository.getComments(
       commentId: commentableId,
       commentType: 'Doc',
-    ) as FutureOr<ApiResponse>);
+    );
     var data = (res.data as List);
     comments = data.map((e) => CommentDetailSeri.fromJson(e)).toList();
     return res;

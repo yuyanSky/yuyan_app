@@ -36,7 +36,7 @@ class _SmallNoteEditorState extends State<SmallNoteEditor> {
           return Scaffold(
             appBar: AppBar(
               title: Text('小记'),
-              actions: [_publish(c.value!.mirror!.id)],
+              actions: [_publish(c.value!.mirror!.id!)],
             ),
             body: Column(
               children: [
@@ -79,7 +79,7 @@ class _SmallNoteEditorState extends State<SmallNoteEditor> {
     );
   }
 
-  Widget _publish(int? mirrorId) {
+  Widget _publish(int mirrorId) {
     return GetBuilder<PostNoteController>(
       init: PostNoteController(mirrorId),
       builder: (pub) {

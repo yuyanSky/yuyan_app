@@ -34,23 +34,23 @@ class FetchRefreshListViewBuilder<T extends FetchListValueController>
       tag: tag,
       autoRemove: false,
       builder: (c) {
-        if (c == null) {
-          return Container(
-            padding: const EdgeInsets.all(16),
-            margin: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.red,
-              ),
-            ),
-            child: Text(
-              'get controller: ${T.toString()} with tag: $tag'
-              'resulted in a null controller'
-              'did you forget to Get.put'
-              'or, you just messed up with tag',
-            ),
-          );
-        }
+        // if (c == null) {
+        //   return Container(
+        //     padding: const EdgeInsets.all(16),
+        //     margin: const EdgeInsets.all(4),
+        //     decoration: BoxDecoration(
+        //       border: Border.all(
+        //         color: Colors.red,
+        //       ),
+        //     ),
+        //     child: Text(
+        //       'get controller: ${T.toString()} with tag: $tag'
+        //       'resulted in a null controller'
+        //       'did you forget to Get.put'
+        //       'or, you just messed up with tag',
+        //     ),
+        //   );
+        // }
         return c.stateBuilder(
           onIdle: () {
             return Scrollbar(

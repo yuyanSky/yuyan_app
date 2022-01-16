@@ -83,7 +83,6 @@ class _HomeState extends State<Home> {
         size: 34,
         color: iconColor(1 == currIndex),
       ),
-      // TODO(@dreamer2q): considering add a center-docked button
       // GestureDetector(
       //   onTap: () {},
       //   child: Transform.translate(

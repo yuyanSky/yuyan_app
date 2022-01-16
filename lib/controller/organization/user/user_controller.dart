@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:yuyan_app/config/net/api.dart';
 import 'package:yuyan_app/config/service/api2_repository.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
@@ -110,11 +109,11 @@ class UserEventsController extends FetchListValueController<EventSeri> {
   bool hasMore = true;
 
   Future<List<EventSeri>> _doFetch([bool loadmore = false]) async {
-    var res = await (ApiRepository.getUserEvents(
+    var res = await ApiRepository.getUserEvents(
       userId: userId,
       limit: 20,
       offset: loadmore ? offset : 0,
-    ) as FutureOr<ApiResponse>);
+    );
 
     var list = (res.data as List).map((e) => EventSeri.fromJson(e)).toList();
     hasMore = (res.meta!['hasMore'] ?? false);

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:yuyan_app/config/net/api.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
@@ -21,8 +20,7 @@ class TopicDetailController extends FetchValueController<TopicDetailSeri> {
   @override
   Future<TopicDetailSeri> fetch() async {
     final res =
-        await (ApiRepository.getTopicDetailRes(iid: iid, groupId: groupId)
-            as FutureOr<ApiResponse>);
+        await ApiRepository.getTopicDetailRes(iid: iid, groupId: groupId);
     abilities = MetaAbilitySeri.fromJson(res.meta!['abilities']);
     return TopicDetailSeri.fromJson(res.data);
   }
@@ -74,7 +72,7 @@ class CommentPostController extends FetchValueController<CommentDetailSeri> {
   int? _parentId;
 
   postComment({
-    String? comment,
+    required String comment,
     int? parentId,
     VoidCallback? success,
     VoidCallback? error,
@@ -83,9 +81,7 @@ class CommentPostController extends FetchValueController<CommentDetailSeri> {
     _comment = comment;
     _parentId = parentId;
     if (convert) {
-      _comment = await ApiRepository.convertLake(
-        markdown: comment,
-      );
+      _comment = await ApiRepository.convertLake(markdown: comment);
     }
     await onRefresh(force: true);
     if (isErrorState) {
