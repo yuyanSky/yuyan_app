@@ -224,7 +224,7 @@ mixin ControllerStateMixin on GetxController {
     App.analytics.logEvent(
       name: 'view_state_error',
       parameters: {
-        ...error!.toJson() as Map<String, Object?>,
+        ...error!.toJson(),
         'stack': stack,
       },
     );

@@ -1,4 +1,6 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:package_info/package_info.dart';
 
@@ -12,14 +14,15 @@ class App {
   static TokenProvider tokenProvider = TokenProvider();
   static CurrSpaceProvider currentSpaceProvider = CurrSpaceProvider();
   static MyUserProvider userProvider = MyUserProvider();
-  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
+  static late FirebaseAnalytics analytics;
   static late PackageInfo version;
 
   static init() async {
     version = await PackageInfo.fromPlatform();
-
     await StorageManager.init();
+    await Firebase.initializeApp();
+    analytics = FirebaseAnalytics.instance;
 
     // web.WebView.platform = web.SurfaceAndroidWebView();
 
