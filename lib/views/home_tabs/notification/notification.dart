@@ -54,10 +54,10 @@ class _NotificationTabState extends State<NotificationTab> {
                       itemCount: c.value!.length,
                       separatorBuilder: (_, i) => Divider(height: 4),
                       itemBuilder: (_, i) {
-                        NotificationItemSeri? item = c.value![i];
+                        NotificationItemSeri item = c.value![i]!;
                         return NotificationItemWidget(
                           data: item,
-                          unread: item?.readAt == null ? false : true,
+                          unread: item.readAt == null ? true : false,
                         );
                       },
                     ),
