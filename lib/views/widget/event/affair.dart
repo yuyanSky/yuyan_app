@@ -119,7 +119,7 @@ class _ToUserWidget extends StatelessWidget {
 }
 
 class _ToDocWidget extends StatelessWidget {
-  final EventSeri item;
+  final EventSeri? item;
 
   const _ToDocWidget({Key? key, this.item}) : super(key: key);
 

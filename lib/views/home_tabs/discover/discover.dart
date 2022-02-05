@@ -16,6 +16,8 @@ class DiscoverTab extends StatefulWidget {
 
 class _DiscoverTabState extends State<DiscoverTab>
     with SingleTickerProviderStateMixin {
+  TabController _tabController;
+
   @override
   void initState() {
     super.initState();

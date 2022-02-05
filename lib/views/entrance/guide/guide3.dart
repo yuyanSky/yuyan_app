@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
 
 class Guide3 extends StatefulWidget {
-  Guide3({Key key}) : super(key: key);
+  Guide3({Key? key}) : super(key: key);
 
   @override
   _Guide3State createState() => _Guide3State();

@@ -59,7 +59,6 @@ class MyGroupController extends FetchSavableController<MyGroupProvider> {
   MyGroupController()
       : super(
           initialRefresh: true,
-          fetchData: s,
           initData: MyGroupProvider(),
         );
 

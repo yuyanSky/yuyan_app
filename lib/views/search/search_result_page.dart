@@ -2,17 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shifting_tabbar/shifting_tabbar.dart';
 import 'package:yuyan_app/config/viewstate/view_page.dart';
-import 'package:yuyan_app/controller/organization/search/search_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/model/user/user.dart';
-import 'package:yuyan_app/model/user/user_lite_seri.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/views/home_tabs/discover/widget/book_tile_widget.dart';
 import 'package:yuyan_app/views/home_tabs/discover/widget/doc_tile_widget.dart';
-import 'package:yuyan_app/views/organization/topic_page/topic_item_widget.dart';
-import 'package:yuyan_app/views/organization/widget/group.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class SearchResultWidget extends StatefulWidget {
@@ -21,8 +17,8 @@ class SearchResultWidget extends StatefulWidget {
 
   const SearchResultWidget({
     Key? key,
-    this.query,
-    this.initIndex,
+    required this.query,
+    required this.initIndex,
   }) : super(key: key);
 
   @override
@@ -143,7 +139,7 @@ class _SearchResultWidgetState extends State<SearchResultWidget>
           );
         },
       ),
-      //话题
+      // 话题
       FetchRefreshListViewBuilder<SearchController>(
         tag: 'topic+' + query,
         builder: (c) {

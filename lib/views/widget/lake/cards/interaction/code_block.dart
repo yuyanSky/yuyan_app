@@ -45,7 +45,7 @@ class CodeBlockWidget extends StatelessWidget {
         fontSize: 12,
       ),
       text: node.value,
-      children: node.children?.map((e) => _parseTree(e))?.toList(),
+      children: node.children?.map((e) => _parseTree(e)).toList(),
     );
   }
 
