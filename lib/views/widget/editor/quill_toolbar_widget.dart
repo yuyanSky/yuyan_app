@@ -5,10 +5,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:delta_markdown/delta_markdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_quill/models/documents/document.dart';
-import 'package:flutter_quill/models/documents/nodes/embed.dart';
-import 'package:flutter_quill/widgets/controller.dart';
-import 'package:flutter_quill/widgets/toolbar.dart';
+import 'package:flutter_quill/flutter_quill.dart';
+
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/util/util.dart';
@@ -257,7 +255,7 @@ class _CommentToolbarWidgetState extends State<CommentToolbarWidget>
             ),
             Obx(
               () => TextButton(
-                child: Text('发布'),
+                child: Icon(Icons.publish),
                 onPressed: _doPublish,
               ).onlyIf(
                 !publishing.value,
