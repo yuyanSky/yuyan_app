@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:delta_markdown/delta_markdown.dart';
+// import 'package:delta_markdown/delta_markdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
@@ -11,6 +11,10 @@ import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/model/document/note/note.dart';
 import 'package:yuyan_app/model/document/note/note_status.dart';
 import 'package:yuyan_app/model/document/upload/upload_result_seri.dart';
+
+String deltaToMarkdown(String s) {
+  throw UnimplementedError('FixMe');
+}
 
 class PostNoteController extends FetchValueController<NoteSeri> {
   final int id;

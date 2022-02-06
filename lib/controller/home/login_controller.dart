@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:webview_cookie_manager/webview_cookie_manager.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/token.dart';
 import 'package:yuyan_app/config/route_manager.dart';
@@ -13,13 +13,22 @@ import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
 
 class LoginController extends FetchValueController<TokenJsonSeri> {
-  final FlutterWebviewPlugin controller;
+  final Future<WebViewController> controllerWaiter;
   final TokenProvider provider = App.tokenProvider;
+  late final WebViewController _controller;
 
-  LoginController(this.controller)
+  LoginController(this.controllerWaiter)
       : super(initialFetch: false, initialState: ViewState.idle) {
-    controller.onUrlChanged.listen(onUrlChanged);
-    controller.onStateChanged.listen(onStateChanged);
+    controllerWaiter.then((controller) {
+      _controller = controller;
+      hideThirdLogin();
+    });
+    // controller.onUrlChanged.listen(onUrlChanged);
+    // controller.onStateChanged.listen(onStateChanged);
+  }
+
+  void initController(WebViewController controller) {
+    _controller = controller;
   }
 
   String get authUrl {
@@ -40,24 +49,24 @@ class LoginController extends FetchValueController<TokenJsonSeri> {
   onUrlChanged(String url) {
     debugPrint('url change: $url');
     if (url.startsWith("yuyan://")) {
-      controller.hide();
       //获取Code
       var uri = Uri.parse(url);
       _code = uri.queryParameters['code'];
-      onRefresh(force: true);
+      if (!isLoadingState) {
+        onRefresh(force: true);
+      }
     }
   }
 
   // 隐藏语雀第三方登录， iOS 审核需要
-  onStateChanged(state) {
+  void hideThirdLogin() {
+    final js = 'document.querySelector(".third-login").style.display="none";';
     Timer(Duration(milliseconds: 100), () {
-      final js = 'document.querySelector(".third-login").style.display="none";';
-      controller.evalJavascript(js);
+      // controller.evalJavascript(js);
+      _controller.runJavascript(js);
+      // controller.runJavascript(js);
     });
-    if (state.type == WebViewState.finishLoad) {
-      final js = 'document.querySelector(".third-login").style.display="none";';
-      controller.evalJavascript(js);
-    }
+    _controller.runJavascript(js);
   }
 
   @override
@@ -67,8 +76,9 @@ class LoginController extends FetchValueController<TokenJsonSeri> {
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.CENTER,
     );
-    controller.reloadUrl(authUrl);
-    controller.show();
+    _controller.loadUrl(authUrl);
+    // controller.reloadUrl(authUrl);
+    // controller.show();
   }
 
   @override

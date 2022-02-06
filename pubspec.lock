@@ -183,13 +183,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-  delta_markdown:
-    dependency: "direct main"
-    description:
-      name: delta_markdown
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.0"
   diff_match_patch:
     dependency: transitive
     description:
@@ -346,9 +339,9 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "47e3931596dc4bb1d5f6e6a38d829e91e54d9abb"
-      resolved-ref: "47e3931596dc4bb1d5f6e6a38d829e91e54d9abb"
-      url: "https://github.com/vrtdev/flutter_html.git"
+      ref: HEAD
+      resolved-ref: d66afd7b0444cb704f7e9d3906c7b0c634d4f029
+      url: "https://github.com/yuyanSky/flutter_html.git"
     source: git
     version: "2.0.0-nullsafety.0"
   flutter_inappwebview:
@@ -396,10 +389,12 @@ packages:
   flutter_quill:
     dependency: "direct main"
     description:
-      name: flutter_quill
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.9.8"
+      path: "."
+      ref: upgrade
+      resolved-ref: "75fe81bd977de6d1760c08c7164b3ac4dabc5abb"
+      url: "https://github.com/singerdmx/flutter-quill"
+    source: git
+    version: "3.9.6"
   flutter_simple_treeview:
     dependency: "direct main"
     description:
@@ -440,13 +435,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_webview_plugin:
-    dependency: "direct main"
-    description:
-      name: flutter_webview_plugin
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.0"
   flutter_xupdate:
     dependency: "direct main"
     description:
@@ -1251,12 +1239,12 @@ packages:
     source: hosted
     version: "2.0.6"
   webview_flutter:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: webview_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.8.0"
+    version: "3.0.0"
   webview_flutter_android:
     dependency: transitive
     description:

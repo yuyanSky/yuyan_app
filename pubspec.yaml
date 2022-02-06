@@ -24,8 +24,13 @@ dependencies:
 
   # 富文本编辑器
   notus: ^1.0.0-rc.2
-  flutter_quill: ^3.9.8
-  delta_markdown: ^0.4.0
+  # flutter_quill: # ^3.9.8
+  flutter_quill:
+    git:
+      url: https://github.com/singerdmx/flutter-quill
+      ref: upgrade # for flutter 2.10
+      
+  # delta_markdown: ^0.4.0
   # delta_markdown:
   # git:
   # url: https://github.com/dreamer2q/delta_markdown.git
@@ -45,10 +50,11 @@ dependencies:
   ## 文档瞄photo_view点
   scroll_to_index: ^2.1.1
   ## html渲染
-  flutter_html: # ^1.3.0
+  flutter_html: #^3.0.0-alpha.2 # ^1.3.0
     git:
-      ref: 47e3931596dc4bb1d5f6e6a38d829e91e54d9abb
-      url: https://github.com/vrtdev/flutter_html.git
+      # ref: 47e3931596dc4bb1d5f6e6a38d829e91e54d9abb
+      # url: https://github.com/vrtdev/flutter_html.git
+      url: https://github.com/yuyanSky/flutter_html.git
   ## 代码高亮支持
   flutter_highlight: ^0.7.0
   ## clipboard复制代码
@@ -66,7 +72,8 @@ dependencies:
   ## like动画按钮
   like_button: ^2.0.4
   # Webview相关
-  flutter_webview_plugin: ^0.4.0
+  webview_flutter: ^3.0.0
+  #  flutter_webview_plugin: ^0.4.0
   #  flutter_inappwebview: 4.0.0+4
   flutter_inappwebview: ^5.3.2
   # cookie manager: getAllCookies
