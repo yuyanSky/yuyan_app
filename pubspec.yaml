@@ -24,8 +24,10 @@ dependencies:
 
   # 富文本编辑器
   notus: ^1.0.0-rc.2
-  flutter_quill: ^3.9.8
-  delta_markdown: ^0.4.0
+  flutter_quill:
+    git: https://github.com/singerdmx/flutter-quill.git
+  delta_markdown:
+    git: https://github.com/devtud/delta_markdown.git
   # delta_markdown:
   # git:
   # url: https://github.com/dreamer2q/delta_markdown.git

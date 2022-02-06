@@ -186,9 +186,11 @@ packages:
   delta_markdown:
     dependency: "direct main"
     description:
-      name: delta_markdown
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "85c8a3853067c49238b003b6bb3f4b2b5c06c87f"
+      url: "https://github.com/devtud/delta_markdown.git"
+    source: git
     version: "0.4.0"
   diff_match_patch:
     dependency: transitive
